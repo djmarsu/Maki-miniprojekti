@@ -33,10 +33,11 @@ public class BookTest {
         assertEquals("year", book.getField("year"));
         assertEquals("publisher", book.getField("publisher"));
         assertEquals("author", book.getField("author"));
-        assertEquals("series", book.getField("volume"));
-        assertEquals("address", book.getField("series"));
-        assertEquals("edition", book.getField("address"));
-        assertEquals("month", book.getField("edition"));
+        assertEquals("series", book.getField("series"));
+        assertEquals("address", book.getField("address"));
+        assertEquals("edition", book.getField("edition"));
+        assertEquals("volume", book.getField("volume"));
+        assertEquals("month", book.getField("month"));
         assertEquals("note", book.getField("note"));
     }
     
