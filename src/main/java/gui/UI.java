@@ -32,7 +32,7 @@ public class UI implements Runnable {
     private Map<String, Field> fields;
     private int fieldPosX = 20;
     private int fieldPosY = 60; 
-    private Book book;
+    private JLabel result;
 
     public UI(int width, int height) {
      this.windowWidth = width;
@@ -83,8 +83,16 @@ public class UI implements Runnable {
         
         
         JButton createReference = new JButton("Create a reference");  
-        createReference.setBounds(20, 520, 300, 30);
+        createReference.setBounds(20, 520, 200, 30);
         addReferencePage.add(createReference);
+        
+        JButton createBibTex = new JButton("Create a BibTex file");  
+        createBibTex.setBounds(260, 520, 200, 30);
+        addReferencePage.add(createBibTex);
+        
+        this.result = new JLabel("Event messages come here");  
+        this.result.setBounds(20, 600, 200, 30);
+        addReferencePage.add(this.result);
         
         
     }
@@ -94,6 +102,10 @@ public class UI implements Runnable {
             field.setPosition(x, y);
             y += gap;
         }  
+    }
+    
+    public void setResult(String string){
+        this.result.setText(string);
     }
     
     
