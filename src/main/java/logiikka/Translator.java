@@ -38,13 +38,23 @@ public class Translator {
         sb.append(" = ");
         inputParam(sb, book.getField(field));
     }
+    
+    public static String compileUmlauts(String s) {
+        String compiled = s;
+        compiled = compiled.replace("ä", "\\\"{a}");
+        compiled = compiled.replace("ö", "\\\"{ö}");
+        compiled = compiled.replace("å", "\\aa");
 
+        return compiled;
+    }
+    
     private void inputParam(StringBuilder sb, String field) {
         sb.append("\"");
-        sb.append(field);
+        String compiledfield = compileUmlauts(field);
+        sb.append(compiledfield);
         sb.append("\",\n");
     }
-
+    
     private void writeInFile(String bibtexString) {
         try {
             fw.write(bibtexString);
