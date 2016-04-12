@@ -5,7 +5,7 @@
  */
 package referencechampion;
 
-import gui.Kayttoliittyma;
+import gui.UI;
 import javax.swing.SwingUtilities;
 
 /**
@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
  */
 public class Main {
     public static void main(String[] args) {
-        Kayttoliittyma kl = new Kayttoliittyma(600, 600);
+        UI kl = new UI(600, 600);
         SwingUtilities.invokeLater(kl);
     }
 }
