@@ -34,6 +34,7 @@ public class Translator {
     }
 
     private void appendField(StringBuilder sb, String field, Book book) {
+        sb.append("\t");
         sb.append(field);
         sb.append(" = ");
         inputParam(sb, book.getField(field));
@@ -59,7 +60,6 @@ public class Translator {
         try {
             fw.write(bibtexString);
         } catch (Exception e) {
-            
         }
 
     }
