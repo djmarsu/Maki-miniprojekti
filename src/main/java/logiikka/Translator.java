@@ -19,8 +19,8 @@ public class Translator {
         for (String field : book.getFields()) {
             appendField(sb, field, book);
         }
-        sb.append("}");
-
+        sb.append("}\n");
+        System.out.println(sb.toString());
         writeInFile(sb.toString());
     }
 
@@ -46,7 +46,7 @@ public class Translator {
             if (Character.isUpperCase(s.charAt(i))) {
                 sb.append("{");
                 sb.append(s.charAt(i));
-                sb.append("{");
+                sb.append("}");
             } else {
                 sb.append(s.charAt(i));
             }

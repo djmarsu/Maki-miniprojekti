@@ -9,8 +9,11 @@ package gui.actionlisteners;
 import gui.Field;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import referencechampion.Book;
 import referencechampion.ReferenceBase;
 
@@ -18,25 +21,21 @@ import referencechampion.ReferenceBase;
  *
  * @author alrial
  */
-public class CreateBook implements ActionListener {
-    
+public class Translate implements ActionListener {
+
     private ReferenceBase base;
-    private Map<String, Field> fields;
     
-    public CreateBook(Map<String, Field> fields, ReferenceBase base){
-        this.fields = fields;
+    public Translate(ReferenceBase base){
         this.base = base;
-        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(this.fields);
-        HashMap<String, String> values = new HashMap<String, String>();
-        for (String s : this.fields.keySet()) {
-            values.put(s, this.fields.get(s).getText());
+        System.out.println("nappi");
+        try {
+            base.translateAll();
+        } catch (IOException ex) {
+            Logger.getLogger(Translate.class.getName()).log(Level.SEVERE, null, ex);
         }
-        base.addBook(new Book(values));
-        
     }
 }

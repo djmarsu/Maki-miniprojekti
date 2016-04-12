@@ -35,7 +35,7 @@ public class ReferenceBase {
         for (Book book : refCol.getList()) {
             translator.translateBook(book);
         }
-        fileWriter.close();
+        fileWriter.flush();
     }
     
     public void addBook(Book book) {
