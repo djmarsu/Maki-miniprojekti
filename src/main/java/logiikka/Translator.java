@@ -33,9 +33,9 @@ public class Translator {
     
     public static String compileUmlauts(String s) {
         String compiled = s.toLowerCase();
-        compiled = compiled.toUpperCase().charAt(0) + compiled.substring(1);;
+        compiled = compiled.toUpperCase().charAt(0) + compiled.substring(1);
         compiled = compiled.replace("ä", "\\\"{a}")
-                           .replace("ö", "\\\"{ö}")
+                           .replace("ö", "\\\"{o}")
                            .replace("å", "\\aa");
 
         return compiled;
