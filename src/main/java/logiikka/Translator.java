@@ -32,10 +32,11 @@ public class Translator {
     }
     
     public static String compileUmlauts(String s) {
-        String compiled = s;
-        compiled = compiled.replace("ä", "\\\"{a}");
-        compiled = compiled.replace("ö", "\\\"{ö}");
-        compiled = compiled.replace("å", "\\aa");
+        String compiled = s.toLowerCase();
+        compiled = compiled.toUpperCase().charAt(0) + compiled.substring(1);
+        compiled = compiled.replace("ä", "\\\"{a}")
+                           .replace("ö", "\\\"{o}")
+                           .replace("å", "\\aa");
 
         return compiled;
     }
