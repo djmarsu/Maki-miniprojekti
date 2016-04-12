@@ -20,15 +20,15 @@ public class ReferenceCollection {
         this.list = new ArrayList();
     }
     
-    public ArrayList<Book> haeLista() {
+    public ArrayList<Book> getList() {
         return list;
     }
     
-    public void addBookTo(Book book) {
-        list.add(kirj);
+    public void addBook(Book book) {
+        list.add(book);
     }
     
-    public void poistaKirjaListasta(Book book) {
-        list.remove(kirj);
+    public void removeBook(Book book) {
+        list.remove(book);
     }
 }
