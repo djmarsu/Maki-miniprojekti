@@ -1,17 +1,17 @@
 
 package referencechampion;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 
 public class BookTest {
     
-    Book book = new Book("AB06", "2015", )
+    Book book = new Book("key", "title", "year", "publisher", "author", "volume", "series",
+                        "address", "edition", "month", "note");
     
     public BookTest() {
     }
@@ -22,13 +22,22 @@ public class BookTest {
         
     }
     
-    @After
-    public void tearDown() {
+    @Test
+    public void fieldNamesAreReturnedCorrectly() {
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void constructorSetsFieldsCorrectly() {
+        assertEquals("key", book.getField("key"));
+        assertEquals("title", book.getField("title"));
+        assertEquals("year", book.getField("year"));
+        assertEquals("publisher", book.getField("publisher"));
+        assertEquals("author", book.getField("author"));
+        assertEquals("series", book.getField("volume"));
+        assertEquals("address", book.getField("series"));
+        assertEquals("edition", book.getField("address"));
+        assertEquals("month", book.getField("edition"));
+        assertEquals("note", book.getField("note"));
+    }
+    
 }
