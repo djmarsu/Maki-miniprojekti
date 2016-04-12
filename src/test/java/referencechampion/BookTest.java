@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class BookTest {
     
-    Book 
+    Book book = new Book("AB06", "2015", )
     
     public BookTest() {
     }
