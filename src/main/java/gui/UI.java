@@ -97,6 +97,7 @@ public class UI implements Runnable {
         
     }
     
+    
     private void setFieldsPosition(int x, int y, int gap){
         for (Field field: this.fields.values()) {
             field.setPosition(x, y);
