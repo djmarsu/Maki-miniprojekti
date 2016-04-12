@@ -38,8 +38,8 @@ public class ReferenceBase {
         fileWriter.flush();
     }
     
-    public void addBook(Book book) {
-        refCol.addBook(book);
+    public boolean addBook(Book book) {
+        return refCol.addBook(book);
     }
 
 }

@@ -50,7 +50,6 @@ public class UI implements Runnable {
     @Override
     public void run() {
         constructWindow();
-
     }
     
     private void constructWindow(){
@@ -60,34 +59,41 @@ public class UI implements Runnable {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Dimension dimension = new Dimension(windowWidth, windowHeight);
         window.setResizable(false);
-        contructWindowComponents(window.getContentPane());
+        constructWindowComponents(window.getContentPane());
         window.setPreferredSize(dimension);
 
         window.pack();
         window.setVisible(true);
     }
 
-    private void contructWindowComponents(Container container) {
+    private void constructWindowComponents(Container container) {
         container.setBackground(Color.DARK_GRAY);
         container.setLayout(new GroupLayout(container));       
         
-        JTabbedPane tabs = new JTabbedPane();    
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.setBounds(0, 0, windowWidth, windowHeight);
+        container.add(tabs);
       
+        constructAddBookTab(tabs);
+        
+        
+    }
+    
+    private void constructAddBookTab(JTabbedPane tabs) {
         Container addReferencePage = new Container();   
         
         tabs.addTab("Add reference", addReferencePage); 
-
-        tabs.setBounds(0, 0, windowWidth, windowHeight);
-        container.add(tabs);
         
         JLabel pagetitle = new JLabel("Create a new book");
         pagetitle.setBounds(20, 10, 300, 30);
         addReferencePage.add(pagetitle);
                
-
+        this.result = new JLabel("");  
+        this.result.setBounds(20, 600, 200, 30);
+        addReferencePage.add(this.result);
         this.fields = FieldCreator.createFields(new Book().getFields(), addReferencePage);
-        this.createbook = new CreateBook(this.fields , this.base);
-        setFieldsPosition(fieldPosX, fieldPosY, 40);              
+        this.createbook = new CreateBook(this.fields, this.base, this.result);
+        setFieldsPosition(fieldPosX, fieldPosY, 40);            
         
         
         JButton createReference = new JButton("Create a reference");  
@@ -99,12 +105,6 @@ public class UI implements Runnable {
         createBibTex.setBounds(260, 520, 200, 30);
         createBibTex.addActionListener(translate);
         addReferencePage.add(createBibTex);
-        
-        
-        this.result = new JLabel("Event messages come here");  
-        this.result.setBounds(20, 600, 200, 30);
-        addReferencePage.add(this.result);
-        
         
     }
     

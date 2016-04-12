@@ -4,6 +4,7 @@ package gui.stub;
 import gui.Field;
 import gui.actionlisteners.CreateBook;
 import java.util.HashMap;
+import javax.swing.JLabel;
 import referencechampion.ReferenceBase;
 
 /*
@@ -17,19 +18,17 @@ import referencechampion.ReferenceBase;
  */
 public class StubUI {
 
-    HashMap<String, String> syotteet;
+    private JLabel result;
 
-    public StubUI(HashMap<String, String> syotteet) {
-        HashMap<String,Field> fields = new HashMap<String,Field>();
-        for (String s : syotteet.keySet()) {
-            fields.put(s, new Field(syotteet.get(s), null));
-        }
-//        CreateBook cb = new CreateBook(fields);
-//        cb.actionPerformed(null);
+    public StubUI(HashMap<String, String> syotteet) throws Exception {
+        this.result=new JLabel("");
+        CreateBook cb = new CreateBook(null, new ReferenceBase(), result);
+        cb.setBookValues(syotteet);
+        cb.actionPerformed(null);
     }
     
     public String getOutput() {
-       return null; 
+       return result.getText();
     }
     
 
