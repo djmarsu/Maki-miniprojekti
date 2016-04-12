@@ -2,16 +2,17 @@
 package referencechampion;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class Book {
     
-    private HashMap<String, String> fields;
+    private Map<String, String> fields;
     
     public Book(String key, String title, String year, String publisher, String author,
             String volume, String series, String address, String edition, String month,
             String note) {
-        
+        fields = new HashMap<String, String>();
         this.fields.put("key", key);
         this.fields.put("title", title);
         this.fields.put("year", year);
