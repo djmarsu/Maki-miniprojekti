@@ -28,8 +28,8 @@ public class Field {
         container.add(this.text);
     }
     
-    public JTextField getField(){
-        return this.field;
+    public String getText(){
+        return this.field.getText();
     }
     
     public void setPosition(int x, int y){        
