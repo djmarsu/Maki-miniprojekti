@@ -5,9 +5,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-/**
- * @author emivo
- */
 public class Kayttoliittyma implements Runnable {
 
     private int lenx;
