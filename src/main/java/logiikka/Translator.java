@@ -49,9 +49,7 @@ public class Translator {
     private void writeInFile(String bibtexString) {
         try {
             fw.write(bibtexString);
-            System.out.println(bibtexString);
         } catch (Exception e) {
-            System.out.println("HUPS");
         }
 
     }
