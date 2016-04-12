@@ -1,9 +1,8 @@
 
 package referencechampion;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 
 public class Book {
     
@@ -28,6 +27,10 @@ public class Book {
     
     public String getField(String key) {
         return fields.get(key);
+    }
+    
+    public Set <String> getFields() {
+        return this.fields.keySet();
     }
     
     
