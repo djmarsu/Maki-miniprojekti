@@ -17,8 +17,9 @@ public class BookTest {
    
     @Before
     public void setUp() {
+        
         book = new Book("key", "title", "year", "publisher", "author", "volume", "series",
-                        "address", "edition", "month", "note");
+"address", "edition", "month", "note");
     }
     
     @Test
