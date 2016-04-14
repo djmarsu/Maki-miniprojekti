@@ -80,7 +80,7 @@ public class UI implements Runnable {
         addReferencePage.add(pagetitle);
                
         this.result = new JLabel("");  
-        this.result.setBounds(20, 600, 200, 30);
+        this.result.setBounds(20, 600, 400, 30);
         addReferencePage.add(this.result);
         this.fields = FieldCreator.createFields(new Book().getFields(), addReferencePage);
         this.createbook = new CreateBook(this.fields, this.base, this.result);
