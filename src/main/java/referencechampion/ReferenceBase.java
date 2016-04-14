@@ -32,7 +32,7 @@ public class ReferenceBase {
     
     public void translateAll() throws IOException {
         for (Book book : refCol.getList()) {
-            translator.translateBook(book);
+            translator.translateReference(book, "book");
         }
         fileWriter.flush();
     }

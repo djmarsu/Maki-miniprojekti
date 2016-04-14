@@ -1,7 +1,6 @@
 package referencechampion;
 
 import java.io.FileWriter;
-import referencechampion.Book;
 
 public class Translator {
 
@@ -11,24 +10,39 @@ public class Translator {
         this.fw = fw;
     }
 
-    public void translateBook(Book book) {
+    public void translateReference(Reference reference, String type) {
         StringBuilder sb = new StringBuilder();
-        sb.append("@book{");
-        sb.append(book.getField("key"));
+        sb.append("@");
+        sb.append(type);
+        sb.append("{");
+        sb.append(reference.getField("key"));
         sb.append(",\n");
-        for (String field : book.getFields()) {
-            appendField(sb, field, book);
+        for (String field : reference.getFields()) {
+            appendField(sb, field, reference);
         }
         sb.append("}\n");
         System.out.println(sb.toString());
         writeInFile(sb.toString());
     }
+    
+//    public void translateBook(Book book) {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("@book{");
+//        sb.append(book.getField("key"));
+//        sb.append(",\n");
+//        for (String field : book.getFields()) {
+//            appendField(sb, field, book);
+//        }
+//        sb.append("}\n");
+//        System.out.println(sb.toString());
+//        writeInFile(sb.toString());
+//    }
 
-    private void appendField(StringBuilder sb, String field, Book book) {
+    private void appendField(StringBuilder sb, String field, Reference reference) {
         sb.append("\t");
         sb.append(compileUmlauts(field));
         sb.append(" = ");
-        inputParam(sb, book.getField(field));
+        inputParam(sb, reference.getField(field));
     }
 
     public String compileUmlauts(String s) {
