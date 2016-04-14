@@ -1,4 +1,4 @@
 target/
 /nbproject/
 *~
-references.bib
+*.bib
