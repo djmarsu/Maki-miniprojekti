@@ -7,7 +7,6 @@ package referencechampion;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import logiikka.Translator;
 
 /**
  *

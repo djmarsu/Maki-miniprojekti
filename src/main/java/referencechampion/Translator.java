@@ -1,4 +1,4 @@
-package logiikka;
+package referencechampion;
 
 import java.io.FileWriter;
 import referencechampion.Book;
