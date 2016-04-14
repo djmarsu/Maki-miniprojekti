@@ -10,13 +10,12 @@ package referencechampion;
  *
  * @author alrial
  */
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class Book implements Reference {
 
-    private HashMap<String, String> fields;
+    private TreeMap<String, String> fields;
     
 
     public Book() {
@@ -26,7 +25,7 @@ public class Book implements Reference {
     public Book(String key, String title, String year, String publisher, String author,
             String volume, String series, String address, String edition, String month,
             String note) {
-        fields = new HashMap<String, String>();
+        fields = new TreeMap<String, String>();
         this.fields.put("key", key);
         this.fields.put("title", title);
         this.fields.put("year", year);
@@ -40,7 +39,7 @@ public class Book implements Reference {
         this.fields.put("note", note);
     }
 
-    public Book(HashMap<String, String> fields) {
+    public Book(TreeMap<String, String> fields) {
         this.fields = fields;
     }
 
