@@ -16,5 +16,4 @@ public interface Reference {
     String getField(String key);
 
     Set<String> getFields();
-    
 }

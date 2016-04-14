@@ -54,4 +54,14 @@ public class Book implements Reference {
         return this.fields.keySet();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().equals(Book.class)) return false;
+        
+        Book book = (Book) obj;
+        
+        return book.getField("title").equals(this.getField("title")) 
+                && book.getField("author").equals(this.getField("author"));
+    }
+
 }
