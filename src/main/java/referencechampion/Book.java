@@ -1,17 +1,10 @@
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package referencechampion;
 
-/**
- *
- * @author alrial
- */
+
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class Book implements Reference {
@@ -50,8 +43,30 @@ public class Book implements Reference {
     }
 
     @Override
-    public Set<String> getFields() {
-        return this.fields.keySet();
+    public ArrayList<String> getFields() {
+        ArrayList<String> fields = new ArrayList<String>();
+        fields.add("key");
+        fields.add("title");
+        fields.add("year");
+        fields.add("publisher");
+        fields.add("author");
+        fields.add("volume");
+        fields.add("series");
+        fields.add("address");
+        fields.add("edition");
+        fields.add("month");
+        fields.add("note");
+        return fields;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!obj.getClass().equals(Book.class)) return false;
+        
+        Book book = (Book) obj;
+        
+        return book.getField("title").equals(this.getField("title")) 
+                && book.getField("author").equals(this.getField("author"));
     }
 
 }

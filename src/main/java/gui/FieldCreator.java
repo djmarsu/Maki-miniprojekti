@@ -7,8 +7,9 @@
 package gui;
 
 import java.awt.Container;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
+
 
 /**
  *
@@ -16,7 +17,7 @@ import java.util.Set;
  */
 public class FieldCreator {
     
-    public static HashMap<String, Field> createFields(Set<String> names, Container container){
+    public static HashMap<String, Field> createFields(ArrayList<String> names, Container container){
         HashMap<String, Field> fields = new HashMap<String, Field>();
         
         for (String string : names) {
