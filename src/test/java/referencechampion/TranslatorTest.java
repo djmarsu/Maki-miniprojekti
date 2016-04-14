@@ -52,7 +52,7 @@ public class TranslatorTest {
     // @Test
     // public void hello() {}
     @Test
-    public void bookHasCorrectOutPutOfBook() {
+    public void bookHasCorrectOutPutOfBook() throws IOException {
         String expected = "@book{book,\n"
                 + "	volume = \"4\",\n"
                 + "	note = \"{A}n optional note\",\n"
