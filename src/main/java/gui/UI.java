@@ -3,24 +3,15 @@ package gui;
 import gui.actionlisteners.CreateBook;
 import gui.actionlisteners.Translate;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import referencechampion.Book;
 import referencechampion.ReferenceBase;
 
@@ -89,7 +80,7 @@ public class UI implements Runnable {
         addReferencePage.add(pagetitle);
                
         this.result = new JLabel("");  
-        this.result.setBounds(20, 600, 200, 30);
+        this.result.setBounds(20, 600, 400, 30);
         addReferencePage.add(this.result);
         this.fields = FieldCreator.createFields(new Book().getFields(), addReferencePage);
         this.createbook = new CreateBook(this.fields, this.base, this.result);

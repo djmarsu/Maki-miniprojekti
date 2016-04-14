@@ -7,6 +7,7 @@ package referencechampion;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,7 +32,7 @@ public class ReferenceBase {
     }
     
     public void translateAll() throws IOException {
-        for (Book book : refCol.getList()) {
+        for (Reference book : refCol.getList()) {
             translator.translateReference(book, "book");
         }
         fileWriter.flush();
@@ -41,4 +42,9 @@ public class ReferenceBase {
         return refCol.addBook(book);
     }
 
+    public ArrayList<Reference> getReferences() {
+        return refCol.getList();
+    }
+
+    
 }

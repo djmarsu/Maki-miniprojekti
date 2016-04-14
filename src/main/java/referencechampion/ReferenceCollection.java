@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class ReferenceCollection {
     
-    private BookValidator validator;
-    private ArrayList<Book> list;
+    private ReferenceValidator validator;
+    private ArrayList<Reference> list;
     
     public ReferenceCollection() {
         this.list = new ArrayList();
-        this.validator = new BookValidator();
+        this.validator = new ReferenceValidator();
     }
     
-    public ArrayList<Book> getList() {
+    public ArrayList<Reference> getList() {
         return list;
     }
     

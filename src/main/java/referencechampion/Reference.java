@@ -15,6 +15,10 @@ public interface Reference {
 
     String getField(String key);
 
+<<<<<<< HEAD
     ArrayList<String> getFields();
     
+=======
+    Set<String> getFields();
+>>>>>>> 61799e231555aa95e018b0ebd888c7dd3225f2e9
 }
