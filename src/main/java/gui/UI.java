@@ -10,7 +10,9 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import referencechampion.Book;
 import referencechampion.ReferenceBase;
@@ -66,7 +68,7 @@ public class UI implements Runnable {
         container.add(tabs);
       
         constructAddBookTab(tabs);
-        
+        constructListingTab(tabs);        
         
     }
     
@@ -97,6 +99,30 @@ public class UI implements Runnable {
         createBibTex.addActionListener(translate);
         addReferencePage.add(createBibTex);
         
+    }
+    
+    private void constructListingTab(JTabbedPane tabs) {
+        Container listingPage = new Container();   
+        
+        tabs.addTab("Listing", listingPage); 
+        
+        JLabel pagetitle = new JLabel("Reference listing:");
+        pagetitle.setBounds(20, 10, 300, 30);
+        listingPage.add(pagetitle);
+        
+        JTextArea listing = new JTextArea("");
+        listing.setEnabled(false);
+        listing.setBounds(0, 0, 300, 300);
+        listingPage.add(listing);
+ 
+        JScrollPane scrollPane = new JScrollPane(listing);
+        scrollPane.setBounds(10, 60, 500, 550);
+        listingPage.add(scrollPane);
+        
+        JButton updateList = new JButton("Update List");  
+        updateList.setBounds(300, 20, 200, 30);
+        updateList.addActionListener(createbook);
+        listingPage.add(updateList);      
     }
     
     
