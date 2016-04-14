@@ -1,11 +1,10 @@
 
 package referencechampion;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 public class BookTest {
@@ -24,7 +23,7 @@ public class BookTest {
     
     @Test
     public void setOfFieldNamesIsReturnedCorrectly() {
-        HashSet<String> expected = new HashSet<String>();
+        ArrayList<String> expected = new ArrayList<String>();
         expected.add("key");
         expected.add("title");
         expected.add("year");
@@ -68,5 +67,5 @@ public class BookTest {
         assertEquals("", book.getField("volume"));
         assertEquals("", book.getField("month"));
         assertEquals("", book.getField("note"));
-    }  
+    }
 }
