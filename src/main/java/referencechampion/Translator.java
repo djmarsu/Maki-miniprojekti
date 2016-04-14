@@ -25,7 +25,7 @@ public class Translator {
         writeInFile(sb.toString());
         return sb.toString();
     }
-    
+
 //    public void translateBook(Book book) {
 //        StringBuilder sb = new StringBuilder();
 //        sb.append("@book{");
@@ -38,12 +38,13 @@ public class Translator {
 //        System.out.println(sb.toString());
 //        writeInFile(sb.toString());
 //    }
-
     private void appendField(StringBuilder sb, String field, Reference reference) {
-        sb.append("\t");
-        sb.append(compileUmlauts(field));
-        sb.append(" = ");
-        inputParam(sb, reference.getField(field));
+        if (!reference.getField(field).isEmpty()) {
+            sb.append("\t");
+            sb.append(compileUmlauts(field));
+            sb.append(" = ");
+            inputParam(sb, reference.getField(field));
+        }
     }
 
     private String compileUmlauts(String s) {
@@ -77,7 +78,7 @@ public class Translator {
     }
 
     private void writeInFile(String bibtexString) throws IOException {
-            fw.write(bibtexString);
+        fw.write(bibtexString);
 
     }
 }
