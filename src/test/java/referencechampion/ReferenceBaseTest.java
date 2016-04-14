@@ -38,11 +38,17 @@ public class ReferenceBaseTest {
     @Before
     public void setUp() throws IOException {
         base = new ReferenceBase();
+        
         HashMap validInfo = new HashMap<String,String>();
         validInfo.put("title", "validTitle");
         validInfo.put("author", "validAuthor");
         validInfo.put("publisher", "validPublisher");
         validBook = new Book(validInfo);
+        
+        HashMap invalidInfo = new HashMap<String,String>();
+        invalidInfo.put("title", "validTitle");
+        invalidInfo.put("author", "");
+        invalidBook= new Book(invalidInfo);
         
     }
     
@@ -59,5 +65,11 @@ public class ReferenceBaseTest {
     public void validBookIsAddedToTheSystem() {
         assertTrue(base.addBook(validBook));
         assertTrue(base.getReferences().contains(validBook));
+    }
+    
+    @Test
+    public void invalidBookIsNotAddedToTheSystem() {
+        assertFalse(base.addBook(invalidBook));
+        assertFalse(base.getReferences().contains(invalidBook));
     }
 }
