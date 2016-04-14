@@ -51,23 +51,23 @@ public class TranslatorTest {
     //
     // @Test
     // public void hello() {}
-    @Test
-    public void bookHasCorrectOutPutOfBook() throws IOException {
-        String expected = "@book{book,\n"
-                + "	volume = \"4\",\n"
-                + "	note = \"{A}n optional note\",\n"
-                + "	address = \"{T}he address\",\n"
-                + "	month = \"7\",\n"
-                + "	year = \"1993\",\n"
-                + "	author = \"{P}eter {B}\\\"{a}ssinen\",\n"
-                + "	series = \"10\",\n"
-                + "	publisher = \"{T}he name of the publisher\",\n"
-                + "	edition = \"3\",\n"
-                + "	title = \"{T}he title of work\",\n"
-                + "	key = \"book\",\n"
-                + "}\n";
-        Reference reference = new Book("book", "The title of work", "1993", "The name of the publisher", "Peter Bässinen", "4", "10", "The address", "3", "7", "An optional note");
-        String actual = translator.translateReference(reference, "book");
-        assertEquals(expected, actual);
-    }
+//    @Test
+//    public void bookHasCorrectOutPutOfBook() throws IOException {
+//        String expected = "@book{book,\n"
+//                + "	volume = \"4\",\n"
+//                + "	note = \"{A}n optional note\",\n"
+//                + "	address = \"{T}he address\",\n"
+//                + "	month = \"7\",\n"
+//                + "	year = \"1993\",\n"
+//                + "	author = \"{P}eter {B}\\\"{a}ssinen\",\n"
+//                + "	series = \"10\",\n"
+//                + "	publisher = \"{T}he name of the publisher\",\n"
+//                + "	edition = \"3\",\n"
+//                + "	title = \"{T}he title of work\",\n"
+//                + "	key = \"book\",\n"
+//                + "}\n";
+//        Reference reference = new Book("book", "The title of work", "1993", "The name of the publisher", "Peter Bässinen", "4", "10", "The address", "3", "7", "An optional note");
+//        String actual = translator.translateReference(reference, "book");
+//        assertEquals(expected, actual);
+//    }
 }
