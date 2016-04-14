@@ -5,7 +5,7 @@
  */
 package referencechampion;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,6 +15,6 @@ public interface Reference {
 
     String getField(String key);
 
-    Set<String> getFields();
+    ArrayList<String> getFields();
     
 }

@@ -10,12 +10,13 @@ package referencechampion;
  *
  * @author alrial
  */
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
-import java.util.TreeMap;
 
 public class Book implements Reference {
 
-    private TreeMap<String, String> fields;
+    private HashMap<String, String> fields;
     
 
     public Book() {
@@ -25,7 +26,7 @@ public class Book implements Reference {
     public Book(String key, String title, String year, String publisher, String author,
             String volume, String series, String address, String edition, String month,
             String note) {
-        fields = new TreeMap<String, String>();
+        fields = new HashMap<String, String>();
         this.fields.put("key", key);
         this.fields.put("title", title);
         this.fields.put("year", year);
@@ -39,7 +40,7 @@ public class Book implements Reference {
         this.fields.put("note", note);
     }
 
-    public Book(TreeMap<String, String> fields) {
+    public Book(HashMap<String, String> fields) {
         this.fields = fields;
     }
 
@@ -49,8 +50,20 @@ public class Book implements Reference {
     }
 
     @Override
-    public Set<String> getFields() {
-        return this.fields.keySet();
+    public ArrayList<String> getFields() {
+        ArrayList<String> fields = new ArrayList<String>();
+        fields.add("key");
+        fields.add("title");
+        fields.add("year");
+        fields.add("publisher");
+        fields.add("author");
+        fields.add("volume");
+        fields.add("series");
+        fields.add("address");
+        fields.add("edition");
+        fields.add("month");
+        fields.add("note");
+        return fields;
     }
 
 }
