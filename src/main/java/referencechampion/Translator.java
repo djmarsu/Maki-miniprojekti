@@ -1,6 +1,7 @@
 package referencechampion;
 
 import java.io.FileWriter;
+import java.io.IOException;
 
 public class Translator {
 
@@ -10,7 +11,7 @@ public class Translator {
         this.fw = fw;
     }
 
-    public void translateReference(Reference reference, String type) {
+    public String translateReference(Reference reference, String type) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("@");
         sb.append(type);
@@ -21,8 +22,8 @@ public class Translator {
             appendField(sb, field, reference);
         }
         sb.append("}\n");
-        System.out.println(sb.toString());
         writeInFile(sb.toString());
+        return sb.toString();
     }
     
 //    public void translateBook(Book book) {
@@ -45,7 +46,7 @@ public class Translator {
         inputParam(sb, reference.getField(field));
     }
 
-    public String compileUmlauts(String s) {
+    private String compileUmlauts(String s) {
         String ret = capsuleUpperCases(s);
         ret = ret.replace("ä", "\\\"{a}")
                 .replace("ö", "\\\"{o}")
@@ -75,11 +76,8 @@ public class Translator {
         sb.append("\",\n");
     }
 
-    private void writeInFile(String bibtexString) {
-        try {
+    private void writeInFile(String bibtexString) throws IOException {
             fw.write(bibtexString);
-        } catch (Exception e) {
-        }
 
     }
 }
