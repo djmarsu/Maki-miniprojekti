@@ -20,7 +20,8 @@ public class ReferenceEntity implements Reference {
     }
     
     public ReferenceEntity(String type) {
-        this(type, ReferenceCollection.getBook());
+        this(type, ReferenceCollection.getReference(type));
+
     }
 
     public ReferenceEntity(String type, List<String> fieldNames) {

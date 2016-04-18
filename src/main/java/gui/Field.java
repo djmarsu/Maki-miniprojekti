@@ -33,7 +33,11 @@ public class Field {
         return this.field.getText();
     }
 
-    public void setPosition(int x, int y) {
+    public void setText(String text) {
+        this.field.setText(text);
+    }
+    
+    public void setPosition(int x, int y){        
         this.text.setBounds(x, y, 100, 30);
         this.field.setBounds(x + 120, y, 300, 30);
     }

@@ -96,7 +96,7 @@ public class UI implements Runnable {
         typeList.addActionListener(this.selectTypeAction);
         addReferencePage.add(typeList);
 
-        this.result = new JLabel("");
+        this.result = new JLabel("Fields with * are required");
         this.result.setBounds(20, 600, 400, 30);
         addReferencePage.add(this.result);
         

@@ -47,7 +47,11 @@ public class CreateReference implements ActionListener {
 //                bookValues.put(s, );
             }
         }
-        if (base.addReference(reference)) result.setText("New reference added");
+        
+        if (base.addReference(reference)) {
+            result.setText("New reference added");
+            emptyFields();
+        }
         else result.setText("One or more required fields are empty");
     }
     
@@ -55,4 +59,9 @@ public class CreateReference implements ActionListener {
         this.referenceValues = values;
     }
     
+    private void emptyFields() {
+        for (String key : this.fields.keySet()) {
+            fields.get(key).setText("");
+        }
+    }
 }
