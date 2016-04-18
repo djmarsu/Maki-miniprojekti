@@ -35,7 +35,7 @@ public class ArticleTest {
 
     @Test
     public void constructorInitiatesFieldsCorrectly() {
-        for (String field : ReferenceCollection.getArticle()) {
+        for (String field : ReferenceCollection.getReference("article")) {
             article.addValue(field, field);
         }
         assertEquals("key", article.getField("key"));
@@ -52,7 +52,7 @@ public class ArticleTest {
 
     @Test
     public void constructorWithoutParametersInitiatesFieldsCorrectly() {
-        for (String field : ReferenceCollection.getArticle()) {
+        for (String field : ReferenceCollection.getReference("article")) {
             article.addValue(field, "");
         }
         assertEquals("", article.getField("key"));

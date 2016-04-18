@@ -36,7 +36,7 @@ public class BookTest {
 
     @Test
     public void constructorInitiatesFieldsCorrectly() {
-        for (String field : ReferenceCollection.getBook()) {
+        for (String field : ReferenceCollection.getReference("book")) {
             book.addValue(field, field);
         }
         assertEquals("key", book.getField("key"));
@@ -54,7 +54,7 @@ public class BookTest {
 
     @Test
     public void constructorWithoutParametersInitiatesFieldsCorrectly() {
-        for (String field : ReferenceCollection.getBook()) {
+        for (String field : ReferenceCollection.getReference("book")) {
             book.addValue(field, "");
         }
         assertEquals("", book.getField("key"));
