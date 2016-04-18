@@ -9,7 +9,7 @@ public class ReferenceCollection {
 
     private static final List<String> book = Arrays.asList("key", "author", "title", "publisher", "volume", "series", "address", "edition", "year", "month", "note");
     private static final List<String> article = Arrays.asList("key", "author", "title", "journal", "volume", "number", "pages", "year", "month", "note");
-    private static final List<String> inproceedings = Arrays.asList("key", "author", "title", "booktitle", "editor", "volume", "number", "series", "pages", "address", "organizator", "publisher", "year", "month", "note");
+    private static final List<String> inproceedings = Arrays.asList("key", "author", "title", "booktitle", "editor", "volume", "number", "series", "pages", "address", "organization", "publisher", "year", "month", "note");
     private static final Map<String, List<String>> referenceTypes;
 
     static {
