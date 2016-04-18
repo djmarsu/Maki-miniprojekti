@@ -14,7 +14,7 @@ public class BookTest {
 
     @Before
     public void setUp() {
-        book = new ReferenceEntity("book", ReferenceCollection.getBook());
+        book = new ReferenceEntity("book", ReferenceCollection.getReference("book"));
     }
 
     @Test
