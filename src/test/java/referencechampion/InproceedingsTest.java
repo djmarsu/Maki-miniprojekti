@@ -14,7 +14,23 @@ public class InproceedingsTest {
 
     @Before
     public void setUp() {
-        inproceedings = new ReferenceEntity("inproceedings");
+        ArrayList<String> fieldNames = new ArrayList<String>();
+        fieldNames.add("key");
+        fieldNames.add("author");
+        fieldNames.add("title");
+        fieldNames.add("booktitle");
+        fieldNames.add("editor");
+        fieldNames.add("volume");
+        fieldNames.add("number");
+        fieldNames.add("series");
+        fieldNames.add("pages");
+        fieldNames.add("address");
+        fieldNames.add("organization");
+        fieldNames.add("publisher");
+        fieldNames.add("year");
+        fieldNames.add("month");
+        fieldNames.add("note");
+        inproceedings = new ReferenceEntity("inproceedings", fieldNames);
     }
 
     @Test
