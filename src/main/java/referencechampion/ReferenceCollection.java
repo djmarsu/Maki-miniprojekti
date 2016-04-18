@@ -22,6 +22,13 @@ public class ReferenceCollection {
     public static List<String> getBook() {
         return book;
     }
+    public static List<String> getArticle() {
+        return article;
+    }
+    public static List<String> getInproceedings() {
+        return inproceedings;
+    }
+
     public static List<String> getReference(String type) {
         return referenceTypes.get(type);
     }
