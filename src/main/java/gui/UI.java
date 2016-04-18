@@ -133,7 +133,7 @@ public class UI implements Runnable {
     public JButton createButton(String name, int x, int y, int width, int length, ActionListener a , Container container){
         JButton button = new JButton(name);
         button.setBounds(x, y, width, length);
-        button.addActionListener(translateAction);
+        button.addActionListener(a);
         container.add(button);
         return button;
     }

@@ -51,7 +51,8 @@ public class SelectType implements ActionListener {
         
         for (String name : names) {
             if (requirements.contains(name)) {
-                names.set(names.indexOf(name), name + "*");
+//                names.set(names.indexOf(name), name + "*");
+                names.set(names.indexOf(name), name);
             }
         }
         

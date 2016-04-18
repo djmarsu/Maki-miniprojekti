@@ -38,7 +38,7 @@ public class CreateReference implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ReferenceEntity reference = new ReferenceEntity(typeList.getSelectedItem().toString()); //TODO
+        ReferenceEntity reference = new ReferenceEntity(typeList.getSelectedItem().toString());
         System.out.println(fields);
         if (fields!=null) {
             for (String s : fields.keySet()) {
