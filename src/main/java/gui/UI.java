@@ -90,7 +90,7 @@ public class UI implements Runnable {
 
         addReferencePage.add(typelist);
 
-        this.result = new JLabel("");
+        this.result = new JLabel("Fields with * are required");
         this.result.setBounds(20, 600, 400, 30);
         addReferencePage.add(this.result);
         this.fields = FieldCreator.createFields(ReferenceCollection.getBook(), addReferencePage);       
