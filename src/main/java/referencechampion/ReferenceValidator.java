@@ -10,7 +10,7 @@ public class ReferenceValidator {
     }
     
     private boolean validateBook(ReferenceEntity book) {
-        return validateField(book.getField("publisher")) && validateField(book.getField("author")) && validateField(book.getField("title"));
+        return validateField(book.getField("publisher")) && validateField(book.getField("author")) && validateField(book.getField("title"))&& validateField(book.getField("year"));
     }
     private boolean validateField(String field) {
         return field!=null && !field.equals("");
