@@ -4,6 +4,7 @@ package gui.stub;
 import gui.Field;
 import gui.actionlisteners.CreateReference;
 import java.util.HashMap;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import referencechampion.ReferenceBase;
 
@@ -22,7 +23,8 @@ public class StubUI {
 
     public StubUI(HashMap<String, String> syotteet) throws Exception {
         this.result=new JLabel("");
-        CreateReference cb = new CreateReference(null, new ReferenceBase(), result);
+        JComboBox combo=new JComboBox();
+        CreateReference cb = new CreateReference(null, new ReferenceBase(), result, combo);
         cb.setReferenceValues(syotteet);
         cb.actionPerformed(null);
     }

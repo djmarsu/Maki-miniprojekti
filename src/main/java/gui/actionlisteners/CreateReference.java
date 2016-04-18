@@ -11,9 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import referencechampion.ReferenceEntity;
 import referencechampion.ReferenceBase;
+import referencechampion.ReferenceEntity;
 
 /**
  *
@@ -23,26 +24,29 @@ public class CreateReference implements ActionListener {
     
     private ReferenceBase base;
     private HashMap<String, String> referenceValues;
-    private Map<String, Field> fields;
+    protected Map<String, Field> fields;
     private JLabel result;
+    private JComboBox typeList;
     
-    public CreateReference(Map<String, Field> fields, ReferenceBase base, JLabel result){
+    public CreateReference(Map<String, Field> fields, ReferenceBase base, JLabel result, JComboBox typeList){
         this.fields = fields;
         this.base = base;
         this.result = result;
-        referenceValues = new HashMap<String,String>();
+        this.referenceValues = new HashMap<String,String>();
+        this.typeList = typeList;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ReferenceEntity reference = new ReferenceEntity("book"); //TODO
+        ReferenceEntity reference = new ReferenceEntity(typeList.getSelectedItem().toString()); //TODO
+        System.out.println(fields);
         if (fields!=null) {
             for (String s : fields.keySet()) {
                 reference.addValue(s, fields.get(s).getText());
+                System.out.println(s +"  "+ fields.get(s).getText());
 //                bookValues.put(s, );
             }
         }
-        
         if (base.addReference(reference)) result.setText("New reference added");
         else result.setText("One or more required fields are empty");
     }

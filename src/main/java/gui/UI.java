@@ -1,13 +1,13 @@
 package gui;
 
 import gui.actionlisteners.CreateReference;
+import gui.actionlisteners.SelectType;
 import gui.actionlisteners.Translate;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,11 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 import referencechampion.ReferenceBase;
 import referencechampion.ReferenceCollection;
-import referencechampion.ReferenceEntity;
 
 /**
  * @author alrial
@@ -30,19 +28,20 @@ public class UI implements Runnable {
     private int windowWidth;
     private int windowHeight;
     private JFrame window;
-    protected Map<String, Field> fields;
-    private int fieldPosX = 20;
-    private int fieldPosY = 60;
+    protected Map<String, Field> fields;    
     private JLabel result;
+    private JLabel pagetitle;
     private CreateReference createReferenceAction;
     private Translate translateAction;
-    private ReferenceBase base;
+    private SelectType selectTypeAction;
+    private ReferenceBase base;    
 
     public UI(int width, int height, ReferenceBase base) {
         this.windowWidth = width;
         this.windowHeight = height;
         this.base = base;
         this.translateAction = new Translate(base);
+        this.fields = new HashMap<>();
     }
 
     @Override
@@ -78,25 +77,31 @@ public class UI implements Runnable {
 
     private void constructAddReferenceTab(JTabbedPane tabs) {
         Container addReferencePage = new Container();
-
+        
         tabs.addTab("Add reference", addReferencePage);
 
-        JLabel pagetitle = new JLabel("Create a new <type>");
-        pagetitle.setBounds(20, 10, 300, 30);
-        addReferencePage.add(pagetitle);
+        this.pagetitle = new JLabel("Create a new reference");
+        this.pagetitle.setBounds(20, 10, 300, 30);
+        addReferencePage.add(this.pagetitle);
+        
+        Container fieldArea = new Container();       
+        
+        JScrollPane scrollPane = new JScrollPane(fieldArea);
+        scrollPane.setBounds(20, 60, 500, 400);
+        addReferencePage.add(scrollPane);         
 
-        JComboBox typelist = new JComboBox(ReferenceCollection.getTypes());
-        typelist.setBounds(470, 60, 120, 30);       
-
-        addReferencePage.add(typelist);
+        JComboBox typeList = new JComboBox(ReferenceCollection.getTypes());
+        typeList.setBounds(470, 10, 120, 30);      
+        this.selectTypeAction = new SelectType(fieldArea, this.base, this.fields, this.pagetitle, typeList);
+        typeList.addActionListener(this.selectTypeAction);
+        addReferencePage.add(typeList);
 
         this.result = new JLabel("");
         this.result.setBounds(20, 600, 400, 30);
         addReferencePage.add(this.result);
-        this.fields = FieldCreator.createFields(ReferenceCollection.getBook(), addReferencePage);       
-        setFieldsPosition(fieldPosX, fieldPosY, 40, ReferenceCollection.getBook());
         
-        this.createReferenceAction = new CreateReference(this.fields, this.base, this.result);
+        
+        this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
         JButton createReference = new JButton("Create a reference");
         createReference.setBounds(20, 520, 200, 30);
         createReference.addActionListener(createReferenceAction);
@@ -133,15 +138,11 @@ public class UI implements Runnable {
         listingPage.add(updateList);
     }
 
-    private void setFieldsPosition(int x, int y, int gap, List<String> names) {
-        for (String s : names) {
-            this.fields.get(s).setPosition(x, y);
-            y += gap;
-        }
-    }
+    
 
     public void setResult(String string) {
         this.result.setText(string);
     }
+
 
 }
