@@ -35,6 +35,7 @@ public class InproceedingsTest {
         expected.add("year");
         expected.add("month");
         expected.add("note");
+        // palauttaa vielä books tyypin listan
         assertTrue(inproceedings.getFields().equals(expected));
     }
 
