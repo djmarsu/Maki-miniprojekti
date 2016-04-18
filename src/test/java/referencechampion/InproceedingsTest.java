@@ -41,7 +41,7 @@ public class InproceedingsTest {
 
     @Test
     public void constructorInitiatesFieldsCorrectly() {
-        for (String field : ReferenceCollection.getInproceedings()) {
+        for (String field : ReferenceCollection.getReference("inproceedings")) {
             inproceedings.addValue(field, field);
         }
         assertEquals("key", inproceedings.getField("key"));
@@ -63,7 +63,7 @@ public class InproceedingsTest {
 
     @Test
     public void constructorWithoutParametersInitiatesFieldsCorrectly() {
-        for (String field : ReferenceCollection.getInproceedings()) {
+        for (String field : ReferenceCollection.getReference("inproceedings")) {
             inproceedings.addValue(field, "");
         }
         assertEquals("", inproceedings.getField("key"));
