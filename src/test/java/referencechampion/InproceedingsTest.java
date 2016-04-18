@@ -14,7 +14,7 @@ public class InproceedingsTest {
 
     @Before
     public void setUp() {
-        inproceedings = new ReferenceEntity("inproceedings", ReferenceCollection.getInproceedings());
+        inproceedings = new ReferenceEntity("inproceedings", ReferenceCollection.getReference("inproceedings"));
     }
 
     @Test

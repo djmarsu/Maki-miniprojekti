@@ -14,7 +14,7 @@ public class ArticleTest {
 
     @Before
     public void setUp() {
-        article = new ReferenceEntity("article", ReferenceCollection.getArticle());
+        article = new ReferenceEntity("article", ReferenceCollection.getReference("article"));
     }
 
     @Test
