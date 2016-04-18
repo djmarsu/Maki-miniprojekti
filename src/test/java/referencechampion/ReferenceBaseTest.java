@@ -43,6 +43,7 @@ public class ReferenceBaseTest {
         validBook.addValue("title", "validTitle");
         validBook.addValue("author", "validAuthor");
         validBook.addValue("publisher", "validPublisher");
+        validBook.addValue("year", "validYear");
         
         invalidBook= new ReferenceEntity("book");
         invalidBook.addValue("title", "validTitle");
