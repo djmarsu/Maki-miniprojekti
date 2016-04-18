@@ -6,6 +6,7 @@ import gui.actionlisteners.Translate;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.GroupLayout;
@@ -39,8 +40,7 @@ public class UI implements Runnable {
     public UI(int width, int height, ReferenceBase base) {
         this.windowWidth = width;
         this.windowHeight = height;
-        this.base = base;
-        this.translateAction = new Translate(base);
+        this.base = base;       
         this.fields = new HashMap<>();
     }
 
@@ -80,9 +80,7 @@ public class UI implements Runnable {
         
         tabs.addTab("Add reference", addReferencePage);
 
-        this.pagetitle = new JLabel("Create a new reference");
-        this.pagetitle.setBounds(20, 10, 300, 30);
-        addReferencePage.add(this.pagetitle);
+        this.pagetitle = createLabel("Create a new reference", 20, 10, 300, 30, addReferencePage);
         
         Container fieldArea = new Container();       
         
@@ -91,26 +89,19 @@ public class UI implements Runnable {
         addReferencePage.add(scrollPane);         
 
         JComboBox typeList = new JComboBox(ReferenceCollection.getTypes());
-        typeList.setBounds(470, 10, 120, 30);      
+        typeList.setBounds(440, 10, 150, 30);      
         this.selectTypeAction = new SelectType(fieldArea, this.base, this.fields, this.pagetitle, typeList);
         typeList.addActionListener(this.selectTypeAction);
         addReferencePage.add(typeList);
 
-        this.result = new JLabel("Fields with * are required");
-        this.result.setBounds(20, 600, 400, 30);
-        addReferencePage.add(this.result);
+        this.result = createLabel("Fields with * are required", 20, 600, 400, 30, addReferencePage);
         
         
         this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
-        JButton createReference = new JButton("Create a reference");
-        createReference.setBounds(20, 520, 200, 30);
-        createReference.addActionListener(createReferenceAction);
-        addReferencePage.add(createReference);
+        this.translateAction = new Translate(base);
 
-        JButton createBibTex = new JButton("Create a BibTex file");
-        createBibTex.setBounds(260, 520, 200, 30);
-        createBibTex.addActionListener(translateAction);
-        addReferencePage.add(createBibTex);
+        createButton("Create a reference", 20, 520, 200, 30, createReferenceAction, addReferencePage);
+        createButton("Create a BibTex file", 260, 520, 200, 30, translateAction,  addReferencePage);
 
     }
 
@@ -119,9 +110,7 @@ public class UI implements Runnable {
 
         tabs.addTab("Listing", listingPage);
 
-        JLabel pagetitle = new JLabel("Reference listing:");
-        pagetitle.setBounds(20, 10, 300, 30);
-        listingPage.add(pagetitle);
+        createLabel("Reference listing:", 20, 10, 300, 30, listingPage);
 
         JTextArea listing = new JTextArea("");
         listing.setEnabled(false);
@@ -132,16 +121,30 @@ public class UI implements Runnable {
         scrollPane.setBounds(10, 60, 500, 550);
         listingPage.add(scrollPane);
 
-        JButton updateList = new JButton("Update List");
-        updateList.setBounds(300, 20, 200, 30);
-        updateList.addActionListener(createReferenceAction);
-        listingPage.add(updateList);
+        createButton("Update List", 300, 20, 200, 30, null, listingPage);
     }
 
     
 
     public void setResult(String string) {
         this.result.setText(string);
+    }
+    
+    public JButton createButton(String name, int x, int y, int width, int length, ActionListener a , Container container){
+        JButton button = new JButton(name);
+        button.setBounds(x, y, width, length);
+        button.addActionListener(translateAction);
+        container.add(button);
+        return button;
+    }
+    
+    
+    
+    public JLabel createLabel(String name, int x, int y, int width, int length, Container container){
+        JLabel label = new JLabel(name);
+        label.setBounds(x, y, width, length);
+        container.add(label);
+        return label;
     }
 
 
