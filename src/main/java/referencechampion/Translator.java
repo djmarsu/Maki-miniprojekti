@@ -11,10 +11,10 @@ public class Translator {
         this.fw = fw;
     }
 
-    public String translateReference(Reference reference, String type) throws IOException {
+    public String translateReference(Reference reference) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("@");
-        sb.append(type);
+        sb.append(reference.getType());
         sb.append("{");
         sb.append(reference.getField("key"));
         sb.append(",\n");
@@ -39,9 +39,9 @@ public class Translator {
 //        writeInFile(sb.toString());
 //    }
     private void appendField(StringBuilder sb, String field, Reference reference) {
-        if (!reference.getField(field).isEmpty()) {
+        if (reference.getField(field) != null && !reference.getField(field).isEmpty()) {
             sb.append("\t");
-            sb.append(compileUmlauts(field));
+            sb.append(field);
             sb.append(" = ");
             inputParam(sb, reference.getField(field));
         }

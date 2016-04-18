@@ -54,8 +54,19 @@ public class TranslatorTest {
                 + "	month = \"7\",\n"
                 + "	note = \"{A}n optional note\",\n"
                 + "}\n";
-        Reference reference = new Book("book", "The title of work", "1993", "The name of the publisher", "Peter Bässinen", "4", "10", "The address", "3", "7", "An optional note");
-        String actual = translator.translateReference(reference, "book");
+        ReferenceEntity reference = new ReferenceEntity("book");
+        reference.addValue("key", "book");
+        reference.addValue("title", "The title of work");
+        reference.addValue("year", "1993");
+        reference.addValue("publisher", "The name of the publisher");
+        reference.addValue("author", "Peter Bässinen");
+        reference.addValue("volume", "4");
+        reference.addValue("series", "10");
+        reference.addValue("address", "The address");
+        reference.addValue("edition", "3");
+        reference.addValue("month", "7");
+        reference.addValue("note", "An optional note");
+        String actual = translator.translateReference(reference);
         assertEquals(expected, actual);
     }
 

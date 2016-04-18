@@ -15,35 +15,39 @@ import java.util.ArrayList;
  */
 public class ReferenceBase {
 
-    private ReferenceCollection refCol;
+    private ArrayList<Reference> refCol;
+    private ReferenceValidator validator;
     private Translator translator;
     private FileWriter fileWriter;
 
-    public ReferenceBase(ReferenceCollection refCol, FileWriter fileWriter) {
+    public ReferenceBase(ArrayList<Reference> refCol, FileWriter fileWriter) {
         this.refCol = refCol;
-        
+        this.validator = new ReferenceValidator();
         this.fileWriter = fileWriter;
         this.translator = new Translator(this.fileWriter);
         
     }
 
     public ReferenceBase() throws IOException {
-        this(new ReferenceCollection(), new FileWriter("references.bib", true));
+        this(new ArrayList<Reference>(), new FileWriter("references.bib", true));
     }
     
     public void translateAll() throws IOException {
-        for (Reference book : refCol.getList()) {
-            translator.translateReference(book, "book");
+        for (Reference reference : refCol) {
+            translator.translateReference(reference);
         }
         fileWriter.flush();
     }
     
-    public boolean addBook(Book book) {
-        return refCol.addBook(book);
+    public boolean addReference(Reference reference) {
+        if (validator.validate(reference)) {
+           return refCol.add(reference);
+        }
+        return false;
     }
 
     public ArrayList<Reference> getReferences() {
-        return refCol.getList();
+        return refCol;
     }
 
     

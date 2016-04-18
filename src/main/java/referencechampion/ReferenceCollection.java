@@ -1,30 +1,17 @@
 package referencechampion;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ReferenceCollection {
-    
-    private ReferenceValidator validator;
-    private ArrayList<Reference> list;
-    
-    public ReferenceCollection() {
-        this.list = new ArrayList();
-        this.validator = new ReferenceValidator();
+
+    private static List<String> book = Arrays.asList("key","title","year","publisher","author","volume","series","address","edition","month","note");
+
+    public static List<String> getBook() {
+        return book;
     }
     
-    public ArrayList<Reference> getList() {
-        return list;
-    }
-    
-    public boolean addBook(Book book) {
-        if (validator.validate(book)) {
-            list.add(book);
-            return true;
-        }
-        return false;
-    }
-    
-    public void removeBook(Book book) {
-        list.remove(book);
-    }
+//    public static List<String> getReference(String type) {
+//        
+//    }
 }

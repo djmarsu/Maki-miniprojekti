@@ -20,8 +20,8 @@ import org.junit.Test;
  * @author juhokyyh
  */
 public class ReferenceBaseTest {
-    private Book validBook;
-    private Book invalidBook;
+    private ReferenceEntity validBook;
+    private ReferenceEntity invalidBook;
     private ReferenceBase base;
     
     public ReferenceBaseTest() {
@@ -39,16 +39,14 @@ public class ReferenceBaseTest {
     public void setUp() throws IOException {
         base = new ReferenceBase();
         
-        HashMap validInfo = new HashMap<String,String>();
-        validInfo.put("title", "validTitle");
-        validInfo.put("author", "validAuthor");
-        validInfo.put("publisher", "validPublisher");
-        validBook = new Book(validInfo);
+        validBook = new ReferenceEntity("book");
+        validBook.addValue("title", "validTitle");
+        validBook.addValue("author", "validAuthor");
+        validBook.addValue("publisher", "validPublisher");
         
-        HashMap invalidInfo = new HashMap<String,String>();
-        invalidInfo.put("title", "validTitle");
-        invalidInfo.put("author", "");
-        invalidBook= new Book(invalidInfo);
+        invalidBook= new ReferenceEntity("book");
+        invalidBook.addValue("title", "validTitle");
+        invalidBook.addValue("author", "");
         
     }
     
@@ -63,13 +61,13 @@ public class ReferenceBaseTest {
     // public void hello() {}
     @Test
     public void validBookIsAddedToTheSystem() {
-        assertTrue(base.addBook(validBook));
+        assertTrue(base.addReference(validBook));
         assertTrue(base.getReferences().contains(validBook));
     }
     
     @Test
     public void invalidBookIsNotAddedToTheSystem() {
-        assertFalse(base.addBook(invalidBook));
+        assertFalse(base.addReference(invalidBook));
         assertFalse(base.getReferences().contains(invalidBook));
     }
 }

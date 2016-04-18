@@ -5,6 +5,7 @@ import gui.actionlisteners.Translate;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.util.List;
 import java.util.Map;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -14,8 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
-import referencechampion.Book;
+import referencechampion.ReferenceEntity;
 import referencechampion.ReferenceBase;
+import referencechampion.ReferenceCollection;
 
 /**
  * @author alrial
@@ -84,9 +86,9 @@ public class UI implements Runnable {
         this.result = new JLabel("");  
         this.result.setBounds(20, 600, 400, 30);
         addReferencePage.add(this.result);
-        this.fields = FieldCreator.createFields(new Book().getFields(), addReferencePage);
+        this.fields = FieldCreator.createFields(ReferenceCollection.getBook(), addReferencePage);
         this.createbook = new CreateBook(this.fields, this.base, this.result);
-        setFieldsPosition(fieldPosX, fieldPosY, 40);            
+        setFieldsPosition(fieldPosX, fieldPosY, 40, ReferenceCollection.getBook());            
         
         
         JButton createReference = new JButton("Create a reference");  
@@ -126,11 +128,11 @@ public class UI implements Runnable {
     }
     
     
-    private void setFieldsPosition(int x, int y, int gap){
-        for (Field field: this.fields.values()) {
-            field.setPosition(x, y);
+    private void setFieldsPosition(int x, int y, int gap, List<String> names){
+        for (String s : names) {
+            this.fields.get(s).setPosition(x, y);
             y += gap;
-        }  
+        }
     }
     
     public void setResult(String string){

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import referencechampion.Book;
+import referencechampion.ReferenceEntity;
 import referencechampion.ReferenceBase;
 
 /**

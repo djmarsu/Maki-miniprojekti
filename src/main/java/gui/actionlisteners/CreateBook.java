@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
-import referencechampion.Book;
+import referencechampion.ReferenceEntity;
 import referencechampion.ReferenceBase;
 
 /**
@@ -35,13 +35,15 @@ public class CreateBook implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        ReferenceEntity reference = new ReferenceEntity("book");
         if (fields!=null) {
             for (String s : fields.keySet()) {
-                bookValues.put(s, fields.get(s).getText());
+                reference.addValue(s, fields.get(s).getText());
+//                bookValues.put(s, );
             }
         }
         
-        if (base.addBook(new Book(bookValues))) result.setText("New reference added");
+        if (base.addReference(reference)) result.setText("New reference added");
         else result.setText("One or more required fields are empty");
     }
     

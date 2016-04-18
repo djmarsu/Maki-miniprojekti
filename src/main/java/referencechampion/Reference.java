@@ -1,13 +1,14 @@
 
 package referencechampion;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Reference {
 
     String getField(String key);
 
-    ArrayList<String> getFields();
+    List<String> getFields();
 
 
+    String getType();
 }
