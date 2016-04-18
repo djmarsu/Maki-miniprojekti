@@ -14,19 +14,7 @@ public class BookTest {
 
     @Before
     public void setUp() {
-        ArrayList<String> fieldNames = new ArrayList<String>();
-        fieldNames.add("key");
-        fieldNames.add("author");
-        fieldNames.add("title");
-        fieldNames.add("publisher");
-        fieldNames.add("volume");
-        fieldNames.add("series");
-        fieldNames.add("address");
-        fieldNames.add("edition");
-        fieldNames.add("year");
-        fieldNames.add("month");
-        fieldNames.add("note");
-        book = new ReferenceEntity("book", fieldNames);
+        book = new ReferenceEntity("book", ReferenceCollection.getBook());
     }
 
     @Test

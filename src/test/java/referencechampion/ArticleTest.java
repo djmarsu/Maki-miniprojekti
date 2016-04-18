@@ -14,18 +14,7 @@ public class ArticleTest {
 
     @Before
     public void setUp() {
-        ArrayList<String> fieldNames = new ArrayList<String>();
-        fieldNames.add("key");
-        fieldNames.add("author");
-        fieldNames.add("title");
-        fieldNames.add("journal");
-        fieldNames.add("volume");
-        fieldNames.add("number");
-        fieldNames.add("pages");
-        fieldNames.add("year");
-        fieldNames.add("month");
-        fieldNames.add("note");
-        article = new ReferenceEntity("article", fieldNames);
+        article = new ReferenceEntity("article", ReferenceCollection.getArticle());
     }
 
     @Test
