@@ -2,7 +2,7 @@ package gui.stub;
 
 
 import gui.Field;
-import gui.actionlisteners.CreateBook;
+import gui.actionlisteners.CreateReference;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import referencechampion.ReferenceBase;
@@ -22,8 +22,8 @@ public class StubUI {
 
     public StubUI(HashMap<String, String> syotteet) throws Exception {
         this.result=new JLabel("");
-        CreateBook cb = new CreateBook(null, new ReferenceBase(), result);
-        cb.setBookValues(syotteet);
+        CreateReference cb = new CreateReference(null, new ReferenceBase(), result);
+        cb.setReferenceValues(syotteet);
         cb.actionPerformed(null);
     }
     

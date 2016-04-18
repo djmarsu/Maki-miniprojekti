@@ -19,18 +19,18 @@ import referencechampion.ReferenceBase;
  *
  * @author alrial
  */
-public class CreateBook implements ActionListener {
+public class CreateReference implements ActionListener {
     
     private ReferenceBase base;
-    private HashMap<String, String> bookValues;
+    private HashMap<String, String> referenceValues;
     private Map<String, Field> fields;
     private JLabel result;
     
-    public CreateBook(Map<String, Field> fields, ReferenceBase base, JLabel result){
+    public CreateReference(Map<String, Field> fields, ReferenceBase base, JLabel result){
         this.fields = fields;
         this.base = base;
         this.result = result;
-        bookValues = new HashMap<String,String>();
+        referenceValues = new HashMap<String,String>();
     }
 
     @Override
@@ -47,8 +47,8 @@ public class CreateBook implements ActionListener {
         else result.setText("One or more required fields are empty");
     }
     
-    public void setBookValues(HashMap<String,String> values) {
-        this.bookValues = values;
+    public void setReferenceValues(HashMap<String,String> values) {
+        this.referenceValues = values;
     }
     
 }
