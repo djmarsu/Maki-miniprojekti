@@ -5,7 +5,15 @@ package referencechampion;
 
 public class ReferenceValidator {
     public boolean validate(Reference ref) {
-        if (ref.getClass().equals(ReferenceEntity.class)) return (validateBook((ReferenceEntity)ref));
+        if (ref.getClass().equals(ReferenceEntity.class)) {
+            if (ref.getType() == "book") {
+                return (validateBook((ReferenceEntity)ref));
+            } else if (ref.getType() == "article") {
+                return (validateArticle((ReferenceEntity)ref));
+            } else if (ref.getType() == "inproceedings") {
+                return (validateInproceedings((ReferenceEntity)ref));
+            }
+        }
         return false;
     }
     
