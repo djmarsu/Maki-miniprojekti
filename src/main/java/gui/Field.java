@@ -46,4 +46,8 @@ public class Field {
         this.container.remove(this.field);
         this.container.remove(this.text);
     }
+    
+    public void setName(String name) { //testejä varten tarvitaan TextField-objektille nimi
+        this.field.setName(name);
+    } 
 }

@@ -1,26 +1,27 @@
-import gui.stub.*
-import java.util.HashMap
+import referencechampion.*
+import gui.*
+import org.fest.swing.fixture.*
 
 description 'User can add a book to the reference collection'
 
 scenario "user can fill out the form correctly and add a book", {
     given 'command add a reference is selected', {
-       
+       ui = new UI(600, 700, new ReferenceBase())
+       ui.run()
+       window = new FrameFixture(ui.getWindow())
+       window.comboBox("dropdown").selectItem("book")
     }
 
     when 'a valid title and author are entered', {
-       HashMap<String, String> input = new HashMap<String,String>()
-
-       input.put("key", "book")
-       input.put("title", "a book")
-       input.put("author", "an author")
-       input.put("publisher", "a publisher")
-
-       ui = new StubUI(input)
+       window.textBox("author").enterText("author")
+       window.textBox("title").enterText("title")
+       window.textBox("publisher").enterText("publisher")
+       window.textBox("year").enterText("1234")
+        window.button("Create a reference").click()
     }
 
     then 'a book will be added to the system', {
-       
+       window.label("result").requireText "New reference added"
     }
 }
 
@@ -30,17 +31,11 @@ scenario "user cannot add a book with an empty title-field", {
     }
 
     when 'an invalid title is entered', {
-       HashMap<String, String> input = new HashMap<String,String>()
-
-       input.put("title", "")
-       input.put("author", "an author")
-       input.put("publisher", "a publisher")
-
-       ui = new StubUI(input)
+       
     }
 
     then 'a book will not be added to the system', {
-       ui.getOutput().shouldHave("One or more required fields are empty")
+       
     }
 }
 
@@ -50,17 +45,11 @@ scenario "user cannot add a book with an empty author-field", {
     }
 
     when 'an invalid author is entered', {
-       HashMap<String, String> input = new HashMap<String,String>()
-
-       input.put("title", "a book")
-       input.put("author", "")
-       input.put("publisher", "a publisher")
-
-       ui = new StubUI(input)
+       
     }
 
     then 'a book will not be added to the system', {
-       ui.getOutput().shouldHave("One or more required fields are empty")
+       
     }
 }
 
@@ -70,16 +59,10 @@ scenario "user cannot add a book with an empty publisher-field", {
     }
 
     when 'an invalid publisher is entered', {
-       HashMap<String, String> input = new HashMap<String,String>()
-
-       input.put("title", "a book")
-       input.put("author", "an author")
-       input.put("publisher", "")
-
-       ui = new StubUI(input)
+       
     }
 
     then 'a book will not be added to the system', {
-       ui.getOutput().shouldHave("One or more required fields are empty")
+       
     }
 }

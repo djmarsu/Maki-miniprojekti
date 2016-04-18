@@ -89,12 +89,14 @@ public class UI implements Runnable {
         addReferencePage.add(scrollPane);         
 
         JComboBox typeList = new JComboBox(ReferenceCollection.getTypes());
+        typeList.setName("dropdown");
         typeList.setBounds(440, 10, 150, 30);      
         this.selectTypeAction = new SelectType(fieldArea, this.base, this.fields, this.pagetitle, typeList);
         typeList.addActionListener(this.selectTypeAction);
         addReferencePage.add(typeList);
 
         this.result = createLabel("Fields with * are required", 20, 600, 400, 30, addReferencePage);
+        result.setName("result"); //testejä varten
         
         
         this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
@@ -132,6 +134,7 @@ public class UI implements Runnable {
     
     public JButton createButton(String name, int x, int y, int width, int length, ActionListener a , Container container){
         JButton button = new JButton(name);
+        button.setName(name); //nimi tarvitaan testeihin
         button.setBounds(x, y, width, length);
         button.addActionListener(a);
         container.add(button);
@@ -147,5 +150,7 @@ public class UI implements Runnable {
         return label;
     }
 
-
+    public JFrame getWindow() { //testejä varten
+        return window;
+    }
 }
