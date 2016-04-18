@@ -93,8 +93,8 @@ public class UI implements Runnable {
         this.result = new JLabel("Fields with * are required");
         this.result.setBounds(20, 600, 400, 30);
         addReferencePage.add(this.result);
-        this.fields = FieldCreator.createFields(ReferenceCollection.getBook(), addReferencePage);       
-        setFieldsPosition(fieldPosX, fieldPosY, 40, ReferenceCollection.getBook());
+        this.fields = FieldCreator.createFields(ReferenceCollection.getReference("book"), addReferencePage);       
+        setFieldsPosition(fieldPosX, fieldPosY, 40, ReferenceCollection.getReference("book"));
         
         this.createReferenceAction = new CreateReference(this.fields, this.base, this.result);
         JButton createReference = new JButton("Create a reference");
