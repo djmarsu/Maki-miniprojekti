@@ -43,7 +43,6 @@ public class CreateReference implements ActionListener {
         if (fields!=null) {
             for (String s : fields.keySet()) {
                 reference.addValue(s, fields.get(s).getText());
-                System.out.println(s +"  "+ fields.get(s).getText());
 //                bookValues.put(s, );
             }
         }
