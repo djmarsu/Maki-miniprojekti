@@ -19,6 +19,7 @@ public class ReferenceCollection {
         referenceTypes.put("inproceedings", inproceedings);
     }
 
+    // tarviiko näitä kolmea enää
     public static List<String> getBook() {
         return book;
     }
@@ -28,6 +29,8 @@ public class ReferenceCollection {
     public static List<String> getInproceedings() {
         return inproceedings;
     }
+    
+    
 
     public static List<String> getReference(String type) {
         return referenceTypes.get(type);
