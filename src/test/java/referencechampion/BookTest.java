@@ -14,28 +14,24 @@ public class BookTest {
 
     @Before
     public void setUp() {
-
-//        book = new ReferenceB("key", "title", "year", "publisher", "author", "volume", "series",
-//"address", "edition", "month", "note");
         book = new ReferenceEntity("book");
-        
     }
 
     @Test
     public void setOfFieldNamesIsReturnedCorrectly() {
         ArrayList<String> expected = new ArrayList<String>();
         expected.add("key");
-        expected.add("title");
-        expected.add("year");
-        expected.add("publisher");
         expected.add("author");
+        expected.add("title");
+        expected.add("publisher");
         expected.add("volume");
         expected.add("series");
         expected.add("address");
         expected.add("edition");
+        expected.add("year");
         expected.add("month");
         expected.add("note");
-        assertEquals(true, book.getFields().equals(expected));
+        assertTrue(book.getFields().equals(expected));
     }
 
     @Test

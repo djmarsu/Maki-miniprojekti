@@ -15,13 +15,13 @@ import java.util.ArrayList;
  */
 public class ReferenceBase {
 
-    private ArrayList<Reference> refCol;
+    private ArrayList<Reference> references;
     private ReferenceValidator validator;
     private Translator translator;
     private FileWriter fileWriter;
 
-    public ReferenceBase(ArrayList<Reference> refCol, FileWriter fileWriter) {
-        this.refCol = refCol;
+    public ReferenceBase(ArrayList<Reference> referenceList, FileWriter fileWriter) {
+        this.references = referenceList;
         this.validator = new ReferenceValidator();
         this.fileWriter = fileWriter;
         this.translator = new Translator(this.fileWriter);
@@ -33,7 +33,7 @@ public class ReferenceBase {
     }
     
     public void translateAll() throws IOException {
-        for (Reference reference : refCol) {
+        for (Reference reference : references) {
             translator.translateReference(reference);
         }
         fileWriter.flush();
@@ -41,13 +41,13 @@ public class ReferenceBase {
     
     public boolean addReference(Reference reference) {
         if (validator.validate(reference)) {
-           return refCol.add(reference);
+           return references.add(reference);
         }
         return false;
     }
 
     public ArrayList<Reference> getReferences() {
-        return refCol;
+        return references;
     }
 
     

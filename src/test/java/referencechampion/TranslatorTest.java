@@ -43,27 +43,27 @@ public class TranslatorTest {
     public void bookHasCorrectOutPutOfBook() throws IOException {
         String expected = "@book{book,\n"
                 + "	key = \"book\",\n"
-                + "	title = \"{T}he title of work\",\n"
-                + "	year = \"1993\",\n"
-                + "	publisher = \"{T}he name of the publisher\",\n"
                 + "	author = \"{P}eter {B}\\\"{a}ssinen\",\n"
+                + "	title = \"{T}he title of work\",\n"
+                + "	publisher = \"{T}he name of the publisher\",\n"
                 + "	volume = \"4\",\n"
                 + "	series = \"10\",\n"
                 + "	address = \"{T}he address\",\n"
                 + "	edition = \"3\",\n"
+                + "	year = \"1993\",\n"
                 + "	month = \"7\",\n"
                 + "	note = \"{A}n optional note\",\n"
                 + "}\n";
         ReferenceEntity reference = new ReferenceEntity("book");
         reference.addValue("key", "book");
-        reference.addValue("title", "The title of work");
-        reference.addValue("year", "1993");
-        reference.addValue("publisher", "The name of the publisher");
         reference.addValue("author", "Peter Bässinen");
+        reference.addValue("title", "The title of work");
+        reference.addValue("publisher", "The name of the publisher");
         reference.addValue("volume", "4");
         reference.addValue("series", "10");
         reference.addValue("address", "The address");
         reference.addValue("edition", "3");
+        reference.addValue("year", "1993");
         reference.addValue("month", "7");
         reference.addValue("note", "An optional note");
         String actual = translator.translateReference(reference);

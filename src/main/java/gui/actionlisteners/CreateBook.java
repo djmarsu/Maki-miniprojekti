@@ -35,7 +35,7 @@ public class CreateBook implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ReferenceEntity reference = new ReferenceEntity("book");
+        ReferenceEntity reference = new ReferenceEntity("book"); //TODO
         if (fields!=null) {
             for (String s : fields.keySet()) {
                 reference.addValue(s, fields.get(s).getText());
