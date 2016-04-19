@@ -3,6 +3,7 @@ package gui;
 import gui.actionlisteners.CreateReference;
 import gui.actionlisteners.SelectType;
 import gui.actionlisteners.Translate;
+import gui.actionlisteners.UpdateReferences;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -123,7 +124,7 @@ public class UI implements Runnable {
         scrollPane.setBounds(10, 60, 500, 550);
         listingPage.add(scrollPane);
 
-        createButton("Update List", 300, 20, 200, 30, null, listingPage);
+        createButton("Update List", 300, 20, 200, 30, new UpdateReferences(base, listing), listingPage);
     }
 
     
