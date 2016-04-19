@@ -61,7 +61,7 @@ public class TranslatorTest {
 //        String actual = sb.toString();
 //        assertTrue(actual.contains("@"+referenceType));
         assertTrue(translated.contains("@"+referenceType));
-        for (String string : ReferenceCollection.getReferenceRequirements(referenceType)) {
+        for (String string : ReferenceCollection.getReferenceRequirementsWithoutKey(referenceType)) {
 //            assertTrue(actual.contains(string));
             assertTrue(translated.contains(string));
 

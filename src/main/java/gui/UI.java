@@ -108,8 +108,8 @@ public class UI implements Runnable {
         createLabel(".bib", 440, 480, 60, 30, addReferencePage);      
         
         
-        this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList, this.filename);
-        this.translateAction = new Translate(base);
+        this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
+        this.translateAction = new Translate(base, this.filename);
 
         createButton("Create a reference", 20, 520, 200, 30, createReferenceAction, addReferencePage);
         createButton("Create a BibTex file", 260, 520, 200, 30, translateAction,  addReferencePage);
@@ -166,7 +166,7 @@ public class UI implements Runnable {
         return textField;
     }
 
-    public JFrame getWindow() { //testejä varten
+    public JFrame getWindow() { //testejÃ¤ varten
         return window;
     }
 }

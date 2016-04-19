@@ -28,7 +28,7 @@ public class CreateReference implements ActionListener {
     private JLabel result;
     private JComboBox typeList;
 
-    public CreateReference(Map<String, Field> fields, ReferenceBase base, JLabel result, JComboBox typeList, JTextField filename) {
+    public CreateReference(Map<String, Field> fields, ReferenceBase base, JLabel result, JComboBox typeList) {
         this.fields = fields;
         this.base = base;
         this.result = result;
