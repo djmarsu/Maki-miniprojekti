@@ -20,10 +20,12 @@ public class Field {
     private JLabel text;
     private Container container;
 
-    public Field(String name, Container container) {
-        this.name = name;
+    public Field(String name, Container container, boolean required) {
+        this.name = name;      
         this.field = new JTextField();
-        this.text = new JLabel(this.name);
+        this.field.setName(name);
+        if(required)name += "*";
+        this.text = new JLabel(name);
         this.container = container;
         this.container.add(this.field);
         this.container.add(this.text);
@@ -46,8 +48,4 @@ public class Field {
         this.container.remove(this.field);
         this.container.remove(this.text);
     }
-    
-    public void setName(String name) { //testejä varten tarvitaan TextField-objektille nimi
-        this.field.setName(name);
-    } 
 }

@@ -48,16 +48,9 @@ public class SelectType implements ActionListener {
         this.pagetitle.setText("Create a new " + referenceType);
         List<String> names = ReferenceCollection.getReference(referenceType);
         List<String> requirements = ReferenceCollection.getReferenceRequirements(referenceType);
-        
-        for (String name : names) {
-            if (requirements.contains(name)) {
-//                names.set(names.indexOf(name), name + "*");
-                names.set(names.indexOf(name), name);
-            }
-        }
-        
+              
         FieldCreator.clearFields(this.fields);
-        FieldCreator.createFields(names, this.container, this.fields);    
+        FieldCreator.createReferenceFields(names, this.container, this.fields, requirements);    
         int fieldHeight = setFieldsPosition(fieldPosX, fieldPosY, 40, names);
         this.container.setPreferredSize(new Dimension(400, fieldHeight));
         this.container.repaint();

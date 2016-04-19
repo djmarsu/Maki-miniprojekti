@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import referencechampion.ReferenceBase;
 import referencechampion.ReferenceEntity;
 
@@ -27,7 +28,7 @@ public class CreateReference implements ActionListener {
     private JLabel result;
     private JComboBox typeList;
 
-    public CreateReference(Map<String, Field> fields, ReferenceBase base, JLabel result, JComboBox typeList) {
+    public CreateReference(Map<String, Field> fields, ReferenceBase base, JLabel result, JComboBox typeList, JTextField filename) {
         this.fields = fields;
         this.base = base;
         this.result = result;
@@ -41,7 +42,7 @@ public class CreateReference implements ActionListener {
         if (fields != null) {
             for (String s : fields.keySet()) {
                 reference.addValue(s, fields.get(s).getText());
-            }
+            }          
         }
 
         if (base.addReference(reference)) {
