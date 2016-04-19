@@ -61,6 +61,7 @@ public class ReferenceEntity implements Reference {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(type);
+        sb.append("\n");
         for (String fieldName : fieldNames) {
             if (!fields.get(fieldName).isEmpty()) {
                 sb.append("\t");
