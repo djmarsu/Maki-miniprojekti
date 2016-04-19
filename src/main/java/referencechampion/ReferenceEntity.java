@@ -23,7 +23,7 @@ public class ReferenceEntity implements Reference {
     public ReferenceEntity(String type, List<String> fieldNames) {
         this.type = type;
         this.fieldNames = fieldNames;
-        this.fields = new HashMap<>();
+        this.fields = new HashMap<String, String>();
     }
 
     public void addValue(String fieldName, String value) {

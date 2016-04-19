@@ -42,7 +42,7 @@ public class UI implements Runnable {
         this.windowWidth = width;
         this.windowHeight = height;
         this.base = base;       
-        this.fields = new HashMap<>();
+        this.fields = new HashMap<String, Field>();
     }
 
     @Override

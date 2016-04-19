@@ -19,12 +19,12 @@ public class ReferenceCollection {
  
     
     static {
-        referenceTypes = new HashMap<>();
+        referenceTypes = new HashMap<String,List<String>>();
         referenceTypes.put("book", book);
         referenceTypes.put("article", article);
         referenceTypes.put("inproceedings", inproceedings);
         
-        referenceRequirements = new HashMap<>();
+        referenceRequirements = new HashMap<String,List<String>>();
         referenceRequirements.put("book", booksRequirements);
         referenceRequirements.put("article", articlesRequirements);
         referenceRequirements.put("inproceedings", inproceedingsRequirements);
