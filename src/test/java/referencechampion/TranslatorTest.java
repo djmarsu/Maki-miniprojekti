@@ -7,9 +7,6 @@ package referencechampion;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,20 +50,11 @@ public class TranslatorTest {
         }
         String translated = translator.translateReference(reference);
         assertTrue(translated.contains("@"));
-//        List<String> file = Files.readAllLines(Paths.get("Test.bib"));
-//        StringBuilder sb = new StringBuilder();
-//        for (String string : file) {
-//            sb.append(string);
-//        }
-//        String actual = sb.toString();
-//        assertTrue(actual.contains("@"+referenceType));
         assertTrue(translated.contains("@"+referenceType));
         for (String string : ReferenceCollection.getReferenceRequirements(referenceType)) {
-//            assertTrue(actual.contains(string));
             assertTrue(translated.contains(string));
 
         }
-//        assertTrue(actual.contains("{G}eneric field \\\"{a}\\\"{o}\\aa {A}{A}{A}"));
         assertTrue(translated.contains("{G}eneric field \\\"{a}\\\"{o}\\aa {A}{A}{A}"));
     }
 }

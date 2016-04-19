@@ -1,11 +1,29 @@
-
+import referencechampion.*
 
 description 'a bibtex-file can be created'
 
-scenario "creation successfull", {
-    given 'command make bibtex-file is selected'
+scenario "creation successful", {
+    given 'command make bibtex-file is selected', {
+        translator = new Translator(new FileWriter("easyB.bib"));
+    }
  
-    when 'there is a book given'
+    when 'there is a book given', {
+        referenceType = "book"
+        ReferenceEntity reference = new ReferenceEntity(referenceType);
+        reference.addValue("key","book")
+        for (String field : ReferenceCollection.getReferenceRequirements(referenceType)) {
+            reference.addValue(field, field);
+        }
+        reference.addValue("year","1234")
+        translator.translateReference(reference)
+    }
 
-    then 'file references.bib is updated with a new reference with proper information'
+    then 'file bibtex-file is created with a new reference with proper information', {
+        scanner = new Scanner(new File("easyB.bib"))
+        sb = new StringBuilder()
+        while (scanner.hasNext()) {
+            sb.append(scanner.next())
+        }
+        sb.toString().shouldBe "@book{book,author=\"author\",title=\"title\",publisher=\"publisher\",year=\"1234\",}";
+    }
 }

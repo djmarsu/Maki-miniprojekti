@@ -18,7 +18,10 @@ public class ReferenceBase {
         this.validator = new ReferenceValidator();
         this.fileWriter = fileWriter;
         this.translator = new Translator(this.fileWriter);
-        
+    }
+
+    public ReferenceBase(FileWriter fileWriter) {
+        this(new ArrayList<Reference>(), fileWriter);
     }
 
     public ReferenceBase() throws IOException {
