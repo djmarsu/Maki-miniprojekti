@@ -12,19 +12,19 @@ public class ReferenceCollection {
     private static final List<String> inproceedings = Arrays.asList("key", "author", "title", "booktitle", "editor", "volume", "number", "series", "pages", "address", "organization", "publisher", "year", "month", "note");
     private static final Map<String, List<String>> referenceTypes;
 
-    private static final List<String> articlesRequirements = Arrays.asList("publisher", "title", "year");
-    private static final List<String> booksRequirements = Arrays.asList("author", "journal", "title", "year");
+    private static final List<String> articlesRequirements = Arrays.asList("journal", "title", "year");
+    private static final List<String> booksRequirements = Arrays.asList("author", "publisher", "title", "year");
     private static final List<String> inproceedingsRequirements = Arrays.asList("author", "booktitle", "title", "year");
     private static final Map<String, List<String>> referenceRequirements;
  
     
     static {
-        referenceTypes = new HashMap<>();
+        referenceTypes = new HashMap<String,List<String>>();
         referenceTypes.put("book", book);
         referenceTypes.put("article", article);
         referenceTypes.put("inproceedings", inproceedings);
         
-        referenceRequirements = new HashMap<>();
+        referenceRequirements = new HashMap<String,List<String>>();
         referenceRequirements.put("book", booksRequirements);
         referenceRequirements.put("article", articlesRequirements);
         referenceRequirements.put("inproceedings", inproceedingsRequirements);

@@ -25,21 +25,8 @@ public class Translator {
         writeInFile(sb.toString());
         return sb.toString();
     }
-
-//    public void translateBook(Book book) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("@book{");
-//        sb.append(book.getField("key"));
-//        sb.append(",\n");
-//        for (String field : book.getFields()) {
-//            appendField(sb, field, book);
-//        }
-//        sb.append("}\n");
-//        System.out.println(sb.toString());
-//        writeInFile(sb.toString());
-//    }
     private void appendField(StringBuilder sb, String field, Reference reference) {
-        if (reference.getField(field) != null && !reference.getField(field).isEmpty()) {
+        if (reference.getField(field) != null && !reference.getField(field).isEmpty() && !field.equals("key")) {
             sb.append("\t");
             sb.append(field);
             sb.append(" = ");
@@ -79,6 +66,6 @@ public class Translator {
 
     private void writeInFile(String bibtexString) throws IOException {
         fw.write(bibtexString);
-
+        fw.flush();
     }
 }

@@ -1,9 +1,5 @@
-
-
 package referencechampion;
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +14,7 @@ public class ReferenceEntity implements Reference {
         this(type);
         this.fields = fields;
     }
-    
+
     public ReferenceEntity(String type) {
         this(type, ReferenceCollection.getReference(type));
 
@@ -27,9 +23,9 @@ public class ReferenceEntity implements Reference {
     public ReferenceEntity(String type, List<String> fieldNames) {
         this.type = type;
         this.fieldNames = fieldNames;
-        this.fields = new HashMap<>();
+        this.fields = new HashMap<String, String>();
     }
-    
+
     public void addValue(String fieldName, String value) {
         this.fields.put(fieldName, value);
     }
@@ -46,17 +42,36 @@ public class ReferenceEntity implements Reference {
 
     @Override
     public boolean equals(Object obj) {
-        if (!obj.getClass().equals(ReferenceEntity.class)) return false;
-        
+        if (!obj.getClass().equals(ReferenceEntity.class)) {
+            return false;
+        }
+
         ReferenceEntity book = (ReferenceEntity) obj;
-        
-        return book.getField("title").equals(this.getField("title")) 
+
+        return book.getField("title").equals(this.getField("title"))
                 && book.getField("author").equals(this.getField("author"));
     }
 
     @Override
     public String getType() {
         return this.type;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(type);
+        sb.append("\n");
+        for (String fieldName : fieldNames) {
+            if (!fields.get(fieldName).isEmpty()) {
+                sb.append("\t");
+                sb.append(fieldName);
+                sb.append(" = ");
+                sb.append(fields.get(fieldName));
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
 
 }
