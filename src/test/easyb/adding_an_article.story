@@ -22,7 +22,7 @@ scenario "user can fill out the form correctly and add an article", {
     }
 
     then 'an article will be added to the system', {
-        window.label("result").requireText "One or more required fields are empty"
+        window.label("result").requireText "New reference added"
        window.cleanUp()
     }
 }
