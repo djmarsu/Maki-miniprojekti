@@ -33,7 +33,7 @@ public class ReferenceBase {
     }
     
     public boolean addReference(Reference reference) {
-        if (validator.validate(reference)) {
+        if (validator.validate(reference) && keyAvailable(reference.getField("key"))) {
            return references.add(reference);
         }
         return false;
@@ -41,6 +41,14 @@ public class ReferenceBase {
 
     public ArrayList<Reference> getReferences() {
         return references;
+    }
+    
+    public boolean keyAvailable(String key) { //ei voida lisätä samaa avainta
+        for (Reference ref : references) {
+            if (ref.getField("key").equals(key)) return false;
+        }
+        
+        return true;
     }
 
     

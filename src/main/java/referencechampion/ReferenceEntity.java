@@ -48,8 +48,7 @@ public class ReferenceEntity implements Reference {
 
         ReferenceEntity book = (ReferenceEntity) obj;
 
-        return book.getField("title").equals(this.getField("title"))
-                && book.getField("author").equals(this.getField("author"));
+        return book.getField("key").equals(this.getField("key"));
     }
 
     @Override
