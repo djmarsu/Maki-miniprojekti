@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package referencechampion;
 
@@ -15,13 +10,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- *
- * @author juhokyyh
- */
 public class ReferenceBaseTest {
     ReferenceBase base;
     ReferenceEntity validReference;
+    ReferenceEntity anotherValidReference;
     ReferenceEntity invalidReference;
     
     
@@ -46,7 +38,9 @@ public class ReferenceBaseTest {
             validFields.put(field, field);
         }
         
+        validFields.put("key", "key");
         validReference = new ReferenceEntity(validFields, "book");
+        anotherValidReference = new ReferenceEntity(validFields, "book");
         invalidReference = new ReferenceEntity(new HashMap<String, String>(), "book");
     }
     
@@ -67,15 +61,13 @@ public class ReferenceBaseTest {
     }
     
     @Test
-    public void referenceWithTakenKeyIsNotAdded() {
+    public void referenceWithTakenKeyIsAddedWithDifferentKey() {
         base.addReference(validReference);
-        assertFalse(base.addReference(validReference));
-        assertEquals(base.getReferences().size(),1);
+        assertTrue(base.addReference(anotherValidReference));
+        assertEquals(base.getReferences().size(),2);
+        
+        assertTrue(base.getReferences().contains(validReference));
+        assertTrue(base.getReferences().contains(anotherValidReference));
+        assertTrue(anotherValidReference.getField("key").equals("key_0"));
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }
