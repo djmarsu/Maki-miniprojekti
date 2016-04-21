@@ -34,11 +34,13 @@ public class UI implements Runnable {
     private JFrame window;
     protected Map<String, Field> fields;    
     private JLabel result;
-    private JLabel pagetitle;
+    private JLabel pagetitle;   
     private CreateReference createReferenceAction;
     private Translate translateAction;
     private SelectType selectTypeAction;
-    private ReferenceBase base;    
+    private UpdateReferences updateReferencesAction;
+    private ReferenceBase base;  
+    private JTextField listing;
     private JTextField filename;
 
     public UI(int width, int height, ReferenceBase base) {
@@ -67,7 +69,6 @@ public class UI implements Runnable {
     }
 
     private void constructWindowComponents(Container container) {
-        container.setBackground(Color.DARK_GRAY);
         container.setLayout(new GroupLayout(container));
 
         JTabbedPane tabs = new JTabbedPane();
@@ -76,6 +77,7 @@ public class UI implements Runnable {
 
         constructAddReferenceTab(tabs);
         constructListingTab(tabs);
+        tabs.addChangeListener(updateReferencesAction);
 
     }
 
@@ -109,7 +111,7 @@ public class UI implements Runnable {
         
         
         this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
-        this.translateAction = new Translate(base, this.filename);
+        this.translateAction = new Translate(base, this.filename, this.result);
 
         createButton("Create a reference", 20, 520, 200, 30, createReferenceAction, addReferencePage);
         createButton("Create a BibTex file", 260, 520, 200, 30, translateAction,  addReferencePage);
@@ -125,14 +127,17 @@ public class UI implements Runnable {
 
         JTextArea listing = new JTextArea("");
         listing.setEnabled(false);
+        listing.setDisabledTextColor(Color.BLACK);
         listing.setBounds(0, 0, 300, 300);
         listingPage.add(listing);
 
         JScrollPane scrollPane = new JScrollPane(listing);
         scrollPane.setBounds(10, 60, 500, 550);
         listingPage.add(scrollPane);
+        
+        updateReferencesAction = new UpdateReferences(base, listing);
 
-        createButton("Update List", 300, 20, 200, 30, new UpdateReferences(base, listing), listingPage);
+        createButton("Update List", 300, 20, 200, 30, updateReferencesAction, listingPage);
     }
 
     

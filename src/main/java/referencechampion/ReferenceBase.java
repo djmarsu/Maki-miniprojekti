@@ -30,6 +30,7 @@ public class ReferenceBase {
             translator.translateReference(reference);
         }
         fw.flush();
+        
     }
     
     public boolean addReference(Reference reference) {
