@@ -34,17 +34,38 @@ public class ReferenceBase {
     }
     
     public boolean addReference(Reference reference) {
-        if (validator.validate(reference) && keyAvailable(reference.getField("key"))) {
+        if (validator.validate(reference)) {
+           setAvailableKey(reference);
            return references.add(reference);
         }
         return false;
     }
+    
+    private void setAvailableKey(Reference reference) {
+        reference.addValue("key", nextAvailableKey(reference.getField("key")));
+    }
+    
+    private String nextAvailableKey(String current) { //palauttaa avaimen muodon jota ei vielä varattu tyyliin avain->avain_4
+        // Täällä voisi käyttää stringbuilderia!
+        String key = current;
+        if (keyAvailable(key)) return key;
+        
+        Integer c=0;
+        String tail = "_" + c;
+        
+        while (!keyAvailable(key+tail)) {
+            c++;
+            tail = "_"+c;
+        }
+        return key + tail;
+    }
+    
 
     public ArrayList<Reference> getReferences() {
         return references;
     }
     
-    public boolean keyAvailable(String key) { //ei voida lisätä samaa avainta
+    private boolean keyAvailable(String key) { //onko avain varattu
         for (Reference ref : references) {
             if (ref.getField("key").equals(key)) return false;
         }

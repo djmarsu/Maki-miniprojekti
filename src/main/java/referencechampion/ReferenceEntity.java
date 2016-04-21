@@ -26,6 +26,7 @@ public class ReferenceEntity implements Reference {
         this.fields = new HashMap<String, String>();
     }
 
+    @Override
     public void addValue(String fieldName, String value) {
         this.fields.put(fieldName, value);
     }

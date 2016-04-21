@@ -12,15 +12,25 @@ public class ReferenceValidator {
         for (String req : requirements) {
             if (!validateField(ref.getField(req))) return false;
         }
+        
+        if (!validateField(ref.getField("key"))) ref.addValue("key", defaultKey(ref)); //laittaa tyhjään key-kenttään default-avaimen
         return true;
-        
-        
     }
     
-    private boolean validateField(String field) {
+    public boolean validateField(String field) {
         return field!=null && !field.equals("");
     }
     
+    private String defaultKey(Reference ref) { //palautetaan default-avain tyyliin vih2004
+        String writer = "";
+        String year = ref.getField("year");
+        
+        if (validateField("author")) writer = ref.getField("author");
+        else if (validateField("journal")) writer = ref.getField("journal");
+        
+        writer = writer.substring(0, Math.min(3, writer.length()));
+        return writer.trim().toLowerCase() + year;
+    }
     // ei käytössä ##################################
     private boolean validateAll(ReferenceEntity s) {
         ReferenceCollection refCol = new ReferenceCollection();

@@ -42,6 +42,7 @@ public class UI implements Runnable {
     private ReferenceBase base;  
     private JTextField listing;
     private JTextField filename;
+    private JTextField filter;
 
     public UI(int width, int height, ReferenceBase base) {
         this.windowWidth = width;
@@ -135,8 +136,8 @@ public class UI implements Runnable {
         scrollPane.setBounds(10, 60, 500, 550);
         listingPage.add(scrollPane);
         
-        updateReferencesAction = new UpdateReferences(base, listing);
-
+        this.filter = createTextField("", 300, 0, 160, 20, listingPage);
+        updateReferencesAction = new UpdateReferences(base, listing, filter);
         createButton("Update List", 300, 20, 200, 30, updateReferencesAction, listingPage);
     }
 
@@ -171,7 +172,7 @@ public class UI implements Runnable {
         return textField;
     }
 
-    public JFrame getWindow() { //testejÃ¤ varten
+    public JFrame getWindow() {
         return window;
     }
 }
