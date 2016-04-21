@@ -102,10 +102,10 @@ public class UI implements Runnable {
         this.result = createLabel("Fields with * are required", 20, 600, 400, 30, addReferencePage);
         this.result.setName("result");
              
-        createLabel("Filename:", 260, 480, 60, 30, addReferencePage);
-        this.filename = createTextField("references", 320, 480, 120, 30, addReferencePage);
+        createLabel("Filename:", 260, 460, 160, 30, addReferencePage);
+        this.filename = createTextField("references", 260, 490, 160, 20, addReferencePage);
         this.filename.setHorizontalAlignment(SwingConstants.RIGHT);
-        createLabel(".bib", 440, 480, 60, 30, addReferencePage);      
+        createLabel(".bib", 420, 485, 60, 30, addReferencePage);      
         
         
         this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
