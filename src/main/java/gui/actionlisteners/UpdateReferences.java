@@ -8,7 +8,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import referencechampion.Reference;
 import referencechampion.ReferenceBase;
-import referencechampion.ReferenceFilter;
 
 public class UpdateReferences implements ActionListener {
     ReferenceBase base;
@@ -27,8 +26,7 @@ public class UpdateReferences implements ActionListener {
         
         StringBuilder sb = new StringBuilder();
         
-        ReferenceFilter referenceFilter = new ReferenceFilter(base, filter);
-        ArrayList<Reference> filteredReferences = referenceFilter.getFiltered();
+        ArrayList<Reference> filteredReferences = base.withFilter(filter);
         
         for (Reference reference : filteredReferences) {
             sb.append(reference.toString());

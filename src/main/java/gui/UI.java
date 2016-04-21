@@ -127,7 +127,6 @@ public class UI implements Runnable {
         listing.setEnabled(false);
         listing.setBounds(0, 0, 300, 300);
         listingPage.add(listing);
-
         JScrollPane scrollPane = new JScrollPane(listing);
         scrollPane.setBounds(10, 60, 500, 550);
         listingPage.add(scrollPane);

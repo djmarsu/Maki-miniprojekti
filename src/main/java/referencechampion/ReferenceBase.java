@@ -4,6 +4,7 @@ package referencechampion;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ReferenceBase {
@@ -71,5 +72,18 @@ public class ReferenceBase {
         return true;
     }
 
-    
+    public ArrayList<Reference> withFilter(String filter) {
+        ArrayList<Reference> filtered = new ArrayList<Reference>();
+
+        for (Reference reference : references) {
+            List<String> fields = reference.getFields();
+            for (String field : fields) {
+                if (reference.getField(field).contains(filter)) {
+                    filtered.add(reference);
+                    break;
+                }
+            }
+        }
+        return filtered;
+    }   
 }
