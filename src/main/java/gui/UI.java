@@ -67,7 +67,6 @@ public class UI implements Runnable {
     }
 
     private void constructWindowComponents(Container container) {
-        container.setBackground(Color.DARK_GRAY);
         container.setLayout(new GroupLayout(container));
 
         JTabbedPane tabs = new JTabbedPane();
