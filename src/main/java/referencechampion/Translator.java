@@ -25,7 +25,7 @@ public class Translator {
             appendField(sb, field, reference);
         }
         // poistaa sen viimeisen pilkun :D (ei oo oikeesti tarpeellinen ees)
-        sb.deleteCharAt(sb.length()-2);
+        //sb.deleteCharAt(sb.length()-2);
         sb.append("}\n");
         writeInFile(sb.toString());
         return sb.toString();
