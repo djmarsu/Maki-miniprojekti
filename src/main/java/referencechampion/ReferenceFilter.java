@@ -15,21 +15,18 @@ public class ReferenceFilter {
     public ArrayList<Reference> getFiltered() {
         ArrayList<Reference> filtered = new ArrayList<Reference>();
         ArrayList<Reference> references = referenceBase.getReferences();
-        // näyttää jotenki rasittavalta toi boolean juttu
+
         for (Reference reference : references) {
-            boolean toAdd = false;
             if (filter.isEmpty()) {
-                toAdd = true;
+                filtered.add(reference);
             } else {
                 List<String> fields = reference.getFields();
                 for (String f : fields) {
                     if (reference.getField(f).contains(filter)) {
-                        toAdd = true;
+                        filtered.add(reference);
+                        break;
                     }
                 }
-            }
-            if (toAdd) {
-                filtered.add(reference);
             }
         }
         return filtered;
