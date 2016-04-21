@@ -16,7 +16,7 @@ public class ReferenceBase {
         this.references = referenceList;
         this.validator = new ReferenceValidator();
         this.translator = new Translator();
-        
+
     }
 
     public ReferenceBase() throws IOException {
