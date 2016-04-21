@@ -40,6 +40,7 @@ public class UI implements Runnable {
     private SelectType selectTypeAction;
     private ReferenceBase base;    
     private JTextField filename;
+    private JTextField filter;
 
     public UI(int width, int height, ReferenceBase base) {
         this.windowWidth = width;
@@ -130,8 +131,10 @@ public class UI implements Runnable {
         JScrollPane scrollPane = new JScrollPane(listing);
         scrollPane.setBounds(10, 60, 500, 550);
         listingPage.add(scrollPane);
-
-        createButton("Update List", 300, 20, 200, 30, new UpdateReferences(base, listing), listingPage);
+        
+        this.filter = createTextField("", 300, 0, 160, 20, listingPage);
+       
+        createButton("Update List", 300, 20, 200, 30, new UpdateReferences(base, listing, filter), listingPage);
     }
 
     
