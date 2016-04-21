@@ -11,32 +11,29 @@ public class ReferenceBase {
     private ArrayList<Reference> references;
     private ReferenceValidator validator;
     private Translator translator;
-    private FileWriter fileWriter;
 
-    public ReferenceBase(ArrayList<Reference> referenceList, FileWriter fileWriter) {
+    public ReferenceBase(ArrayList<Reference> referenceList) {
         this.references = referenceList;
         this.validator = new ReferenceValidator();
-        this.fileWriter = fileWriter;
-        this.translator = new Translator(this.fileWriter);
-    }
+        this.translator = new Translator();
 
-    public ReferenceBase(FileWriter fileWriter) {
-        this(new ArrayList<Reference>(), fileWriter);
     }
 
     public ReferenceBase() throws IOException {
-        this(new ArrayList<Reference>(), new FileWriter("references.bib", true));
+        this(new ArrayList<Reference>());
     }
     
-    public void translateAll() throws IOException {
+    public void translateAll(String filename) throws IOException {
+        FileWriter fw = new FileWriter(filename+".bib", true);
+        translator.setFileWriter(fw);
         for (Reference reference : references) {
             translator.translateReference(reference);
         }
-        fileWriter.flush();
+        fw.flush();
     }
     
     public boolean addReference(Reference reference) {
-        if (validator.validate(reference)) {
+        if (validator.validate(reference) && keyAvailable(reference.getField("key"))) {
            return references.add(reference);
         }
         return false;
@@ -44,6 +41,14 @@ public class ReferenceBase {
 
     public ArrayList<Reference> getReferences() {
         return references;
+    }
+    
+    public boolean keyAvailable(String key) { //ei voida lisätä samaa avainta
+        for (Reference ref : references) {
+            if (ref.getField("key").equals(key)) return false;
+        }
+        
+        return true;
     }
 
     

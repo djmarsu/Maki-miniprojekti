@@ -2,35 +2,26 @@
 
 package referencechampion;
 
-import java.util.Arrays;
 import java.util.List;
 
 
 public class ReferenceValidator {
     public boolean validate(Reference ref) {
-        if (ref.getClass().equals(ReferenceEntity.class)) {
-            if (ref.getType() == "book") {
-                return (validateBook((ReferenceEntity)ref));
-            } else if (ref.getType() == "article") {
-                return (validateArticle((ReferenceEntity)ref));
-            } else if (ref.getType() == "inproceedings") {
-                return (validateInproceedings((ReferenceEntity)ref));
-            }
+        List<String> requirements = ReferenceCollection.getReferenceRequirements(ref.getType());
+        
+        for (String req : requirements) {
+            if (!validateField(ref.getField(req))) return false;
         }
-        return false;
+        return true;
         
-        /* vai tää
-        
-        if (ref.getClass().equals(ReferenceEntity.class)) {
-            validateAll((ReferenceEntity)ref);
-        }
-        return false;
-        
-        */
         
     }
     
-    // ei käytössä
+    private boolean validateField(String field) {
+        return field!=null && !field.equals("");
+    }
+    
+    // ei käytössä ##################################
     private boolean validateAll(ReferenceEntity s) {
         ReferenceCollection refCol = new ReferenceCollection();
         
@@ -45,6 +36,11 @@ public class ReferenceValidator {
     }
     
     private boolean validateBook(ReferenceEntity book) {
+        List<String> requirements = ReferenceCollection.getReferenceRequirements("book");
+        
+        for (String req : requirements) {
+            if (!validateField(req)) return false;
+        }
         return validateField(book.getField("publisher")) && validateField(book.getField("title")) && validateField(book.getField("year"));
     }
 
@@ -56,7 +52,4 @@ public class ReferenceValidator {
         return validateField(article.getField("author")) && validateField(article.getField("journal")) && validateField(article.getField("title")) && validateField(article.getField("year"));
     }
     
-    private boolean validateField(String field) {
-        return field!=null && !field.equals("");
-    }
 }

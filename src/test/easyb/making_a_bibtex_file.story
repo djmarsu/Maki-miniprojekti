@@ -10,7 +10,6 @@ scenario "creation successful", {
     when 'there is a book given', {
         referenceType = "book"
         ReferenceEntity reference = new ReferenceEntity(referenceType);
-        reference.addValue("key","book")
         for (String field : ReferenceCollection.getReferenceRequirements(referenceType)) {
             reference.addValue(field, field);
         }
@@ -24,6 +23,6 @@ scenario "creation successful", {
         while (scanner.hasNext()) {
             sb.append(scanner.next())
         }
-        sb.toString().shouldBe "@book{book,author=\"author\",title=\"title\",publisher=\"publisher\",year=\"1234\",}";
+        sb.toString().shouldBe "@book{key,author=\"author\",title=\"title\",publisher=\"publisher\",year=\"1234\",}";
     }
 }

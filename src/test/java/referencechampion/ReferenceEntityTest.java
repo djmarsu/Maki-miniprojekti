@@ -31,6 +31,7 @@ public class ReferenceEntityTest {
         expected.add("volume");
         expected.add("number");
         expected.add("pages");
+        expected.add("address");
         expected.add("year");
         expected.add("month");
         expected.add("note");
@@ -144,6 +145,7 @@ public class ReferenceEntityTest {
         expected.add("author");
         expected.add("title");
         expected.add("publisher");
+        expected.add("editor");
         expected.add("volume");
         expected.add("series");
         expected.add("address");

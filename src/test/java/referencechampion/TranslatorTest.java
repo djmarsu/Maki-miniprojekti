@@ -51,7 +51,9 @@ public class TranslatorTest {
         String translated = translator.translateReference(reference);
         assertTrue(translated.contains("@"));
         assertTrue(translated.contains("@"+referenceType));
-        for (String string : ReferenceCollection.getReferenceRequirements(referenceType)) {
+
+        for (String string : ReferenceCollection.getReferenceRequirementsWithoutKey(referenceType)) {
+//            assertTrue(actual.contains(string));
             assertTrue(translated.contains(string));
 
         }

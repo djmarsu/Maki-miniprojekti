@@ -1,4 +1,3 @@
-
 package gui;
 
 import java.awt.Container;
@@ -6,14 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class FieldCreator {
 
-    public static Map<String, Field> createFields(List<String> names, Container container, Map<String, Field> fields) {
-        
+    public static Map<String, Field> createReferenceFields(List<String> names, Container container, Map<String, Field> fields, List<String> requirements) {
+
         for (String string : names) {
-            Field f = new Field(string, container);
-            f.setName(string); //nimi on testejä varten
+            Field f = new Field(string, container, requirements.contains(string));
+
             fields.put(string, f);
         }
 
@@ -27,6 +25,7 @@ public class FieldCreator {
             }
             fields.clear();
         }
-        
+
     }
+
 }

@@ -10,6 +10,9 @@ public class Translator {
     public Translator(FileWriter fw) {
         this.fw = fw;
     }
+    
+    public Translator() {
+    }
 
     public String translateReference(Reference reference) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -32,6 +35,10 @@ public class Translator {
             sb.append(" = ");
             inputParam(sb, reference.getField(field));
         }
+    }
+    
+    public void setFileWriter(FileWriter fw){
+        this.fw = fw;
     }
 
     private String compileUmlauts(String s) {
