@@ -14,6 +14,7 @@ scenario "creation successful", {
             reference.addValue(field, field);
         }
         reference.addValue("year","1234")
+        reference.addValue("key", "key")
         translator.translateReference(reference)
     }
 
