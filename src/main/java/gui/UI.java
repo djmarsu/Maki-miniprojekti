@@ -131,7 +131,6 @@ public class UI implements Runnable {
         listing.setDisabledTextColor(Color.BLACK);
         listing.setBounds(0, 0, 300, 300);
         listingPage.add(listing);
-
         JScrollPane scrollPane = new JScrollPane(listing);
         scrollPane.setBounds(10, 60, 500, 550);
         listingPage.add(scrollPane);
