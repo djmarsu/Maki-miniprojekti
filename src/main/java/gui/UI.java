@@ -125,7 +125,7 @@ public class UI implements Runnable {
 
         tabs.addTab("Listing", listingPage);
 
-        createLabel("Reference listing:", 20, 10, 300, 30, listingPage);
+        createLabel("Reference listing", 20, 10, 300, 30, listingPage);
 
         JTextArea listing = new JTextArea("");
         listing.setEnabled(false);
@@ -136,9 +136,10 @@ public class UI implements Runnable {
         scrollPane.setBounds(10, 60, 500, 550);
         listingPage.add(scrollPane);
         
-        this.filter = createTextField("", 300, 0, 160, 20, listingPage);
+        createLabel("Filter:", 220, 20, 50, 30, listingPage);
+        this.filter = createTextField("", 280, 20, 200, 30, listingPage);
         updateReferencesAction = new UpdateReferences(base, listing, filter);
-        createButton("Update List", 300, 20, 200, 30, updateReferencesAction, listingPage);
+        createButton("Find", 480, 20, 100, 30, updateReferencesAction, listingPage);
     }
 
     
