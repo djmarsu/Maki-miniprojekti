@@ -93,6 +93,7 @@ public class UI implements Runnable {
         
         JScrollPane scrollPane = new JScrollPane(fieldArea);
         scrollPane.setBounds(20, 60, 500, 400);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(15);
         addReferencePage.add(scrollPane);         
 
         JComboBox typeList = new JComboBox(ReferenceCollection.getTypes());
