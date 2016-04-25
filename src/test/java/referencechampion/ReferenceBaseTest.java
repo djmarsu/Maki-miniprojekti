@@ -32,6 +32,8 @@ public class ReferenceBaseTest {
     @Before
     public void setUp() throws Exception {
         base = new ReferenceBase();
+        // vissiin pitää tehä että se ei ota sieltä json tiedostosta niitä muita?
+        base.empty();
         
         HashMap<String,String> validFields = new HashMap<String,String>();
         List<String> req = ReferenceCollection.getReferenceRequirements("book");

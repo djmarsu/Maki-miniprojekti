@@ -5,12 +5,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,15 +28,22 @@ public class ReferenceBase {
     public ReferenceBase() throws IOException {
         this.validator = new ReferenceValidator();
         this.translator = new Translator();
+        this.references = tryToGetReferencesFromJson();
+    }
+    
+    public ArrayList<Reference> tryToGetReferencesFromJson() throws IOException {
+        File f = new File("/tmp/joop.json");
+        
+        if (!f.exists()) {
+            return new ArrayList<Reference>();
+        }
         
         String json = new String(Files.readAllBytes(Paths.get("/tmp/joop.json")));
-
-        // tässä pakko olla ReferenceEntity mutta tossa alemmassa on vaan reference??
-        Type targetClassType = new TypeToken<ArrayList<ReferenceEntity>>(){}.getType();
         
-        ArrayList<Reference> referenceCollectionFromJson = new Gson().fromJson(json, targetClassType);
-            
-        this.references = referenceCollectionFromJson;
+        // tässä pakko olla ReferenceEntity mutta tossa alemmassa on vaan reference??
+        Type targetClassType = new TypeToken<ArrayList<ReferenceEntity>>(){}.getType();        
+        ArrayList<Reference> referenceCollectionFromJson = new Gson().fromJson(json, targetClassType);            
+        return  referenceCollectionFromJson;
     }
     
     public void translateAll(String filename) throws IOException {
@@ -116,4 +125,9 @@ public class ReferenceBase {
         }
         return filtered;
     }   
+
+    // testejä varten ettei yritä ees ottaa sieltä json tiedostosta niitä muita emt
+    void empty() {
+        this.references.clear();
+    }
 }
