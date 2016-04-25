@@ -18,7 +18,8 @@ public class RemoveReference implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.base.remove(reference);
+        this.base.removeReference(reference);
+        
     }
     
 }
