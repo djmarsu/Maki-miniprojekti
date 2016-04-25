@@ -88,4 +88,8 @@ public class ReferenceBase {
         }
         return filtered;
     }   
+    
+    public boolean remove(Reference reference) {
+        return this.references.remove(reference);
+    }
 }

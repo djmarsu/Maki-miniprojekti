@@ -7,10 +7,10 @@ scenario "User can add a reference without a key", {
     }
  
     when 'an reference without a key is added', {
-
+        
     }
 
     then 'an automated key is generated', {
-
+        
     }
 }
