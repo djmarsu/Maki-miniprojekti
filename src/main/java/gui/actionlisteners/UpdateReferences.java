@@ -41,7 +41,7 @@ public class UpdateReferences implements ActionListener, ChangeListener {
         
         ArrayList<Reference> filteredReferences = base.withFilter(filter);
         ListingCreator.clearListedReferences(listedReferences);
-        this.listedReferences = ListingCreator.createListedReferences(filteredReferences, listingArea, this.base);
+        this.listedReferences = ListingCreator.createListedReferences(filteredReferences, listingArea, this.base, this);
         
         int listHeight = setReferenceListingPosition(fieldPosX, fieldPosY, 10);
         
