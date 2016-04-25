@@ -132,6 +132,7 @@ public class ReferenceBase {
         return this.references.remove(reference);
     }
 
+
     // testejä varten ettei yritä ees ottaa sieltä json tiedostosta niitä muita emt
     void empty() {
         this.references.clear();

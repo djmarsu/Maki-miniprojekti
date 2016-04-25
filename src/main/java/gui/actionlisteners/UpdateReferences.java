@@ -1,5 +1,7 @@
 package gui.actionlisteners;
 
+import gui.ListedReference;
+import gui.ListingCreator;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -17,14 +19,12 @@ import javax.swing.event.ChangeListener;
 import referencechampion.Reference;
 import referencechampion.ReferenceBase;
 
-/**
- *
- * @author emivo
- */
+
 public class UpdateReferences implements ActionListener, ChangeListener {
     ReferenceBase base;
     Container listingArea;
     JTextField filterField;
+    List<ListedReference> listedReferences;
     private final int fieldPosX = 20;
     private final int fieldPosY = 40;
 
@@ -32,6 +32,7 @@ public class UpdateReferences implements ActionListener, ChangeListener {
         this.base = base;
         this.listingArea = listingArea;
         this.filterField = filter;
+        this.listedReferences = new ArrayList<ListedReference>();
     }
 
     @Override
@@ -39,14 +40,13 @@ public class UpdateReferences implements ActionListener, ChangeListener {
         String filter = filterField.getText();
         
         ArrayList<Reference> filteredReferences = base.withFilter(filter);
-        int count = 0;
-        for (Reference reference : filteredReferences) {
-            listingArea.add(makeComponent(reference, count));
-            count++;
-        }
+        ListingCreator.clearListedReferences(listedReferences);
+        this.listedReferences = ListingCreator.createListedReferences(filteredReferences, listingArea, this.base);
+        
+        int listHeight = setReferenceListingPosition(fieldPosX, fieldPosY, 10);
         
         
-        this.listingArea.setPreferredSize(new Dimension(400, getNextY(count-1)));
+        this.listingArea.setPreferredSize(new Dimension(400, listHeight));
         this.listingArea.repaint();
         this.listingArea.revalidate();
     }
@@ -56,25 +56,14 @@ public class UpdateReferences implements ActionListener, ChangeListener {
         this.actionPerformed(null);
     }
     
-    private Component makeComponent(Reference reference, int count) { //Palauttaa yhden container-olion, joka näyttää
-        Container c = new Container();                                // yhden referencen ja sen poistamiseen tarvittavan buttonin
-        int y = getNextY(count);                                      //Tän sijoittelu ei vielä ihan pelaa
-        c.setBounds(fieldPosX, y, 500, 500);
-        JLabel referenceLabel = new JLabel(reference.toString());
-        referenceLabel.setBounds(fieldPosX, y, 200, 200);
-        c.add(referenceLabel);
-        
-        JButton deleteButton = new JButton("delete");
-        deleteButton.setBounds(fieldPosX+50, y, 200, 30);
-        deleteButton.addActionListener(new RemoveReference(reference, base));
-        deleteButton.addActionListener(this);
-        c.add(deleteButton);
-        return c;
-    }
 
-    private int getNextY(int count) { //Referencet näytetään allekkain, tämä palauttaa siis count:nnen referencen y-koordinaatin
-        int gap = 100;
-        return fieldPosY + gap*count;
+    private int setReferenceListingPosition(int x, int y, int gap){
+        for (ListedReference listedReference : listedReferences) {
+            listedReference.setPosition(x, y);
+            y+=gap+listedReference.getReferenceValuesHeight();
+        }
+        return y;
     }
+    
     
 }
