@@ -12,4 +12,6 @@ public interface Reference {
     List<String> getFields();
     
     String getType();
+
+    public String toString();
 }

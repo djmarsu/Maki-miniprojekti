@@ -5,11 +5,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTextArea;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JTextField;
 import referencechampion.Reference;
 import referencechampion.ReferenceBase;
 
-public class UpdateReferences implements ActionListener {
+/**
+ *
+ * @author emivo
+ */
+public class UpdateReferences implements ActionListener, ChangeListener {
     ReferenceBase base;
     JTextArea listingArea;
     JTextField filterField;
@@ -33,6 +39,16 @@ public class UpdateReferences implements ActionListener {
             sb.append("\n");
         }
         
+        listingArea.setText(sb.toString());
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        StringBuilder sb = new StringBuilder();
+        for (Reference reference : base.getReferences()) {
+            sb.append(reference.toString());
+            sb.append("\n");
+        }
         listingArea.setText(sb.toString());
     }
     

@@ -96,12 +96,24 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>${cobertura.version}</version>
-                <configuration>
+                <configuration>                   
+                    <instrumentation>
+                        <ignores>
+                            <ignore>*</ignore>
+                        </ignores>
+                    </instrumentation>
                     <formats>
                         <format>html</format>
                         <format>xml</format>
                     </formats>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>

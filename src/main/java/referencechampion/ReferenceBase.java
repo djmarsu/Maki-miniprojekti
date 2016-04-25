@@ -53,6 +53,7 @@ public class ReferenceBase {
             translator.translateReference(reference);
         }
         fw.flush();
+        
     }
     
     public boolean addReference(Reference reference) {
@@ -70,6 +71,7 @@ public class ReferenceBase {
     }
     
     private String nextAvailableKey(String current) { //palauttaa avaimen muodon jota ei vielä varattu tyyliin avain->avain_4
+        // Täällä voisi käyttää stringbuilderia!
         String key = current;
         if (keyAvailable(key)) return key;
         
