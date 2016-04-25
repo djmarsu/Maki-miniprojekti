@@ -1,6 +1,7 @@
 
 package gui;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -18,6 +19,8 @@ public class ListedReference {
     public ListedReference(Reference reference, Container container, ActionListener al) {
         this.reference = reference;
         this.textField = new JTextArea(reference.toString());
+        this.textField.setEnabled(false);
+        this.textField.setDisabledTextColor(Color.BLACK);
         this.deleteButton = new JButton("delete");
         deleteButton.addActionListener(al);
         this.container = container;

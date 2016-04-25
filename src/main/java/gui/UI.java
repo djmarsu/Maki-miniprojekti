@@ -131,14 +131,21 @@ public class UI implements Runnable {
         
         
         Container listing = new Container();
+
+        createLabel("Reference listing", 20, 10, 300, 30, listingPage);
+
+        listing.setEnabled(false);
+        listing.setBounds(0, 0, 300, 300);
+        listingPage.add(listing);
         JScrollPane scrollPane = new JScrollPane(listing);
         scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SPEED);
         scrollPane.setBounds(20, 60, 500, 400);
         listingPage.add(scrollPane);
         
-        this.filter = createTextField("", 300, 0, 160, 20, listingPage);
+        createLabel("Filter:", 220, 20, 50, 30, listingPage);
+        this.filter = createTextField("", 280, 20, 200, 30, listingPage);
         updateReferencesAction = new UpdateReferences(base, listing, filter);
-        createButton("Search", 300, 20, updateReferencesAction, listingPage);
+        createButton("Find", 480, 20, 100, 30, updateReferencesAction, listingPage);
     }
 
     
