@@ -1,55 +1,69 @@
 package gui.actionlisteners;
 
+import gui.ListedReference;
+import gui.ListingCreator;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.JTextField;
 import referencechampion.Reference;
 import referencechampion.ReferenceBase;
 
-/**
- *
- * @author emivo
- */
+
 public class UpdateReferences implements ActionListener, ChangeListener {
     ReferenceBase base;
-    JTextArea listingArea;
+    Container listingArea;
     JTextField filterField;
+    List<ListedReference> listedReferences;
+    private final int fieldPosX = 20;
+    private final int fieldPosY = 40;
 
-    public UpdateReferences(ReferenceBase base, JTextArea listingArea, JTextField filter) {
+    public UpdateReferences(ReferenceBase base, Container listingArea, JTextField filter) {
         this.base = base;
         this.listingArea = listingArea;
         this.filterField = filter;
+        this.listedReferences = new ArrayList<ListedReference>();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String filter = filterField.getText();
         
-        StringBuilder sb = new StringBuilder();
-        
         ArrayList<Reference> filteredReferences = base.withFilter(filter);
+        ListingCreator.clearListedReferences(listedReferences);
+        this.listedReferences = ListingCreator.createListedReferences(filteredReferences, listingArea, this.base, this);
         
-        for (Reference reference : filteredReferences) {
-            sb.append(reference.toString());
-            sb.append("\n");
-        }
+        int listHeight = setReferenceListingPosition(fieldPosX, fieldPosY, 10);
         
-        listingArea.setText(sb.toString());
+        
+        this.listingArea.setPreferredSize(new Dimension(400, listHeight));
+        this.listingArea.repaint();
+        this.listingArea.revalidate();
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        StringBuilder sb = new StringBuilder();
-        for (Reference reference : base.getReferences()) {
-            sb.append(reference.toString());
-            sb.append("\n");
-        }
-        listingArea.setText(sb.toString());
+        this.actionPerformed(null);
     }
+    
+
+    private int setReferenceListingPosition(int x, int y, int gap){
+        for (ListedReference listedReference : listedReferences) {
+            listedReference.setPosition(x, y);
+            y+=gap+listedReference.getReferenceValuesHeight();
+        }
+        return y;
+    }
+    
     
 }

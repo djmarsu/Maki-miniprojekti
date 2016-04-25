@@ -25,7 +25,12 @@ public class FieldCreator {
             }
             fields.clear();
         }
-
+    }
+    
+    public static void emptyFields(Map<String, Field> fields) {
+        for (Field field : fields.values()) {
+            field.setText("");
+        }
     }
 
 }

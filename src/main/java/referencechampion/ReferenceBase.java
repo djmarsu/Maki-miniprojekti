@@ -127,9 +127,16 @@ public class ReferenceBase {
         }
         return filtered;
     }   
+    
+    public boolean removeReference(Reference reference) {
+        references.remove(reference);
+        updateJsonFile();
+        return true;
+    }
+
 
     // testejä varten ettei yritä ees ottaa sieltä json tiedostosta niitä muita emt
-    void empty() {
+    public void empty() {
         this.references.clear();
     }
 }

@@ -29,6 +29,9 @@ import referencechampion.ReferenceCollection;
  */
 public class UI implements Runnable {
 
+    private static final int SCROLL_SPEED = 15;
+    private static final int DEFAULT_BUTTON_HEIGHT = 30;
+    private static final int DEFAULT_BUTTON_WIDTH = 200;
     private int windowWidth;
     private int windowHeight;
     private JFrame window;
@@ -40,7 +43,6 @@ public class UI implements Runnable {
     private SelectType selectTypeAction;
     private UpdateReferences updateReferencesAction;
     private ReferenceBase base;  
-    private JTextField listing;
     private JTextField filename;
     private JTextField filter;
 
@@ -93,6 +95,7 @@ public class UI implements Runnable {
         
         JScrollPane scrollPane = new JScrollPane(fieldArea);
         scrollPane.setBounds(20, 60, 500, 400);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SPEED);
         addReferencePage.add(scrollPane);         
 
         JComboBox typeList = new JComboBox(ReferenceCollection.getTypes());
@@ -114,8 +117,8 @@ public class UI implements Runnable {
         this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
         this.translateAction = new Translate(base, this.filename, this.result);
 
-        createButton("Create a reference", 20, 520, 200, 30, createReferenceAction, addReferencePage);
-        createButton("Create a BibTex file", 260, 520, 200, 30, translateAction,  addReferencePage);
+        createButton("Create a reference", 20, 520, createReferenceAction, addReferencePage);
+        createButton("Create a BibTex file", 260, 520, translateAction,  addReferencePage);
 
     }
 
@@ -125,19 +128,24 @@ public class UI implements Runnable {
         tabs.addTab("Listing", listingPage);
 
         createLabel("Reference listing:", 20, 10, 300, 30, listingPage);
+        
+        
+        Container listing = new Container();
 
-        JTextArea listing = new JTextArea("");
+        createLabel("Reference listing", 20, 10, 300, 30, listingPage);
+
         listing.setEnabled(false);
-        listing.setDisabledTextColor(Color.BLACK);
         listing.setBounds(0, 0, 300, 300);
         listingPage.add(listing);
         JScrollPane scrollPane = new JScrollPane(listing);
-        scrollPane.setBounds(10, 60, 500, 550);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SPEED);
+        scrollPane.setBounds(20, 60, 500, 400);
         listingPage.add(scrollPane);
         
-        this.filter = createTextField("", 300, 0, 160, 20, listingPage);
+        createLabel("Filter:", 220, 20, 50, 30, listingPage);
+        this.filter = createTextField("", 280, 20, 200, 30, listingPage);
         updateReferencesAction = new UpdateReferences(base, listing, filter);
-        createButton("Update List", 300, 20, 200, 30, updateReferencesAction, listingPage);
+        createButton("Find", 480, 20, 100, 30, updateReferencesAction, listingPage);
     }
 
     
@@ -146,13 +154,18 @@ public class UI implements Runnable {
         this.result.setText(string);
     }
     
-    public JButton createButton(String name, int x, int y, int width, int length, ActionListener a , Container container){
+    public JButton createButton(String name, int x, int y, int width, int height, ActionListener a , Container container){
         JButton button = new JButton(name);
         button.setName(name); //nimi tarvitaan testeihin
-        button.setBounds(x, y, width, length);
+        button.setBounds(x, y, width, height);
         button.addActionListener(a);
         container.add(button);
+        button.addActionListener(updateReferencesAction);
         return button;
+    }
+    
+    public JButton createButton(String name, int x, int y, ActionListener a, Container container) {
+        return createButton(name, x, y, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, a, container);
     }
     
     

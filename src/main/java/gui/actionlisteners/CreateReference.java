@@ -6,6 +6,7 @@
 package gui.actionlisteners;
 
 import gui.Field;
+import gui.FieldCreator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public class CreateReference implements ActionListener {
 
         if (base.addReference(reference)) {
             result.setText("New reference added");
-            emptyFields();
+            FieldCreator.emptyFields(this.fields);
         } else {
             result.setText("One or more required fields are empty");
         }
@@ -55,11 +56,5 @@ public class CreateReference implements ActionListener {
 
     public void setReferenceValues(HashMap<String, String> values) {
         this.referenceValues = values;
-    }
-
-    private void emptyFields() {
-        for (String key : this.fields.keySet()) {
-            fields.get(key).setText("");
-        }
     }
 }
