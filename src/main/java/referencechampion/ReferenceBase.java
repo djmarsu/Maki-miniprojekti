@@ -4,6 +4,7 @@ package referencechampion;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ReferenceBase {
@@ -30,6 +31,7 @@ public class ReferenceBase {
             translator.translateReference(reference);
         }
         fw.flush();
+        
     }
     
     public boolean addReference(Reference reference) {
@@ -45,6 +47,7 @@ public class ReferenceBase {
     }
     
     private String nextAvailableKey(String current) { //palauttaa avaimen muodon jota ei vielä varattu tyyliin avain->avain_4
+        // Täällä voisi käyttää stringbuilderia!
         String key = current;
         if (keyAvailable(key)) return key;
         
@@ -71,5 +74,18 @@ public class ReferenceBase {
         return true;
     }
 
-    
+    public ArrayList<Reference> withFilter(String filter) {
+        ArrayList<Reference> filtered = new ArrayList<Reference>();
+
+        for (Reference reference : references) {
+            List<String> fields = reference.getFields();
+            for (String field : fields) {
+                if (reference.getField(field).contains(filter)) {
+                    filtered.add(reference);
+                    break;
+                }
+            }
+        }
+        return filtered;
+    }   
 }
