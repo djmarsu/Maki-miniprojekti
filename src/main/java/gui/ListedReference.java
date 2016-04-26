@@ -22,6 +22,7 @@ public class ListedReference {
         this.textField.setEnabled(false);
         this.textField.setDisabledTextColor(Color.BLACK);
         this.deleteButton = new JButton("delete");        
+        this.deleteButton.setName(reference.getField("key"));
         deleteButton.addActionListener(al2);
         deleteButton.addActionListener(al1);
         this.container = container;

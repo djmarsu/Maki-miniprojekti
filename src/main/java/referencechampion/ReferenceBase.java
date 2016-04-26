@@ -33,7 +33,7 @@ public class ReferenceBase {
     
     
 
-    public void loadReferencesFromMemory() {
+    private void loadReferencesFromMemory() {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(IN_MEMORY_FILE_NAME));
             references = (ArrayList<Reference>) objectInputStream.readObject();
@@ -102,7 +102,7 @@ public class ReferenceBase {
         return true;
     }
 
-    public void writeReferencesInMemory() {
+    private void writeReferencesInMemory() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(IN_MEMORY_FILE_NAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -134,6 +134,10 @@ public class ReferenceBase {
         references.remove(reference);
         writeReferencesInMemory();
         return true;
+    }
+    
+    public int referencesCount() {
+        return references.size();
     }
 
     /**
