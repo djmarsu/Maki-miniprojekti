@@ -4,3 +4,4 @@ target/
 *.bib
 /ReferenceChampion.iml
 /.idea/
+/references.data
