@@ -23,6 +23,6 @@ scenario "user can delete an added reference", {
     }
 
     then 'reference is removed from the list', {
-        
+        window.cleanUp();
     }
 }

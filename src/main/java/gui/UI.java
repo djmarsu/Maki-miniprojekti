@@ -126,6 +126,7 @@ public class UI implements Runnable {
         Container listingPage = new Container();
 
         tabs.addTab("Listing", listingPage);
+        tabs.setName("Listing");
 
         createLabel("Reference listing:", 20, 10, 300, 30, listingPage);
         
