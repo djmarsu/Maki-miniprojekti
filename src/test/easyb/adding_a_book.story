@@ -23,7 +23,7 @@ scenario "user can fill out the form correctly and add a book", {
 
     then 'a book will be added to the system', {
        window.label("result").requireText "New reference added"
-        window.cleanUp()
+       window.cleanUp()
     }
 }
 

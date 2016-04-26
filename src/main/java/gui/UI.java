@@ -134,6 +134,7 @@ public class UI implements Runnable {
 
         createLabel("Reference listing", 20, 10, 300, 30, listingPage);
 
+        listing.setName("listing");
         listing.setEnabled(false);
         listing.setBounds(0, 0, 300, 300);
         listingPage.add(listing);
@@ -144,8 +145,9 @@ public class UI implements Runnable {
         
         createLabel("Filter:", 220, 20, 50, 30, listingPage);
         this.filter = createTextField("", 280, 20, 200, 30, listingPage);
+        this.filter.setName("filter");
         updateReferencesAction = new UpdateReferences(base, listing, filter);
-        createButton("Find", 480, 20, 100, 30, updateReferencesAction, listingPage);
+        createButton("Find", 480, 20, 100, 30, updateReferencesAction, listingPage).setName("find");
     }
 
     

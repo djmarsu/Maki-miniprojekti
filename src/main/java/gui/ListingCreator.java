@@ -16,10 +16,11 @@ public class ListingCreator {
     public static List<ListedReference> createListedReferences(List<Reference> references, Container container, ReferenceBase base, ActionListener al) {
 
         List<ListedReference> list = new ArrayList<ListedReference>();
+        int index = 1;
         for (Reference r : references) {
-            ListedReference lr = new ListedReference(r, container, new RemoveReference(r, base), al);
-
+            ListedReference lr = new ListedReference(r, container, new RemoveReference(r, base), al, index);
             list.add(lr);
+            index ++;
         }
 
         return list;
