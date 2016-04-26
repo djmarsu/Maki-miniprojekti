@@ -19,7 +19,7 @@ public class ListedReference {
     public ListedReference(Reference reference, Container container, ActionListener al1, ActionListener al2, int index) {
         this.reference = reference;
         this.textField = new JTextArea(reference.toString());
-        this.textField.setName(""+index);
+        this.textField.setName(reference.getField("key"));
         this.textField.setEnabled(false);
         this.textField.setDisabledTextColor(Color.BLACK);
         this.deleteButton = new JButton("delete");        

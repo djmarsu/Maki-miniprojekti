@@ -34,14 +34,15 @@ public class UI implements Runnable {
     private int windowWidth;
     private int windowHeight;
     private JFrame window;
-    protected Map<String, Field> fields;    
+    protected Map<String, Field> fields;  
+    protected Container listing;
     private JLabel result;
     private JLabel pagetitle;   
     private CreateReference createReferenceAction;
     private Translate translateAction;
     private SelectType selectTypeAction;
     private UpdateReferences updateReferencesAction;
-    private ReferenceBase base;  
+    private ReferenceBase base;    
 
     private JTextField filename;
     private JTextField filter;
@@ -134,7 +135,7 @@ public class UI implements Runnable {
         createLabel("Reference listing:", 20, 10, 300, 30, listingPage);
         
         
-        Container listing = new Container();
+        listing = new Container();
         listing.setName("listings");
 
         createLabel("Reference listing", 20, 10, 300, 30, listingPage);
@@ -189,6 +190,10 @@ public class UI implements Runnable {
         textField.setBounds(x, y, width, length);    
         container.add(textField);
         return textField;
+    }
+    
+    public Container getListing(){
+        return listing;
     }
 
     public JFrame getWindow() {
