@@ -24,8 +24,6 @@ public class Translator {
         for (String field : reference.getFields()) {
             appendField(sb, field, reference);
         }
-        // poistaa sen viimeisen pilkun :D (ei oo oikeesti tarpeellinen ees)
-        //sb.deleteCharAt(sb.length()-2);
         sb.append("}\n");
         writeInFile(sb.toString());
         return sb.toString();
@@ -54,7 +52,8 @@ public class Translator {
 
     private String capsuleUpperCases(String s) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
+        sb.append(s.charAt(0));
+        for (int i = 1; i < s.length(); i++) {
             if (Character.isUpperCase(s.charAt(i))) {
                 sb.append("{");
                 sb.append(s.charAt(i));

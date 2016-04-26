@@ -1,29 +1,41 @@
 package referencechampion;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReferenceBase {
 
+    private final String BASE_DIRECTORY; // This is the directory where all the data is saved
+    private final String IN_MEMORY_FILE_NAME;
     private ArrayList<Reference> references;
     private ReferenceValidator validator;
     private Translator translator;
 
     public ReferenceBase() throws IOException {
-        this.validator = new ReferenceValidator();
-        this.translator = new Translator();
-        loadReferencesFromMemory();
+        this("references.data");
     }
 
-    public void loadReferencesFromMemory() throws IOException {
+    public ReferenceBase(String memoryDataFileName) { // in tests, use some test file name
+        this.validator = new ReferenceValidator();
+        this.translator = new Translator();
+        BASE_DIRECTORY = Paths.get(System.getProperty("user.home"), "ReferenceChampionData").toString();
+        IN_MEMORY_FILE_NAME = Paths.get(BASE_DIRECTORY, memoryDataFileName).toString();
+        loadReferencesFromMemory();
+    }
+    
+    
+
+    private void loadReferencesFromMemory() {
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("references.data"));
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(IN_MEMORY_FILE_NAME));
             references = (ArrayList<Reference>) objectInputStream.readObject();
         } catch (Exception e) {
             createNewReferencesData();
@@ -36,7 +48,8 @@ public class ReferenceBase {
     }
 
     public void translateAll(String filename) throws IOException {
-        FileWriter fw = new FileWriter(filename + ".bib", true);
+        filename = Paths.get(BASE_DIRECTORY, filename).toString(); // this is not final if customer wants to save bib file to other directory
+        FileWriter fw = new FileWriter(filename + ".bib", false);
         translator.setFileWriter(fw);
         for (Reference reference : references) {
             translator.translateReference(reference);
@@ -59,8 +72,7 @@ public class ReferenceBase {
         reference.addValue("key", nextAvailableKey(reference.getField("key")));
     }
 
-    private String nextAvailableKey(String current) { //palauttaa avaimen muodon jota ei vielä varattu tyyliin avain->avain_4
-        // Täällä voisi käyttää stringbuilderia!
+    private String nextAvailableKey(String current) {
         String key = current;
         if (keyAvailable(key)) {
             return key;
@@ -80,7 +92,7 @@ public class ReferenceBase {
         return references;
     }
 
-    private boolean keyAvailable(String key) { //onko avain varattu
+    private boolean keyAvailable(String key) {
         for (Reference ref : references) {
             if (ref.getField("key").equals(key)) {
                 return false;
@@ -90,15 +102,16 @@ public class ReferenceBase {
         return true;
     }
 
-    public void writeReferencesInMemory() {
+    private void writeReferencesInMemory() {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("references.data");
+            FileOutputStream fileOutputStream = new FileOutputStream(IN_MEMORY_FILE_NAME);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(references);
             objectOutputStream.close();
             fileOutputStream.close();
         } catch (Exception e) {
-            System.out.println("Unexpected Error: " + e.getMessage());
+            File f = new File(BASE_DIRECTORY);
+            f.mkdirs();
         }
     }
 
@@ -122,9 +135,16 @@ public class ReferenceBase {
         writeReferencesInMemory();
         return true;
     }
+    
+    public int referencesCount() {
+        return references.size();
+    }
 
-    // testejä varten ettei yritä ees ottaa sieltä json tiedostosta niitä muita emt
-    public void empty() {
-        this.references.clear();
+    /**
+     * CAUTION THIS WILL ERAISE ALL SAVED OBJECTS
+     */
+    public void clearData() {
+        references = new ArrayList<Reference>();
+        writeReferencesInMemory();
     }
 }

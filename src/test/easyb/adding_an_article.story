@@ -6,7 +6,7 @@ description 'User can add an article to the reference collection'
 
 scenario "user can fill out the form correctly and add an article", {
     given 'tab add a reference is selected', {
-       ui = new UI(600, 700, new ReferenceBase())
+       ui = new UI(600, 700, new ReferenceBase("test.data"))
        ui.run()
        window = new FrameFixture(ui.getWindow())
        window.comboBox("dropdown").selectItem("book")
@@ -24,5 +24,7 @@ scenario "user can fill out the form correctly and add an article", {
     then 'an article will be added to the system', {
         window.label("result").requireText "New reference added"
        window.cleanUp()
+        ui.getBase().referencesCount().shouldBe 1
+        ui.getBase().clearData()
     }
 }

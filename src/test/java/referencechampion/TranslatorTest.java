@@ -57,6 +57,6 @@ public class TranslatorTest {
             assertTrue(translated.contains(string));
 
         }
-        assertTrue(translated.contains("{G}eneric field \\\"{a}\\\"{o}\\aa {A}{A}{A}"));
+        assertTrue(translated.contains("Generic field \\\"{a}\\\"{o}\\aa {A}{A}{A}"));
     }
 }

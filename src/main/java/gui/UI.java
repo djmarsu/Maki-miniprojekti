@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -43,6 +42,7 @@ public class UI implements Runnable {
     private SelectType selectTypeAction;
     private UpdateReferences updateReferencesAction;
     private ReferenceBase base;  
+
     private JTextField filename;
     private JTextField filter;
 
@@ -56,6 +56,9 @@ public class UI implements Runnable {
     @Override
     public void run() {
         constructWindow();
+    }
+    public ReferenceBase getBase() {
+        return base;
     }
 
     private void constructWindow() {
@@ -126,11 +129,13 @@ public class UI implements Runnable {
         Container listingPage = new Container();
 
         tabs.addTab("Listing", listingPage);
+        tabs.setName("Listing");
 
         createLabel("Reference listing:", 20, 10, 300, 30, listingPage);
         
         
         Container listing = new Container();
+        listing.setName("listings");
 
         createLabel("Reference listing", 20, 10, 300, 30, listingPage);
 
@@ -145,7 +150,7 @@ public class UI implements Runnable {
         
         createLabel("Filter:", 220, 20, 50, 30, listingPage);
         this.filter = createTextField("", 280, 20, 200, 30, listingPage);
-        this.filter.setName("filter");
+        this.filter.setName("search");
         updateReferencesAction = new UpdateReferences(base, listing, filter);
         createButton("Find", 480, 20, 100, 30, updateReferencesAction, listingPage).setName("find");
     }
@@ -181,7 +186,7 @@ public class UI implements Runnable {
     
     public JTextField createTextField(String name, int x, int y, int width, int length, Container container){
         JTextField textField = new JTextField(name);
-        textField.setBounds(x, y, width, length);       
+        textField.setBounds(x, y, width, length);    
         container.add(textField);
         return textField;
     }

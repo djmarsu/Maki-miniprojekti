@@ -6,8 +6,9 @@ description 'User can delete a reference'
 
 scenario "user can delete an added reference", {
     given 'user has added a reference', {
-        ui = new UI(600, 700, new ReferenceBase())
+        ui = new UI(600, 700, new ReferenceBase("test.data"))
         ui.run()
+        ui.getBase().clearData()
         window = new FrameFixture(ui.getWindow())
         window.comboBox("dropdown").selectItem("book")
         window.textBox("key").enterText("key")
@@ -19,10 +20,13 @@ scenario "user can delete an added reference", {
     }
 
     when 'delete-button is pushed on listing-tab', {
-        window.tabbedPane("Listing").click()
+        window.tabbedPane("Listing").selectTab("Listing").click()
+        window.button("key").click()
     }
 
     then 'reference is removed from the list', {
-        
+        ui.getBase().referencesCount().shouldBe 0
+        ui.getBase().clearData()
+        window.cleanUp();
     }
 }
