@@ -72,18 +72,16 @@ public class ReferenceBase {
         reference.addValue("key", nextAvailableKey(reference.getField("key")));
     }
 
-    private String nextAvailableKey(String current) {
+    private String nextAvailableKey(String current) { //palauttaa avaimen muodon jota ei vielä varattu tyyliin avain->avain_4
+        // Täällä voisi käyttää stringbuilderia!
         String key = current;
-        if (keyAvailable(key)) {
-            return key;
-        }
-
-        Integer c = 0;
-        String tail = "_" + c;
-
-        while (!keyAvailable(key + tail)) {
+        if (keyAvailable(key)) return key;
+        
+        char c='a';
+        String tail ="_"+c;
+        while (!keyAvailable(key+c)) {
             c++;
-            tail = "_" + c;
+            tail = "_"+c;
         }
         return key + tail;
     }

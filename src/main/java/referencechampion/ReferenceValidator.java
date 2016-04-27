@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ReferenceValidator {
     public boolean validate(Reference ref) {
+        if (ref.getType().equals("book")) return validateBook(ref);
         List<String> requirements = ReferenceCollection.getReferenceRequirements(ref.getType());
         
         for (String req : requirements) {
@@ -14,6 +15,24 @@ public class ReferenceValidator {
         }
         
         if (!validateField(ref.getField("key"))) ref.addValue("key", defaultKey(ref)); //laittaa tyhjään key-kenttään default-avaimen
+        return true;
+    }
+    
+    public boolean validateBook(Reference bookref) {
+        List<String> requirements = ReferenceCollection.getReferenceRequirements("book");
+        
+        for (String req : requirements) {
+            //validoi kirjan author-kentän hyväksyen vaihtoehtoisena editor-kentän
+            if(req.equals("author")){
+                if(!validateField(bookref.getField("author")) && !validateField(bookref.getField("editor"))) {
+                    return false;
+                }
+                continue;
+            }
+            //kirjan muiden kenttien validointi
+            if (!validateField(bookref.getField(req))) return false;
+        }
+        if (!validateField(bookref.getField("key"))) bookref.addValue("key", defaultKey(bookref));
         return true;
     }
     
@@ -25,41 +44,11 @@ public class ReferenceValidator {
         String writer = "";
         String year = ref.getField("year");
         
-        if (validateField("author")) writer = ref.getField("author");
-        else if (validateField("journal")) writer = ref.getField("journal");
-        
+        if (validateField(ref.getField("author")))  writer = ref.getField("author");
+        else if(ref.getType().equals("book") && validateField(ref.getField("editor")))writer = ref.getField("editor");
+        else if (validateField(ref.getField("journal"))) writer = ref.getField("journal");
+   
         writer = writer.substring(0, Math.min(3, writer.length()));
         return writer.trim().toLowerCase() + year;
     }
-    // ei käytössä ##################################
-    private boolean validateAll(ReferenceEntity s) {
-        ReferenceCollection refCol = new ReferenceCollection();
-        
-        List<String> requirements = refCol.getReferenceRequirements(s.getType());
-        for (String requirement : requirements) {
-            if (!validateField(s.getField(requirement))) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-    
-    private boolean validateBook(ReferenceEntity book) {
-        List<String> requirements = ReferenceCollection.getReferenceRequirements("book");
-        
-        for (String req : requirements) {
-            if (!validateField(req)) return false;
-        }
-        return validateField(book.getField("publisher")) && validateField(book.getField("title")) && validateField(book.getField("year"));
-    }
-
-    private boolean validateInproceedings(ReferenceEntity inproceedings) {
-        return validateField(inproceedings.getField("author")) && validateField(inproceedings.getField("booktitle")) && validateField(inproceedings.getField("title")) && validateField(inproceedings.getField("year"));
-    }
-
-    private boolean validateArticle(ReferenceEntity article) {
-        return validateField(article.getField("author")) && validateField(article.getField("journal")) && validateField(article.getField("title")) && validateField(article.getField("year"));
-    }
-    
 }
