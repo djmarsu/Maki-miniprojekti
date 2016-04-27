@@ -128,7 +128,7 @@ public class ReferenceBaseTest {
 
         ArrayList<Reference> filtered = base.withFilter("ääöö");
         assertTrue(filtered.size() == 1);
-        assertTrue(filtered.get(0).getField("key") == "02");
+        assertTrue(filtered.get(0).getField("key").equals("02"));
     }
 
     @Test
