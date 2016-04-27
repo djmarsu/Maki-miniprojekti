@@ -4,9 +4,9 @@ import gui.actionlisteners.CreateReference;
 import gui.actionlisteners.SelectType;
 import gui.actionlisteners.Translate;
 import gui.actionlisteners.UpdateReferences;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,6 +107,7 @@ public class UI implements Runnable {
         typeList.setBounds(440, 10, 150, 30);      
         this.selectTypeAction = new SelectType(fieldArea, this.base, this.fields, this.pagetitle, typeList);
         typeList.addActionListener(this.selectTypeAction);
+        selectTypeAction.actionPerformed(null);
         addReferencePage.add(typeList);
 
         this.result = createLabel("Fields with * are required", 20, 600, 400, 30, addReferencePage);
@@ -152,7 +153,7 @@ public class UI implements Runnable {
         createLabel("Filter:", 220, 20, 50, 30, listingPage);
         this.filter = createTextField("", 280, 20, 200, 30, listingPage);
         this.filter.setName("search");
-        updateReferencesAction = new UpdateReferences(base, listing, filter);
+        updateReferencesAction = new UpdateReferences(base, listing, filter, window);
         createButton("Find", 480, 20, 100, 30, updateReferencesAction, listingPage).setName("find");
     }
 

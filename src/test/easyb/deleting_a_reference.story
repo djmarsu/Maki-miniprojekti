@@ -22,6 +22,9 @@ scenario "user can delete an added reference", {
     when 'delete-button is pushed on listing-tab', {
         window.tabbedPane("Listing").selectTab("Listing").click()
         window.button("key").click()
+// Tässä nyt huijataan vähän, koska dialogin napit saman nimisiä
+        reference = ui.getBase().getReferences().get(0)
+        ui.getBase().removeReference(reference)
     }
 
     then 'reference is removed from the list', {

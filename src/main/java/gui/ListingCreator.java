@@ -6,18 +6,19 @@ import java.awt.Container;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import referencechampion.Reference;
 import referencechampion.ReferenceBase;
 
 
 public class ListingCreator {
     
-    public static List<ListedReference> createListedReferences(List<Reference> references, Container container, ReferenceBase base, ActionListener al) {
+    public static List<ListedReference> createListedReferences(List<Reference> references, Container container, ReferenceBase base, ActionListener al, JFrame frame) {
 
         List<ListedReference> list = new ArrayList<ListedReference>();
         int index = 1;
         for (Reference r : references) {
-            ListedReference lr = new ListedReference(r, container, new RemoveReference(r, base), al, index);
+            ListedReference lr = new ListedReference(r, container, new RemoveReference(r, base, frame), al, index);
             list.add(lr);
             index ++;
         }
