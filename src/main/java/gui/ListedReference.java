@@ -16,12 +16,14 @@ public class ListedReference {
     private JButton deleteButton;
     private Container container;
 
-    public ListedReference(Reference reference, Container container, ActionListener al1, ActionListener al2) {
+    public ListedReference(Reference reference, Container container, ActionListener al1, ActionListener al2, int index) {
         this.reference = reference;
         this.textField = new JTextArea(reference.toString());
+        this.textField.setName(reference.getField("key"));
         this.textField.setEnabled(false);
         this.textField.setDisabledTextColor(Color.BLACK);
         this.deleteButton = new JButton("delete");        
+        this.deleteButton.setName(reference.getField("key"));
         deleteButton.addActionListener(al2);
         deleteButton.addActionListener(al1);
         this.container = container;

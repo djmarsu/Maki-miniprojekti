@@ -2,17 +2,13 @@ package gui.actionlisteners;
 
 import gui.ListedReference;
 import gui.ListingCreator;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -27,8 +23,10 @@ public class UpdateReferences implements ActionListener, ChangeListener {
     List<ListedReference> listedReferences;
     private final int fieldPosX = 20;
     private final int fieldPosY = 40;
+    private JFrame frame;
 
-    public UpdateReferences(ReferenceBase base, Container listingArea, JTextField filter) {
+    public UpdateReferences(ReferenceBase base, Container listingArea, JTextField filter, JFrame frame) {
+        this.frame = frame;
         this.base = base;
         this.listingArea = listingArea;
         this.filterField = filter;
@@ -41,7 +39,7 @@ public class UpdateReferences implements ActionListener, ChangeListener {
         
         ArrayList<Reference> filteredReferences = base.withFilter(filter);
         ListingCreator.clearListedReferences(listedReferences);
-        this.listedReferences = ListingCreator.createListedReferences(filteredReferences, listingArea, this.base, this);
+        this.listedReferences = ListingCreator.createListedReferences(filteredReferences, listingArea, this.base, this, frame);
         
         int listHeight = setReferenceListingPosition(fieldPosX, fieldPosY, 10);
         
