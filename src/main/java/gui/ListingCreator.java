@@ -1,15 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package gui;
 
-/**
- *
- * @author alrial
- */
+import gui.actionlisteners.RemoveReference;
+import java.awt.Container;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
+import referencechampion.Reference;
+import referencechampion.ReferenceBase;
+
+
 public class ListingCreator {
     
+    public static List<ListedReference> createListedReferences(List<Reference> references, Container container, ReferenceBase base, ActionListener al, JFrame frame) {
+
+        List<ListedReference> list = new ArrayList<ListedReference>();
+        int index = 1;
+        for (Reference r : references) {
+            ListedReference lr = new ListedReference(r, container, new RemoveReference(r, base, frame), al, index);
+            list.add(lr);
+            index ++;
+        }
+
+        return list;
+    }
+
+    public static void clearListedReferences(List<ListedReference> references) {
+        if (references != null) {
+            for (ListedReference lr : references) {
+                lr.clear();
+            }
+            references.clear();
+        }
+    }
 }

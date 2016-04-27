@@ -1,16 +1,16 @@
 
 description 'User can view added references'
 
-scenario "User can view all added references", {
-    given 'tab listing is selected', {
+scenario "User can add a reference without a key", {
+    given 'tab add a reference is selected', {
 
    }
  
-    when 'there are references added', {
+    when 'a reference without a key is added', {
 
     }
 
-    then 'a list of references is shown', {
+    then 'a reference is made with an automated key', {
 
     }
 }

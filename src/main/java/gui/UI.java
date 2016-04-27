@@ -4,9 +4,9 @@ import gui.actionlisteners.CreateReference;
 import gui.actionlisteners.SelectType;
 import gui.actionlisteners.Translate;
 import gui.actionlisteners.UpdateReferences;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -29,18 +28,22 @@ import referencechampion.ReferenceCollection;
  */
 public class UI implements Runnable {
 
+    private static final int SCROLL_SPEED = 15;
+    private static final int DEFAULT_BUTTON_HEIGHT = 30;
+    private static final int DEFAULT_BUTTON_WIDTH = 200;
     private int windowWidth;
     private int windowHeight;
     private JFrame window;
-    protected Map<String, Field> fields;    
+    protected Map<String, Field> fields;  
+    protected Container listing;
     private JLabel result;
     private JLabel pagetitle;   
     private CreateReference createReferenceAction;
     private Translate translateAction;
     private SelectType selectTypeAction;
     private UpdateReferences updateReferencesAction;
-    private ReferenceBase base;  
-    private JTextField listing;
+    private ReferenceBase base;    
+
     private JTextField filename;
     private JTextField filter;
 
@@ -54,6 +57,9 @@ public class UI implements Runnable {
     @Override
     public void run() {
         constructWindow();
+    }
+    public ReferenceBase getBase() {
+        return base;
     }
 
     private void constructWindow() {
@@ -93,6 +99,7 @@ public class UI implements Runnable {
         
         JScrollPane scrollPane = new JScrollPane(fieldArea);
         scrollPane.setBounds(20, 60, 500, 400);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SPEED);
         addReferencePage.add(scrollPane);         
 
         JComboBox typeList = new JComboBox(ReferenceCollection.getTypes());
@@ -100,6 +107,7 @@ public class UI implements Runnable {
         typeList.setBounds(440, 10, 150, 30);      
         this.selectTypeAction = new SelectType(fieldArea, this.base, this.fields, this.pagetitle, typeList);
         typeList.addActionListener(this.selectTypeAction);
+        selectTypeAction.actionPerformed(null);
         addReferencePage.add(typeList);
 
         this.result = createLabel("Fields with * are required", 20, 600, 400, 30, addReferencePage);
@@ -114,8 +122,8 @@ public class UI implements Runnable {
         this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
         this.translateAction = new Translate(base, this.filename, this.result);
 
-        createButton("Create a reference", 20, 520, 200, 30, createReferenceAction, addReferencePage);
-        createButton("Create a BibTex file", 260, 520, 200, 30, translateAction,  addReferencePage);
+        createButton("Create a reference", 20, 520, createReferenceAction, addReferencePage);
+        createButton("Create a BibTex file", 260, 520, translateAction,  addReferencePage);
 
     }
 
@@ -123,21 +131,30 @@ public class UI implements Runnable {
         Container listingPage = new Container();
 
         tabs.addTab("Listing", listingPage);
+        tabs.setName("Listing");
 
         createLabel("Reference listing:", 20, 10, 300, 30, listingPage);
+        
+        
+        listing = new Container();
+        listing.setName("listings");
 
-        JTextArea listing = new JTextArea("");
+        createLabel("Reference listing", 20, 10, 300, 30, listingPage);
+
+        listing.setName("listing");
         listing.setEnabled(false);
-        listing.setDisabledTextColor(Color.BLACK);
         listing.setBounds(0, 0, 300, 300);
         listingPage.add(listing);
         JScrollPane scrollPane = new JScrollPane(listing);
-        scrollPane.setBounds(10, 60, 500, 550);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SPEED);
+        scrollPane.setBounds(20, 60, 500, 400);
         listingPage.add(scrollPane);
         
-        this.filter = createTextField("", 300, 0, 160, 20, listingPage);
-        updateReferencesAction = new UpdateReferences(base, listing, filter);
-        createButton("Update List", 300, 20, 200, 30, updateReferencesAction, listingPage);
+        createLabel("Filter:", 220, 20, 50, 30, listingPage);
+        this.filter = createTextField("", 280, 20, 200, 30, listingPage);
+        this.filter.setName("search");
+        updateReferencesAction = new UpdateReferences(base, listing, filter, window);
+        createButton("Find", 480, 20, 100, 30, updateReferencesAction, listingPage).setName("find");
     }
 
     
@@ -146,13 +163,18 @@ public class UI implements Runnable {
         this.result.setText(string);
     }
     
-    public JButton createButton(String name, int x, int y, int width, int length, ActionListener a , Container container){
+    public JButton createButton(String name, int x, int y, int width, int height, ActionListener a , Container container){
         JButton button = new JButton(name);
         button.setName(name); //nimi tarvitaan testeihin
-        button.setBounds(x, y, width, length);
+        button.setBounds(x, y, width, height);
         button.addActionListener(a);
         container.add(button);
+        button.addActionListener(updateReferencesAction);
         return button;
+    }
+    
+    public JButton createButton(String name, int x, int y, ActionListener a, Container container) {
+        return createButton(name, x, y, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, a, container);
     }
     
     
@@ -166,9 +188,13 @@ public class UI implements Runnable {
     
     public JTextField createTextField(String name, int x, int y, int width, int length, Container container){
         JTextField textField = new JTextField(name);
-        textField.setBounds(x, y, width, length);       
+        textField.setBounds(x, y, width, length);    
         container.add(textField);
         return textField;
+    }
+    
+    public Container getListing(){
+        return listing;
     }
 
     public JFrame getWindow() {

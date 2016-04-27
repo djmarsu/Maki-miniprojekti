@@ -1,9 +1,10 @@
 
 package referencechampion;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Reference {
+public interface Reference extends Serializable {
 
     String getField(String key);
     
