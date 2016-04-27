@@ -28,6 +28,7 @@ scenario "User can search a reference with a complete string", {
 
     then 'reference is listed', {
         window.textBox("key").requireText "book\n\tkey = key\n\tauthor = author\n\ttitle = title\n\tpublisher = publisher\n\tyear = 1234\n"
+        ui.getBase().clearData()
         window.cleanUp()
     }
 }
@@ -55,6 +56,7 @@ scenario "User can search a reference with a partial string", {
 
     then 'reference is listed', {
         window.textBox("key2").requireText "book\n\tkey = key2\n\tauthor = authori\n\ttitle = title\n\tpublisher = publisher\n\tyear = 1234\n"
+        ui.getBase().clearData()
         window.cleanUp()
     }
 }
@@ -82,6 +84,7 @@ scenario "User search is filtered with a string", {
 
     then 'no reference is listed', {
         ui.getListing().getComponentCount().shouldBe 0
+        ui.getBase().clearData()
         window.cleanUp()
     }
 }
