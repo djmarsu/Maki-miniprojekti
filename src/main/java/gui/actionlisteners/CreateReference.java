@@ -56,7 +56,8 @@ public class CreateReference implements ActionListener {
 
             ActionListener taskPerformer = new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
-                    result.setText("");
+                    result.setText("Fields with * are required");
+                    result.setForeground(Color.BLACK);
                 }
             };
             Timer timer = new Timer(5000, taskPerformer);
@@ -65,6 +66,7 @@ public class CreateReference implements ActionListener {
             FieldCreator.emptyFields(this.fields);
         } else {
             result.setText("One or more required fields are empty");
+            result.setForeground(Color.RED);
         }
     }
 

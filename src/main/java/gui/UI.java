@@ -107,7 +107,7 @@ public class UI implements Runnable {
         JComboBox typeList = new JComboBox(ReferenceCollection.getTypes());
         typeList.setName("dropdown");
         typeList.setBounds(relX(440), relY(10), relX(150), relY(30));      
-        this.selectTypeAction = new SelectType(fieldArea, this.base, this.fields, this.pagetitle, typeList, this);
+        this.selectTypeAction = new SelectType(fieldArea, this.base, this.fields, this.pagetitle, typeList, this, windowWidth, windowHeight);
         typeList.addActionListener(this.selectTypeAction);
         selectTypeAction.actionPerformed(null);
         addReferencePage.add(typeList);

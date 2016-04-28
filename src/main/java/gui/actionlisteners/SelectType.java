@@ -22,17 +22,21 @@ public class SelectType implements ActionListener {
     private Container container;
     private int fieldPosX = 20;
     private int fieldPosY = 10;
+    private int gapBetweenFields;
+    private int containerWidth;
     private JComboBox typeList;
     protected Map<String, Field> fields;
     private JLabel pagetitle;
     protected UI ui;
     
-    public SelectType(Container container, ReferenceBase base, Map<String, Field> fields, JLabel pagetitle, JComboBox typeList, UI ui){
+    public SelectType(Container container, ReferenceBase base, Map<String, Field> fields, JLabel pagetitle, JComboBox typeList, UI ui, int windowHeight, int windowWidth){
         this.typeList = typeList;
         this.fields = fields;
         this.base = base;
         this.container = container;
         this.pagetitle = pagetitle;
+        this.gapBetweenFields = windowWidth/17;
+        this.containerWidth = windowHeight/3;
     }
 
     @Override
@@ -44,8 +48,8 @@ public class SelectType implements ActionListener {
               
         FieldCreator.clearFields(this.fields);
         FieldCreator.createReferenceFields(names, this.container, this.fields, requirements, ui);    
-        int fieldHeight = setFieldsPosition(fieldPosX, fieldPosY, 40, names);
-        this.container.setPreferredSize(new Dimension(400, fieldHeight));
+        int fieldHeight = setFieldsPosition(fieldPosX, fieldPosY, gapBetweenFields, names);
+        this.container.setPreferredSize(new Dimension(containerWidth, fieldHeight));
         this.container.repaint();
         this.container.revalidate();
     
