@@ -10,36 +10,64 @@ public class Translator {
     public Translator(FileWriter fw) {
         this.fw = fw;
     }
-    
+
     public Translator() {
     }
 
     public String translateReference(Reference reference) throws IOException {
         StringBuilder sb = new StringBuilder();
+        parseKeyAndType(sb, reference);
+        addAuthors(reference, sb);
+        addOtherFields(reference, sb);
+        writeInFile(sb.toString());
+        return sb.toString();
+    }
+
+    private void addOtherFields(Reference reference, StringBuilder sb) {
+        for (String field : reference.getFields()) {
+            if (validField(field, reference)) {
+                appendField(sb, field, reference.getField(field));
+            }
+        }
+        sb.append("}\n");
+    }
+
+    private void addAuthors(Reference reference, StringBuilder sb) {
+        StringBuilder authors = new StringBuilder();
+        for (String field : reference.getFields()) {
+            if (field.contains("author")) {
+                authors.append(compileUmlauts(reference.getField(field)));
+                authors.append(" and ");
+            }
+        }
+        authors.delete(authors.length()-5, authors.length());// delete last and
+        appendField(sb, "author", authors.toString());
+    }
+
+    private void parseKeyAndType(StringBuilder sb, Reference reference) {
         sb.append("@");
         sb.append(reference.getType());
         sb.append("{");
         sb.append(reference.getField("key"));
         sb.append(",\n");
-        for (String field : reference.getFields()) {
-            if (!field.equals("tag")) {
-                appendField(sb, field, reference);
-            }
-        }
-        sb.append("}\n");
-        writeInFile(sb.toString());
-        return sb.toString();
     }
-    private void appendField(StringBuilder sb, String field, Reference reference) {
-        if (reference.getField(field) != null && !reference.getField(field).isEmpty() && !field.equals("key")) {
-            sb.append("\t");
-            sb.append(field);
-            sb.append(" = ");
-            inputParam(sb, reference.getField(field));
-        }
+
+    private static boolean validField(String field, Reference reference) {
+        return !field.contains("author")
+                && !field.equals("tag")
+                && !field.equals("key")
+                && reference.getField(field) != null
+                && !reference.getField(field).isEmpty(); // hieman ruma kenties
     }
-    
-    public void setFileWriter(FileWriter fw){
+
+    private void appendField(StringBuilder sb, String fieldName, String field) {
+        sb.append("\t");
+        sb.append(fieldName);
+        sb.append(" = ");
+        inputParam(sb, field);
+    }
+
+    public void setFileWriter(FileWriter fw) {
         this.fw = fw;
     }
 
@@ -53,6 +81,7 @@ public class Translator {
     }
 
     private String capsuleUpperCases(String s) {
+        // TODO refactor. tämä on ikävän oloinen ts. haisee
         StringBuilder sb = new StringBuilder();
         sb.append(s.charAt(0));
         for (int i = 1; i < s.length(); i++) {
