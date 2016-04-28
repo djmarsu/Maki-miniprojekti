@@ -8,6 +8,8 @@ package gui;
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -49,37 +51,13 @@ public class UITest {
     }
     
     @Test
-    public void guiWorksForBook() {
-        setUpBook();
-    }
-    
-    @Test
-    public void guiWorksForInproceeding() {
-        window.comboBox("dropdown").selectItem("book");
-       window.comboBox("dropdown").selectItem("inproceedings");
-       window.textBox("key").enterText("key");
-        window.textBox("author").enterText("author");
-        window.textBox("booktitle").enterText("booktitle");
-        window.textBox("title").enterText("title");
-        window.textBox("year").enterText("year");
-        window.button("Create a reference").click();
-    }
-    
-    @Test
-    public void guiWorksForDeleting() {
-        setUpBook();
-        window.tabbedPane("Listing").selectTab("Listing").click();
-        window.button("key").click();
-        Reference reference = ui.getBase().getReferences().get(0);
-        ui.getBase().removeReference(reference);
-    }
-    
-    @Test
-    public void guiSearchWorks() {
+    public void dumpGUItestToEnsureNoErrorsPopUp() {
         setUpBook();
         window.tabbedPane("Listing").selectTab("Listing").click();
         window.textBox("search").enterText("key");
         window.button("find").click();
+        window.tabbedPane("Listing").selectTab("Listing").click();
+        window.button("key").click();
     }
 
     // TODO add test methods here.
