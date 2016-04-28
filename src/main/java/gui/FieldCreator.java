@@ -7,10 +7,10 @@ import java.util.Map;
 
 public class FieldCreator {
 
-    public static Map<String, Field> createReferenceFields(List<String> names, Container container, Map<String, Field> fields, List<String> requirements) {
+    public static Map<String, Field> createReferenceFields(List<String> names, Container container, Map<String, Field> fields, List<String> requirements, UI ui) {
 
         for (String string : names) {
-            Field f = new Field(string, container, requirements.contains(string));
+            Field f = new Field(string, container, requirements.contains(string), ui);
 
             fields.put(string, f);
         }

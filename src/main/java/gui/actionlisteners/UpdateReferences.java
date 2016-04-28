@@ -2,6 +2,7 @@ package gui.actionlisteners;
 
 import gui.ListedReference;
 import gui.ListingCreator;
+import gui.UI;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -17,20 +18,22 @@ import referencechampion.ReferenceBase;
 
 
 public class UpdateReferences implements ActionListener, ChangeListener {
-    ReferenceBase base;
-    Container listingArea;
-    JTextField filterField;
-    List<ListedReference> listedReferences;
+    protected ReferenceBase base;
+    protected Container listingArea;
+    protected JTextField filterField;
+    protected UI ui;
+    protected List<ListedReference> listedReferences;
     private final int fieldPosX = 20;
     private final int fieldPosY = 40;
     private JFrame frame;
 
-    public UpdateReferences(ReferenceBase base, Container listingArea, JTextField filter, JFrame frame) {
+    public UpdateReferences(ReferenceBase base, Container listingArea, JTextField filter, JFrame frame, UI ui) {
         this.frame = frame;
         this.base = base;
         this.listingArea = listingArea;
         this.filterField = filter;
         this.listedReferences = new ArrayList<ListedReference>();
+        this.ui = ui;
     }
 
     @Override
@@ -39,7 +42,7 @@ public class UpdateReferences implements ActionListener, ChangeListener {
         
         ArrayList<Reference> filteredReferences = base.withFilter(filter);
         ListingCreator.clearListedReferences(listedReferences);
-        this.listedReferences = ListingCreator.createListedReferences(filteredReferences, listingArea, this.base, this, frame);
+        this.listedReferences = ListingCreator.createListedReferences(filteredReferences, listingArea, this.base, this, frame, this.ui);
         
         int listHeight = setReferenceListingPosition(fieldPosX, fieldPosY, 10);
         

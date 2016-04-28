@@ -3,6 +3,7 @@ package gui.actionlisteners;
 
 import gui.Field;
 import gui.FieldCreator;
+import gui.UI;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -24,8 +25,9 @@ public class SelectType implements ActionListener {
     private JComboBox typeList;
     protected Map<String, Field> fields;
     private JLabel pagetitle;
+    protected UI ui;
     
-    public SelectType(Container container, ReferenceBase base, Map<String, Field> fields, JLabel pagetitle, JComboBox typeList){
+    public SelectType(Container container, ReferenceBase base, Map<String, Field> fields, JLabel pagetitle, JComboBox typeList, UI ui){
         this.typeList = typeList;
         this.fields = fields;
         this.base = base;
@@ -41,7 +43,7 @@ public class SelectType implements ActionListener {
         List<String> requirements = ReferenceCollection.getReferenceRequirements(referenceType);
               
         FieldCreator.clearFields(this.fields);
-        FieldCreator.createReferenceFields(names, this.container, this.fields, requirements);    
+        FieldCreator.createReferenceFields(names, this.container, this.fields, requirements, ui);    
         int fieldHeight = setFieldsPosition(fieldPosX, fieldPosY, 40, names);
         this.container.setPreferredSize(new Dimension(400, fieldHeight));
         this.container.repaint();

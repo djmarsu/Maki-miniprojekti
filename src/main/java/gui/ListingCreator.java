@@ -13,12 +13,12 @@ import referencechampion.ReferenceBase;
 
 public class ListingCreator {
     
-    public static List<ListedReference> createListedReferences(List<Reference> references, Container container, ReferenceBase base, ActionListener al, JFrame frame) {
+    public static List<ListedReference> createListedReferences(List<Reference> references, Container container, ReferenceBase base, ActionListener al, JFrame frame, UI ui) {
 
         List<ListedReference> list = new ArrayList<ListedReference>();
         int index = 1;
         for (Reference r : references) {
-            ListedReference lr = new ListedReference(r, container, new RemoveReference(r, base, frame), al, index);
+            ListedReference lr = new ListedReference(r, container, new RemoveReference(r, base, frame), al, index, ui);
             list.add(lr);
             index ++;
         }
