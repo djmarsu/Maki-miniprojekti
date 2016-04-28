@@ -5,14 +5,9 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import static java.awt.Font.DIALOG;
-import static java.awt.Font.MONOSPACED;
-import static java.awt.Font.PLAIN;
 import static java.awt.Font.TRUETYPE_FONT;
-import java.awt.FontMetrics;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import referencechampion.Reference;
 
