@@ -1,5 +1,6 @@
 package referencechampion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +10,12 @@ public class ReferenceEntity implements Reference {
     private Map<String, String> fields;
     private List<String> fieldNames;
     private String type;
+    private int authors;
 
     public ReferenceEntity(HashMap<String, String> fields, String type) {
         this(type);
         this.fields = fields;
+        this.authors = 1;
     }
 
     public ReferenceEntity(String type) {
@@ -40,6 +43,19 @@ public class ReferenceEntity implements Reference {
     public List<String> getFields() {
         return fieldNames;
     }
+    
+    @Override
+    public void addAuthor() {
+        authors++;
+        List<String> names = new ArrayList();
+        for (String name : getFields()) {
+            names.add(name);
+            if (name.equals("author")) {
+                    names.add("author" + authors);
+            }
+        }
+        fieldNames = names;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -65,7 +81,11 @@ public class ReferenceEntity implements Reference {
         for (String fieldName : fieldNames) {
             if (!fields.get(fieldName).isEmpty()) {
                 sb.append("\t");
-                sb.append(fieldName);
+                if (!fieldName.contains("author")) {
+                    sb.append(fieldName);
+                } else {
+                    sb.append("author");
+                }
                 sb.append(" = ");
                 sb.append(fields.get(fieldName));
                 sb.append("\n");
@@ -74,4 +94,16 @@ public class ReferenceEntity implements Reference {
         return sb.toString();
     }
 
+    @Override
+    public int getAuthors() {
+        return authors;
+    }
+
+    @Override
+    public boolean contains(String string) {
+        for (String value : fields.values()) {
+            if (value.contains(string)) return true;
+        }
+        return false;
+    }
 }

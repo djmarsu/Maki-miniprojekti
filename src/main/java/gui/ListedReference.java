@@ -30,7 +30,6 @@ public class ListedReference {
         this.textField = new JTextArea(reference.toString());
         this.textField.setName(reference.getField("key"));
         this.textField.setFont(new Font(DIALOG, TRUETYPE_FONT, FONT_SIZE));
-        System.out.println(this.textField.getFont());
         this.textField.setEnabled(false);       
         this.textField.setDisabledTextColor(Color.BLACK);
         this.deleteButton = new JButton("delete");        

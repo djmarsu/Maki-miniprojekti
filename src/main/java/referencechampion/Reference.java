@@ -12,7 +12,13 @@ public interface Reference extends Serializable {
 
     List<String> getFields();
     
+    void addAuthor();
+    
+    int getAuthors();
+    
     String getType();
 
-    public String toString();
+    String toString();
+    
+    boolean contains(String string);
 }

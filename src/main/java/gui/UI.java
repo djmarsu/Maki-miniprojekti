@@ -1,5 +1,6 @@
 package gui;
 
+import gui.actionlisteners.AddAuthor;
 import gui.actionlisteners.CreateReference;
 import gui.actionlisteners.SelectType;
 import gui.actionlisteners.Translate;
@@ -121,12 +122,12 @@ public class UI implements Runnable {
         createLabel(".bib", relX(420), relY(485), relX(60), relY(30), addReferencePage);      
         
         
-        this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, typeList);
+        this.createReferenceAction = new CreateReference(this.fields, this.base, this.result, selectTypeAction);
         this.translateAction = new Translate(base, this.filename, this.result);
 
         createButton("Create a reference", relX(20), relY(520), createReferenceAction, addReferencePage);
         createButton("Create a BibTex file", relX(260), relY(520), translateAction,  addReferencePage);
-
+        createButton("Add another author", relX(20), relY(500 - DEFAULT_BUTTON_HEIGHT), new AddAuthor(selectTypeAction),  addReferencePage);
     }
 
     private void constructListingTab(JTabbedPane tabs) {
