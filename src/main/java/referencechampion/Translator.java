@@ -22,7 +22,9 @@ public class Translator {
         sb.append(reference.getField("key"));
         sb.append(",\n");
         for (String field : reference.getFields()) {
-            appendField(sb, field, reference);
+            if (!field.equals("tag")) {
+                appendField(sb, field, reference);
+            }
         }
         sb.append("}\n");
         writeInFile(sb.toString());

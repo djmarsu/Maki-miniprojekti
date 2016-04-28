@@ -74,7 +74,7 @@ public class ReferenceBaseTest {
 
         assertTrue(base.getReferences().contains(validReference));
         assertTrue(base.getReferences().contains(anotherValidReference));
-        assertTrue(anotherValidReference.getField("key").equals("key_a"));
+        assertTrue(anotherValidReference.getField("key").equals("keya"));
     }
 
     private void setUpBeforeFiltering() {

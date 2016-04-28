@@ -78,12 +78,11 @@ public class ReferenceBase {
         if (keyAvailable(key)) return key;
         
         char c='a';
-        String tail ="_"+c;
+        
         while (!keyAvailable(key+c)) {
             c++;
-            tail = "_"+c;
         }
-        return key + tail;
+        return key+c;
     }
 
     public ArrayList<Reference> getReferences() {
