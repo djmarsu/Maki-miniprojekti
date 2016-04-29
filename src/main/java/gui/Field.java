@@ -19,8 +19,9 @@ public class Field {
     private JTextField field;
     private JLabel text;
     private Container container;
+    protected UI ui;
 
-    public Field(String name, Container container, boolean required) {
+    public Field(String name, Container container, boolean required, UI ui) {
         this.name = name;      
         this.field = new JTextField();
         this.field.setName(name);
@@ -29,6 +30,7 @@ public class Field {
         this.container = container;
         this.container.add(this.field);
         this.container.add(this.text);
+        this.ui = ui;
     }
 
     public String getText() {

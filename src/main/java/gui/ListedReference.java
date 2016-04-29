@@ -3,9 +3,11 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
+import static java.awt.Font.DIALOG;
+import static java.awt.Font.TRUETYPE_FONT;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import referencechampion.Reference;
 
@@ -15,12 +17,15 @@ public class ListedReference {
     private JTextArea textField;
     private JButton deleteButton;
     private Container container;
+    private static final int FONT_SIZE = 15;
+    protected UI ui;
 
-    public ListedReference(Reference reference, Container container, ActionListener al1, ActionListener al2, int index) {
+    public ListedReference(Reference reference, Container container, ActionListener al1, ActionListener al2, int index, UI ui) {
         this.reference = reference;
         this.textField = new JTextArea(reference.toString());
         this.textField.setName(reference.getField("key"));
-        this.textField.setEnabled(false);
+        this.textField.setFont(new Font(DIALOG, TRUETYPE_FONT, FONT_SIZE));
+        this.textField.setEnabled(false);       
         this.textField.setDisabledTextColor(Color.BLACK);
         this.deleteButton = new JButton("delete");        
         this.deleteButton.setName(reference.getField("key"));
@@ -29,11 +34,12 @@ public class ListedReference {
         this.container = container;
         this.container.add(this.textField);
         this.container.add(deleteButton);
+        this.ui = ui;
     }   
     
     public void setPosition(int x, int y) {
-        this.textField.setBounds(x, y, 250, getReferenceValuesHeight());
-        this.deleteButton.setBounds(x+270, y, 150, 30);
+        this.textField.setBounds(ui.relX(x), ui.relY(y), ui.relX(250), getReferenceValuesHeight());
+        this.deleteButton.setBounds(ui.relX(x+270), ui.relY(y), ui.relX(150), ui.relY(30));
     }
     
     public void clear() {
@@ -48,7 +54,7 @@ public class ListedReference {
                 listedRows++;
             }
         }
-        return listedRows*15;
+        return ui.relY(listedRows*this.textField.getFontMetrics(this.textField.getFont()).getHeight());
     }
     
     

@@ -12,6 +12,7 @@ public class RemoveReference implements ActionListener {
     private Reference reference;
     private ReferenceBase base;
     private JFrame frame;
+    private final int YES_OPTION = 0;
 
     public RemoveReference(Reference reference, ReferenceBase base, JFrame frame) {
         this.frame = frame;
@@ -22,13 +23,13 @@ public class RemoveReference implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JOptionPane optionPane = new JOptionPane();
-        int i = optionPane.showConfirmDialog(
+        int buttonPressed = optionPane.showConfirmDialog(
                 frame,
                 "Are you sure?",
                 "Confirm remove",
                 JOptionPane.YES_NO_OPTION);
 
-        if (i == 0) this.base.removeReference(reference);
+        if (buttonPressed == YES_OPTION) this.base.removeReference(reference);
     }
 
 }

@@ -25,6 +25,7 @@ public class ReferenceEntityTest {
     public void setOfFieldNamesIsReturnedCorrectlyArticle() {
         ArrayList<String> expected = new ArrayList<String>();
         expected.add("key");
+        expected.add("tag");
         expected.add("author");
         expected.add("title");
         expected.add("journal");
@@ -76,6 +77,7 @@ public class ReferenceEntityTest {
     public void setOfFieldNamesIsReturnedCorrectlyInProceedings() {
         ArrayList<String> expected = new ArrayList<String>();
         expected.add("key");
+        expected.add("tag");
         expected.add("author");
         expected.add("title");
         expected.add("booktitle");
@@ -91,7 +93,7 @@ public class ReferenceEntityTest {
         expected.add("month");
         expected.add("note");
         // palauttaa vielä books tyypin listan
-        assertTrue(inproceedings.getFields().equals(expected));
+        assertEquals(expected, inproceedings.getFields());
     }
 
     @Test
@@ -142,6 +144,7 @@ public class ReferenceEntityTest {
     public void setOfFieldNamesIsReturnedCorrectlyBook() {
         ArrayList<String> expected = new ArrayList<String>();
         expected.add("key");
+        expected.add("tag");
         expected.add("author");
         expected.add("title");
         expected.add("publisher");
@@ -153,7 +156,7 @@ public class ReferenceEntityTest {
         expected.add("year");
         expected.add("month");
         expected.add("note");
-        assertTrue(book.getFields().equals(expected));
+        assertEquals(expected, book.getFields());
     }
     @Test
     public void constructorInitiatesFieldsCorrectlyBook() {

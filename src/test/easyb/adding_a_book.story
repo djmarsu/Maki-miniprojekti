@@ -8,6 +8,7 @@ scenario "user can fill out the form correctly and add a book", {
     given 'tab add a reference is selected', {
        ui = new UI(600, 700, new ReferenceBase("test.data"))
        ui.run()
+       ui.getBase().clearData()
        window = new FrameFixture(ui.getWindow())
        window.comboBox("dropdown").selectItem("book")
     }
@@ -34,6 +35,7 @@ scenario "user cannot add a book with an empty title-field", {
     given 'tab add a reference is selected', {
        ui = new UI(600, 700, new ReferenceBase())
        ui.run()
+       ui.getBase().clearData()
        window = new FrameFixture(ui.getWindow())
        window.comboBox("dropdown").selectItem("book")
     }
