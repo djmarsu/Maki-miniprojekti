@@ -61,6 +61,7 @@ public class CreateReference implements ActionListener {
             timer.setRepeats(false);
             timer.start();
             FieldCreator.emptyFields(this.fields);
+            selection.actionPerformed(null);
         } else {
             result.setText("One or more required fields are empty");
             result.setForeground(Color.RED);

@@ -14,11 +14,17 @@ public interface Reference extends Serializable {
     
     void addAuthor();
     
-    int getAuthors();
+    int howManyAuthors();
     
     String getType();
 
     String toString();
     
     boolean contains(String string);
+    
+    void setDefaultKey();
+    
+    void changeKey(String newKey);
+    
+    boolean validate();
 }

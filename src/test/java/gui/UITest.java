@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import referencechampion.Reference;
 import referencechampion.ReferenceBase;
@@ -50,6 +51,8 @@ public class UITest {
         ui.getBase().clearData();
     }
     
+    
+//    @Ignore // poista kommentointi niin testiä ei käytetä
     @Test
     public void dumpGUItestToEnsureNoErrorsPopUp() {
         setUpBook();
@@ -59,12 +62,6 @@ public class UITest {
         window.tabbedPane("Listing").selectTab("Listing").click();
         window.button("key").click();
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 
     protected void setUpBook() {
         window.comboBox("dropdown").selectItem("book");

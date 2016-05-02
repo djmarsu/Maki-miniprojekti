@@ -70,7 +70,7 @@ public class SelectType implements ActionListener {
 
     public void appendAuthorField() {
         newReference.addAuthor();
-        this.fields.put("author" + newReference.getAuthors(), new Field("", container, false, ui));
+        this.fields.put("author" + newReference.howManyAuthors(), new Field("", container, false, ui));
         update(newReference.getFields());
     }
 
