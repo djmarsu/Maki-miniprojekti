@@ -48,6 +48,8 @@ public class TranslatorTest {
         for (String field : reference.getFields()) {
             reference.addValue(field, "Generic field äöå AAA");
         }
+        reference.addAuthor();
+        reference.addValue("author1", "Another");
         String translated = translator.translateReference(reference);
         assertTrue(translated.contains("@"));
         assertTrue(translated.contains("@"+referenceType));
@@ -57,6 +59,7 @@ public class TranslatorTest {
 
         }
         assertTrue(translated.contains("Generic field \\\"{a}\\\"{o}\\aa {A}{A}{A}"));
+        assertTrue(translated.contains("Generic field \\\"{a}\\\"{o}\\aa {A}{A}{A} and {A}nother"));
     }
 
     @Test

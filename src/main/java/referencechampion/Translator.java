@@ -36,7 +36,7 @@ public class Translator {
         StringBuilder authors = new StringBuilder();
         for (String field : reference.getFields()) {
             if (field.contains("author")) {
-                authors.append(compileUmlauts(reference.getField(field)));
+                authors.append(reference.getField(field));
                 authors.append(" and ");
             }
         }
@@ -75,7 +75,10 @@ public class Translator {
         String ret = capsuleUpperCases(s);
         ret = ret.replace("ä", "\\\"{a}")
                 .replace("ö", "\\\"{o}")
-                .replace("å", "\\aa");
+                .replace("å", "\\aa")
+                .replace("Ä", "{\\\"{A}}")
+                .replace("Ö", "{\\\"{O}}")
+                .replace("Å", "{\\AA}");
 
         return ret;
     }

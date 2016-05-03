@@ -55,7 +55,7 @@ public class UITest {
 //    @Ignore // poista kommentointi niin testiä ei käytetä
     @Test
     public void dumpGUItestToEnsureNoErrorsPopUp() {
-        setUpBook();
+        setUpBook();       
         window.tabbedPane("Listing").selectTab("Listing").click();
         window.textBox("search").enterText("key");
         window.button("find").click();
@@ -70,6 +70,8 @@ public class UITest {
         window.textBox("title").enterText("title");
         window.textBox("publisher").enterText("publisher");
         window.textBox("year").enterText("1234");
+        window.button("Add another author").click();
+        window.textBox("author1").enterText("authori");
         window.button("Create a reference").click();
     }
 }
