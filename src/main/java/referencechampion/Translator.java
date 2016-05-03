@@ -36,7 +36,7 @@ public class Translator {
         StringBuilder authors = new StringBuilder();
         for (String field : reference.getFields()) {
             if (field.contains("author")) {
-                authors.append(compileUmlauts(reference.getField(field)));
+                authors.append(reference.getField(field));
                 authors.append(" and ");
             }
         }
@@ -57,7 +57,7 @@ public class Translator {
                 && !field.equals("tag")
                 && !field.equals("key")
                 && reference.getField(field) != null
-                && !reference.getField(field).isEmpty(); // hieman ruma kenties
+                && !reference.getField(field).isEmpty();
     }
 
     private void appendField(StringBuilder sb, String fieldName, String field) {
@@ -75,15 +75,17 @@ public class Translator {
         String ret = capsuleUpperCases(s);
         ret = ret.replace("ä", "\\\"{a}")
                 .replace("ö", "\\\"{o}")
-                .replace("å", "\\aa");
+                .replace("å", "\\aa")
+                .replace("Ä", "{\\\"{A}}")
+                .replace("Ö", "{\\\"{O}}")
+                .replace("Å", "{\\AA}");
 
         return ret;
     }
 
     private String capsuleUpperCases(String s) {
-        // TODO refactor. tämä on ikävän oloinen ts. haisee
         StringBuilder sb = new StringBuilder();
-        sb.append(s.charAt(0));
+        if (s.length() > 0) sb.append(s.charAt(0));
         for (int i = 1; i < s.length(); i++) {
             if (Character.isUpperCase(s.charAt(i))) {
                 sb.append("{");
@@ -93,6 +95,7 @@ public class Translator {
                 sb.append(s.charAt(i));
             }
         }
+        
         return sb.toString();
     }
 

@@ -20,7 +20,7 @@ public class ReferenceEntityTest {
         inproceedings = new ReferenceEntity("inproceedings", ReferenceCollection.getReference("inproceedings"));
         book = new ReferenceEntity("book", ReferenceCollection.getReference("book"));
     }
-
+    
     @Test
     public void setOfFieldNamesIsReturnedCorrectlyArticle() {
         ArrayList<String> expected = new ArrayList<String>();

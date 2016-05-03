@@ -15,7 +15,6 @@ public class ReferenceBase {
     private final String BASE_DIRECTORY; // This is the directory where all the data is saved
     private final String IN_MEMORY_FILE_NAME;
     private ArrayList<Reference> references;
-    private ReferenceValidator validator;
     private Translator translator;
 
     public ReferenceBase() throws IOException {
@@ -23,7 +22,6 @@ public class ReferenceBase {
     }
 
     public ReferenceBase(String memoryDataFileName) { // in tests, use some test file name
-        this.validator = new ReferenceValidator();
         this.translator = new Translator();
         BASE_DIRECTORY = Paths.get(System.getProperty("user.home"), "ReferenceChampionData").toString();
         IN_MEMORY_FILE_NAME = Paths.get(BASE_DIRECTORY, memoryDataFileName).toString();
@@ -56,8 +54,8 @@ public class ReferenceBase {
     }
 
     public boolean addReference(Reference reference) {
-        if (validator.validate(reference)) {
-            setAvailableKey(reference);
+        if (reference.validate()) {
+            changeKeyIfTaken(reference);
             references.add(reference);
             writeReferencesInMemory();
             return true;
@@ -65,23 +63,23 @@ public class ReferenceBase {
         return false;
     }
 
-    private void setAvailableKey(Reference reference) {
-        reference.addValue("key", nextAvailableKey(reference.getField("key")));
+    private void changeKeyIfTaken(Reference reference) {
+        if (!keyAvailable(reference.getField("key"))) {
+            String key = reference.getField("key");
+            reference.changeKey(nextAvailableKey(key));
+        }
     }
 
-    private String nextAvailableKey(String current) { //palauttaa avaimen muodon jota ei vielä varattu tyyliin avain->avain_4
-        // Täällä voisi käyttää stringbuilderia!
-        String key = current;
-        if (keyAvailable(key)) {
-            return key;
+    private String nextAvailableKey(String current) {
+        String offeredKey;
+        for (char i = 'a'; i < 122; i++) {
+            offeredKey = current.concat("" + (char) i);
+            if (keyAvailable(offeredKey)) {
+                return offeredKey;
+            }
         }
-
-        char c = 'a';
-
-        while (!keyAvailable(key + c)) {
-            c++;
-        }
-        return key + c;
+        // tähän jotain mikä estää mahdollisen pino ylivuodon
+        return nextAvailableKey(current.concat("a"));
     }
 
     public ArrayList<Reference> getReferences() {
@@ -94,7 +92,6 @@ public class ReferenceBase {
                 return false;
             }
         }
-
         return true;
     }
 

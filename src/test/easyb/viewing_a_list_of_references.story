@@ -5,7 +5,7 @@ description 'User can view added references'
 
 scenario "User can add a reference without a key", {
     given 'tab add a reference is selected', {
-        ui = new UI(600, 700, new ReferenceBase("test.data"))
+       ui = new UI(600, 700, new ReferenceBase("test.data"))
        ui.run()
        window = new FrameFixture(ui.getWindow())
        window.comboBox("dropdown").selectItem("book")
@@ -22,7 +22,7 @@ scenario "User can add a reference without a key", {
     }
 
     then 'an automated key is generated', {
-        window.textBox("key").requireText "book\n\tkey = key\n\tauthor = author\n\ttitle = title\n\tpublisher = publisher\n\tyear = 1234\n"
+        window.textBox("key").requireText "book\n\nkey = key\nauthor = author\ntitle = title\npublisher = publisher\nyear = 1234\n"
         ui.getBase().clearData()
         window.cleanUp()
     }

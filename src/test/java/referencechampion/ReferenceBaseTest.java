@@ -36,16 +36,19 @@ public class ReferenceBaseTest {
     public void setUp() throws Exception {
         base = new ReferenceBase("test.data");
 
+        validReference = new ReferenceEntity(makeValidFields(), "book");
+        anotherValidReference = new ReferenceEntity(makeValidFields(), "book");
+        invalidReference = new ReferenceEntity(new HashMap<String, String>(), "book");
+    }
+
+    protected HashMap<String, String> makeValidFields() {
         HashMap<String, String> validFields = new HashMap<String, String>();
         List<String> req = ReferenceCollection.getReferenceRequirements("book");
         for (String field : req) {
             validFields.put(field, field);
         }
-
         validFields.put("key", "key");
-        validReference = new ReferenceEntity(validFields, "book");
-        anotherValidReference = new ReferenceEntity(validFields, "book");
-        invalidReference = new ReferenceEntity(new HashMap<String, String>(), "book");
+        return validFields;
     }
 
     @After
@@ -71,10 +74,17 @@ public class ReferenceBaseTest {
         base.addReference(validReference);
         assertTrue(base.addReference(anotherValidReference));
         assertEquals(2, base.referencesCount());
-
         assertTrue(base.getReferences().contains(validReference));
         assertTrue(base.getReferences().contains(anotherValidReference));
-        assertTrue(anotherValidReference.getField("key").equals("keya"));
+        assertEquals("keya",anotherValidReference.getField("key"));
+        anotherValidReference = new ReferenceEntity(makeValidFields(), "book");
+        anotherValidReference.addValue("key", "key");
+        base.addReference(anotherValidReference);
+        assertEquals("keyb",anotherValidReference.getField("key"));
+        anotherValidReference = new ReferenceEntity(makeValidFields(), "book");
+        anotherValidReference.addValue("key", "key");
+        base.addReference(anotherValidReference);
+        assertEquals("keyc",anotherValidReference.getField("key"));
     }
 
     private void setUpBeforeFiltering() {
@@ -128,7 +138,7 @@ public class ReferenceBaseTest {
 
         ArrayList<Reference> filtered = base.withFilter("ääöö");
         assertTrue(filtered.size() == 1);
-        assertTrue(filtered.get(0).getField("key").equals("02"));
+        assertEquals("02",filtered.get(0).getField("key"));
     }
 
     @Test
@@ -137,7 +147,7 @@ public class ReferenceBaseTest {
 
         ArrayList<Reference> filtered = base.withFilter("");
         assertTrue(filtered.size() == 2);
-        assertTrue(filtered.get(0).getField("key").equals("01"));
-        assertTrue(filtered.get(1).getField("key").equals("02"));
+        assertEquals("01",filtered.get(0).getField("key"));
+        assertEquals("02",filtered.get(1).getField("key"));
     }
 }

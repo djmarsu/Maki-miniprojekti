@@ -43,7 +43,13 @@ public class ReferenceEntity implements Reference {
     public List<String> getFields() {
         return fieldNames;
     }
-    
+
+    @Override
+    public void changeKey(String newKey) {
+        fields.remove("key");
+        fields.put("key", newKey);
+    }
+
     @Override
     public void addAuthor() {
         authors++;
@@ -51,7 +57,7 @@ public class ReferenceEntity implements Reference {
         for (String name : getFields()) {
             names.add(name);
             if (name.equals("author")) {
-                    names.add("author" + authors);
+                names.add("author" + authors);
             }
         }
         fieldNames = names;
@@ -78,9 +84,9 @@ public class ReferenceEntity implements Reference {
         StringBuilder sb = new StringBuilder();
         sb.append(type);
         sb.append("\n");
+        sb.append("\n");
         for (String fieldName : fieldNames) {
-            if (!fields.get(fieldName).isEmpty()) {
-                sb.append("\t");
+            if (fields.get(fieldName) != null && !fields.get(fieldName).isEmpty()) {               
                 if (!fieldName.contains("author")) {
                     sb.append(fieldName);
                 } else {
@@ -95,15 +101,65 @@ public class ReferenceEntity implements Reference {
     }
 
     @Override
-    public int getAuthors() {
+    public int howManyAuthors() {
         return authors;
     }
 
     @Override
     public boolean contains(String string) {
         for (String value : fields.values()) {
-            if (value.contains(string)) return true;
+            if (value.contains(string)) {
+                return true;
+            }
         }
         return false;
+    }
+
+    public void setDefaultKey() {
+        //palautetaan default-avain tyyliin vih2004
+        String writer = "";
+        String year = getField("year");
+        if (authors > 1) {
+            // monella authorilla vain kaksi merkkiä
+            writer = getField("author").substring(0, Math.min(2, writer.length()));
+            for (int i = 2; i <= authors; i++) {
+                writer += getField("author" + i).substring(0, Math.min(2, writer.length()));
+            }
+        } else if (getField("author") != null) {
+            writer = getField("author");
+        } else if (getType().equals("book") && getField("editor") != null) {
+            writer = getField("editor");
+        } else if (getField("journal") != null) {
+            writer = getField("journal");
+        }
+
+        writer = writer.substring(0, Math.min(3, writer.length()));
+        addValue("key", writer.trim().toLowerCase() + year);
+    }
+
+    @Override
+    public boolean validate() {
+        if (getType().equals("book")) {
+            if (!validField(getField("author")) && !validField(getField("editor"))) {
+                return false;
+            }
+        }
+
+        List<String> requirements = ReferenceCollection.getReferenceRequirements(getType());
+
+        for (String req : requirements) {
+            if (!validField(getField(req))) {
+                return false;
+            }
+        }
+
+        if (!validField(getField("key"))) {
+            setDefaultKey();
+        } //laittaa tyhjään key-kenttään default-avaimen
+        return true;
+    }
+
+    private boolean validField(String field) {
+        return field != null && !field.isEmpty();
     }
 }
