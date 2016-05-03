@@ -26,7 +26,7 @@ public class TranslatorTest {
     @Before
     public void setUp() {
         try {
-            translator = new Translator(new FileWriter("Test.bib", true));
+            translator = new Translator(new FileWriter("Test.bib", false));
         } catch (IOException ex) {
             assertTrue("FileWriter do not work", false);
         }
@@ -48,15 +48,38 @@ public class TranslatorTest {
         for (String field : reference.getFields()) {
             reference.addValue(field, "Generic field äöå AAA");
         }
+        reference.addAuthor();
+        reference.addValue("author1", "Another");
         String translated = translator.translateReference(reference);
         assertTrue(translated.contains("@"));
         assertTrue(translated.contains("@"+referenceType));
 
         for (String string : ReferenceCollection.getReferenceRequirementsWithoutKey(referenceType)) {
-//            assertTrue(actual.contains(string));
             assertTrue(translated.contains(string));
 
         }
-        assertTrue(translated.contains("{G}eneric field \\\"{a}\\\"{o}\\aa {A}{A}{A}"));
+        assertTrue(translated.contains("Generic field \\\"{a}\\\"{o}\\aa {A}{A}{A}"));
+        assertTrue(translated.contains("Generic field \\\"{a}\\\"{o}\\aa {A}{A}{A} and {A}nother"));
+    }
+
+    @Test
+    public void emptyFieldsAreNotAppended() throws IOException {
+        String translated = translateABook();
+        assertFalse(translated.contains("note"));
+        assertFalse(translated.contains("month"));
+    }
+
+    private String translateABook() throws IOException {
+        ReferenceEntity reference = new ReferenceEntity("book");
+        for (String field : ReferenceCollection.getReferenceRequirements("book")) {
+            reference.addValue(field, "SomeValue");
+        }
+        return translator.translateReference(reference);
+    }
+
+    @Test
+    public void keyIsNotAppendedAsField() throws IOException {
+        String translated = translateABook();
+        assertFalse(translated.contains("key"));
     }
 }

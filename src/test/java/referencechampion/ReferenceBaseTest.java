@@ -4,9 +4,12 @@ package referencechampion;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.AfterClass;
+
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,66 +19,76 @@ public class ReferenceBaseTest {
     ReferenceEntity validReference;
     ReferenceEntity anotherValidReference;
     ReferenceEntity invalidReference;
-    
-    
+
+
     public ReferenceBaseTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() throws Exception {
-        base = new ReferenceBase();
-        // vissiin pitää tehä että se ei ota sieltä json tiedostosta niitä muita?
-        base.empty();
-        
-        HashMap<String,String> validFields = new HashMap<String,String>();
+        base = new ReferenceBase("test.data");
+
+        validReference = new ReferenceEntity(makeValidFields(), "book");
+        anotherValidReference = new ReferenceEntity(makeValidFields(), "book");
+        invalidReference = new ReferenceEntity(new HashMap<String, String>(), "book");
+    }
+
+    protected HashMap<String, String> makeValidFields() {
+        HashMap<String, String> validFields = new HashMap<String, String>();
         List<String> req = ReferenceCollection.getReferenceRequirements("book");
         for (String field : req) {
             validFields.put(field, field);
         }
-        
         validFields.put("key", "key");
-        validReference = new ReferenceEntity(validFields, "book");
-        anotherValidReference = new ReferenceEntity(validFields, "book");
-        invalidReference = new ReferenceEntity(new HashMap<String, String>(), "book");
+        return validFields;
     }
-    
+
     @After
     public void tearDown() {
+        base.clearData();
     }
-    
+
     @Test
     public void validReferenceIsAdded() {
         assertTrue(base.addReference(validReference));
         assertTrue(base.getReferences().contains(validReference));
+        assertEquals(1, base.referencesCount());
     }
-    
+
     @Test
     public void invalidReferenceIsNotAdded() {
         assertFalse(base.addReference(invalidReference));
         assertFalse(base.getReferences().contains(invalidReference));
     }
-    
+
     @Test
     public void referenceWithTakenKeyIsAddedWithDifferentKey() {
         base.addReference(validReference);
         assertTrue(base.addReference(anotherValidReference));
-        assertEquals(base.getReferences().size(),2);
-        
+        assertEquals(2, base.referencesCount());
         assertTrue(base.getReferences().contains(validReference));
         assertTrue(base.getReferences().contains(anotherValidReference));
-        assertTrue(anotherValidReference.getField("key").equals("key_0"));
+        assertEquals("keya",anotherValidReference.getField("key"));
+        anotherValidReference = new ReferenceEntity(makeValidFields(), "book");
+        anotherValidReference.addValue("key", "key");
+        base.addReference(anotherValidReference);
+        assertEquals("keyb",anotherValidReference.getField("key"));
+        anotherValidReference = new ReferenceEntity(makeValidFields(), "book");
+        anotherValidReference.addValue("key", "key");
+        base.addReference(anotherValidReference);
+        assertEquals("keyc",anotherValidReference.getField("key"));
     }
 
     private void setUpBeforeFiltering() {
-        HashMap<String,String> fields2 = new HashMap<String, String>();
+        HashMap<String, String> fields2 = new HashMap<String, String>();
         fields2.put("key", "01");
         fields2.put("journal", "some some");
         fields2.put("title", "öö testing");
@@ -89,8 +102,8 @@ public class ReferenceBaseTest {
         fields2.put("note", "j");
         ReferenceEntity reference2 = new ReferenceEntity(fields2, "article");
         base.addReference(reference2);
-       
-        HashMap<String,String> fields3 = new HashMap<String, String>();
+
+        HashMap<String, String> fields3 = new HashMap<String, String>();
         fields3.put("key", "02");
         fields3.put("author", "Who ääöö");
         fields3.put("booktitle", "ll");
@@ -110,31 +123,31 @@ public class ReferenceBaseTest {
         ReferenceEntity reference3 = new ReferenceEntity(fields3, "inproceedings");
         base.addReference(reference3);
     }
-       
+
     @Test
     public void filterReturnsEmptyArrayListCorrectly() {
         setUpBeforeFiltering();
-       
+
         ArrayList<Reference> filtered = base.withFilter("doesntexist");
         assertTrue(filtered.isEmpty());
     }
-    
+
     @Test
     public void filterReturnsAllMatchingReferences() {
         setUpBeforeFiltering();
-       
+
         ArrayList<Reference> filtered = base.withFilter("ääöö");
         assertTrue(filtered.size() == 1);
-        assertTrue(filtered.get(0).getField("key") == "02");
+        assertEquals("02",filtered.get(0).getField("key"));
     }
-    
+
     @Test
     public void filterReturnsAllWithEmptyFilter() {
         setUpBeforeFiltering();
-       
+
         ArrayList<Reference> filtered = base.withFilter("");
         assertTrue(filtered.size() == 2);
-        assertTrue(filtered.get(0).getField("key") == "01");
-        assertTrue(filtered.get(1).getField("key") == "02");
-    } 
+        assertEquals("01",filtered.get(0).getField("key"));
+        assertEquals("02",filtered.get(1).getField("key"));
+    }
 }

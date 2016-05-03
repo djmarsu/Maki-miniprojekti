@@ -19,16 +19,22 @@ public class Field {
     private JTextField field;
     private JLabel text;
     private Container container;
+    protected UI ui;
 
-    public Field(String name, Container container, boolean required) {
-        this.name = name;      
+    public Field(String name, Container container, boolean required, UI ui) {
+        this(name, name, container, required, ui);
+    }
+
+    public Field(String name, String textBoxName, Container container, boolean required, UI ui) {
+        this.name = name;
         this.field = new JTextField();
-        this.field.setName(name);
-        if(required)name += "*";
+        this.field.setName(textBoxName);
+        if (required) name += "*";
         this.text = new JLabel(name);
         this.container = container;
         this.container.add(this.field);
         this.container.add(this.text);
+        this.ui = ui;
     }
 
     public String getText() {
@@ -38,8 +44,8 @@ public class Field {
     public void setText(String text) {
         this.field.setText(text);
     }
-    
-    public void setPosition(int x, int y){        
+
+    public void setPosition(int x, int y) {
         this.text.setBounds(x, y, 100, 30);
         this.field.setBounds(x + 120, y, 300, 30);
     }

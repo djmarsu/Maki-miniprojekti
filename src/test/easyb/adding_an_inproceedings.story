@@ -6,7 +6,7 @@ description 'User can add an inproceeding to the reference collection'
 
 scenario "user can fill out the form correctly and add an inproceeding", {
     given 'tab add a reference is selected', {
-       ui = new UI(600, 700, new ReferenceBase())
+       ui = new UI(600, 700, new ReferenceBase("test.data"))
        ui.run()
        window = new FrameFixture(ui.getWindow())
        window.comboBox("dropdown").selectItem("book")
@@ -25,6 +25,7 @@ scenario "user can fill out the form correctly and add an inproceeding", {
     then 'an inproceeding will be added to the system', {
         window.label("result").requireText "New reference added"
        window.cleanUp()
+        ui.getBase().clearData()
     }
 
     

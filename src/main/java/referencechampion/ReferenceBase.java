@@ -1,115 +1,110 @@
-
 package referencechampion;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 
 public class ReferenceBase {
 
+    private final String BASE_DIRECTORY; // This is the directory where all the data is saved
+    private final String IN_MEMORY_FILE_NAME;
     private ArrayList<Reference> references;
-    private ReferenceValidator validator;
     private Translator translator;
 
     public ReferenceBase() throws IOException {
-        this.validator = new ReferenceValidator();
+        this("references.data");
+    }
+
+    public ReferenceBase(String memoryDataFileName) { // in tests, use some test file name
         this.translator = new Translator();
-        this.references = tryToGetReferencesFromJson();
+        BASE_DIRECTORY = Paths.get(System.getProperty("user.home"), "ReferenceChampionData").toString();
+        IN_MEMORY_FILE_NAME = Paths.get(BASE_DIRECTORY, memoryDataFileName).toString();
+        loadReferencesFromMemory();
     }
-    
-    public ArrayList<Reference> tryToGetReferencesFromJson() throws IOException {
-        File f = new File("/tmp/joop.json");
-        
-        if (!f.exists()) {
-            return new ArrayList<Reference>();
+
+    private void loadReferencesFromMemory() {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(IN_MEMORY_FILE_NAME));
+            references = (ArrayList<Reference>) objectInputStream.readObject();
+        } catch (Exception e) {
+            createNewReferencesData();
         }
-        
-        String json = new String(Files.readAllBytes(Paths.get("/tmp/joop.json")));
-        
-        // tässä pakko olla ReferenceEntity mutta tossa alemmassa on vaan reference??
-        Type targetClassType = new TypeToken<ArrayList<ReferenceEntity>>(){}.getType();        
-        ArrayList<Reference> referenceCollectionFromJson = new Gson().fromJson(json, targetClassType);            
-        return  referenceCollectionFromJson;
     }
-    
+
+    private void createNewReferencesData() {
+        references = new ArrayList<Reference>();
+        writeReferencesInMemory();
+    }
+
     public void translateAll(String filename) throws IOException {
-        FileWriter fw = new FileWriter(filename+".bib", true);
+        filename = Paths.get(BASE_DIRECTORY, filename).toString(); // this is not final if customer wants to save bib file to other directory
+        FileWriter fw = new FileWriter(filename + ".bib", false);
         translator.setFileWriter(fw);
         for (Reference reference : references) {
             translator.translateReference(reference);
         }
         fw.flush();
-        
+
     }
-    
+
     public boolean addReference(Reference reference) {
-        if (validator.validate(reference)) {
-           setAvailableKey(reference);
-           references.add(reference);
-           updateJsonFile();
-           return true;
+        if (reference.validate()) {
+            changeKeyIfTaken(reference);
+            references.add(reference);
+            writeReferencesInMemory();
+            return true;
         }
         return false;
     }
-    
-    private void setAvailableKey(Reference reference) {
-        reference.addValue("key", nextAvailableKey(reference.getField("key")));
-    }
-    
-    private String nextAvailableKey(String current) { //palauttaa avaimen muodon jota ei vielä varattu tyyliin avain->avain_4
-        // Täällä voisi käyttää stringbuilderia!
-        String key = current;
-        if (keyAvailable(key)) return key;
-        
-        Integer c=0;
-        String tail = "_" + c;
-        
-        while (!keyAvailable(key+tail)) {
-            c++;
-            tail = "_"+c;
+
+    private void changeKeyIfTaken(Reference reference) {
+        if (!keyAvailable(reference.getField("key"))) {
+            String key = reference.getField("key");
+            reference.changeKey(nextAvailableKey(key));
         }
-        return key + tail;
     }
-    
+
+    private String nextAvailableKey(String current) {
+        String offeredKey;
+        for (char i = 'a'; i < 122; i++) {
+            offeredKey = current.concat("" + (char) i);
+            if (keyAvailable(offeredKey)) {
+                return offeredKey;
+            }
+        }
+        // tähän jotain mikä estää mahdollisen pino ylivuodon
+        return nextAvailableKey(current.concat("a"));
+    }
 
     public ArrayList<Reference> getReferences() {
         return references;
     }
-    
-    private boolean keyAvailable(String key) { //onko avain varattu
+
+    private boolean keyAvailable(String key) {
         for (Reference ref : references) {
-            if (ref.getField("key").equals(key)) return false;
+            if (ref.getField("key").equals(key)) {
+                return false;
+            }
         }
-        
         return true;
     }
-    
-    public void updateJsonFile() {
-        Gson gson = new Gson();
-        String json = gson.toJson(references);  
-        
-        System.out.println("json");
-        System.out.println(json);
-        try {  
-            FileWriter writer = new FileWriter("/tmp/joop.json");  
-            writer.write(json);  
-            writer.close();
-        } catch (IOException e) {  
-            e.printStackTrace();  
+
+    private void writeReferencesInMemory() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(IN_MEMORY_FILE_NAME);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(references);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        } catch (Exception e) {
+            File f = new File(BASE_DIRECTORY);
+            f.mkdirs();
         }
     }
 
@@ -117,26 +112,28 @@ public class ReferenceBase {
         ArrayList<Reference> filtered = new ArrayList<Reference>();
 
         for (Reference reference : references) {
-            List<String> fields = reference.getFields();
-            for (String field : fields) {
-                if (reference.getField(field).contains(filter)) {
-                    filtered.add(reference);
-                    break;
-                }
+            if (reference.contains(filter)) {
+                filtered.add(reference);
             }
         }
         return filtered;
-    }   
-    
+    }
+
     public boolean removeReference(Reference reference) {
         references.remove(reference);
-        updateJsonFile();
+        writeReferencesInMemory();
         return true;
     }
 
+    public int referencesCount() {
+        return references.size();
+    }
 
-    // testejä varten ettei yritä ees ottaa sieltä json tiedostosta niitä muita emt
-    public void empty() {
-        this.references.clear();
+    /**
+     * CAUTION THIS WILL ERAISE ALL SAVED OBJECTS
+     */
+    public void clearData() {
+        references = new ArrayList<Reference>();
+        writeReferencesInMemory();
     }
 }

@@ -1,9 +1,10 @@
 
 package referencechampion;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Reference {
+public interface Reference extends Serializable {
 
     String getField(String key);
     
@@ -11,7 +12,19 @@ public interface Reference {
 
     List<String> getFields();
     
+    void addAuthor();
+    
+    int howManyAuthors();
+    
     String getType();
 
-    public String toString();
+    String toString();
+    
+    boolean contains(String string);
+    
+    void setDefaultKey();
+    
+    void changeKey(String newKey);
+    
+    boolean validate();
 }
