@@ -35,20 +35,21 @@ public class UI implements Runnable {
     private static final int RELATIONAL_WIDTH = 600;
     private static final int RELATIONAL_HEIGTH = 700;
     private final int windowWidth;
-    private int windowHeight;
+    private final int windowHeight;
+    private final ReferenceBase base;  
     private JFrame window;
-    protected Map<String, Field> fields;  
-    protected Container listing;
     private JLabel result;
     private JLabel pagetitle;   
+    private JTextField filename;
+    private JTextField filter;
     private CreateReference createReferenceAction;
     private Translate translateAction;
     private SelectType selectTypeAction;
     private UpdateReferences updateReferencesAction;
-    private ReferenceBase base;    
+    protected Map<String, Field> fields;  
+    protected Container listing;
 
-    private JTextField filename;
-    private JTextField filter;
+    
 
     public UI(int width, int height, ReferenceBase base) {
         this.windowWidth = width;
@@ -97,6 +98,7 @@ public class UI implements Runnable {
         tabs.addTab("Add reference", addReferencePage);
 
         this.pagetitle = createLabel("Create a new reference", relX(20),  relY(10), relX(300),  relY(30), addReferencePage);
+        createLabel("Select type:", relX(340), relY(15), relX(150), relY(20), addReferencePage);
         
         Container fieldArea = new Container();       
         
@@ -153,7 +155,7 @@ public class UI implements Runnable {
         scrollPane.setBounds(relX(20), relY(60), relX(500), relY(400));
         listingPage.add(scrollPane);
         
-        createLabel("Filter:", relX(280), relY(30), relX(50), relY(20), listingPage);
+        createLabel("Filter:", relX(235), relY(25), relX(50), relY(20), listingPage);
         this.filter = createTextField("", relX(280), relY(20), relX(200), relY(30), listingPage);
         this.filter.setName("search");
         updateReferencesAction = new UpdateReferences(base, listing, filter, window, this);
@@ -177,7 +179,7 @@ public class UI implements Runnable {
     }
     
     public JButton createButton(String name, int x, int y, ActionListener a, Container container) {
-        return createButton(name, relX(x), relY(y), relX(DEFAULT_BUTTON_WIDTH), relY(DEFAULT_BUTTON_HEIGHT), a, container);
+        return createButton(name, x, y, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, a, container);
     }
     
     
@@ -205,11 +207,11 @@ public class UI implements Runnable {
     }
     
     public int relX(int x){
-        return (int)(windowWidth*((double)x/RELATIONAL_WIDTH));
+        return (int)((double)windowWidth*((double)x/(double)RELATIONAL_WIDTH));
     }
     
     public int relY(int y){
-        return (int)(windowHeight*((double)y/RELATIONAL_HEIGTH));
+        return (int)((double)windowHeight*((double)y/(double)RELATIONAL_HEIGTH));
     }
 
 }

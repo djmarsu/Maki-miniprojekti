@@ -84,9 +84,9 @@ public class ReferenceEntity implements Reference {
         StringBuilder sb = new StringBuilder();
         sb.append(type);
         sb.append("\n");
+        sb.append("\n");
         for (String fieldName : fieldNames) {
-            if (fields.get(fieldName) != null && !fields.get(fieldName).isEmpty()) {
-                sb.append("\t");
+            if (fields.get(fieldName) != null && !fields.get(fieldName).isEmpty()) {               
                 if (!fieldName.contains("author")) {
                     sb.append(fieldName);
                 } else {

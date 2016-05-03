@@ -23,17 +23,16 @@ import referencechampion.ReferenceBase;
  */
 public class CreateReference implements ActionListener {
 
-    private ReferenceBase base;
-    private HashMap<String, String> referenceValues;
+    private final Color DARK_GREEN = new Color(0x00, 0xC0, 0x00);
+    private final ReferenceBase base;
     protected Map<String, Field> fields;
-    private JLabel result;
-    private SelectType selection;
+    private final JLabel result;
+    private final SelectType selection;
 
     public CreateReference(Map<String, Field> fields, ReferenceBase base, JLabel result, SelectType selection) {
         this.fields = fields;
         this.base = base;
         this.result = result;
-        this.referenceValues = new HashMap<String, String>();
         this.selection = selection;
     }
 
@@ -47,16 +46,9 @@ public class CreateReference implements ActionListener {
         }
 
         if (base.addReference(reference)) {
-            result.setForeground(Color.green);
+            result.setForeground(DARK_GREEN);
             result.setText("New reference added");
-            // result.setFont(new Font(result.getName(), Font.PLAIN, 22));
-
-            ActionListener taskPerformer = new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    result.setText("Fields with * are required");
-                    result.setForeground(Color.BLACK);
-                }
-            };
+            ActionListener taskPerformer = timer();
             Timer timer = new Timer(5000, taskPerformer);
             timer.setRepeats(false);
             timer.start();
@@ -68,7 +60,14 @@ public class CreateReference implements ActionListener {
         }
     }
 
-    public void setReferenceValues(HashMap<String, String> values) {
-        this.referenceValues = values;
+    private ActionListener timer() {
+        ActionListener taskPerformer = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                result.setText("Fields with * are required");
+                result.setForeground(Color.BLACK);
+            }
+        };
+        return taskPerformer;
     }
 }

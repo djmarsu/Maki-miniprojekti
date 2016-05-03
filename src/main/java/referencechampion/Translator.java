@@ -83,7 +83,7 @@ public class Translator {
     private String capsuleUpperCases(String s) {
         // TODO refactor. tämä on ikävän oloinen ts. haisee
         StringBuilder sb = new StringBuilder();
-        sb.append(s.charAt(0));
+        if (s.length() > 0) sb.append(s.charAt(0));
         for (int i = 1; i < s.length(); i++) {
             if (Character.isUpperCase(s.charAt(i))) {
                 sb.append("{");
