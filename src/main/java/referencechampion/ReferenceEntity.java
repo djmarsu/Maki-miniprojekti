@@ -139,12 +139,6 @@ public class ReferenceEntity implements Reference {
 
     @Override
     public boolean validate() {
-        if (getType().equals("book")) {
-            if (!validField(getField("author")) && !validField(getField("editor"))) {
-                return false;
-            }
-        }
-
         List<String> requirements = ReferenceCollection.getReferenceRequirements(getType());
 
         for (String req : requirements) {
