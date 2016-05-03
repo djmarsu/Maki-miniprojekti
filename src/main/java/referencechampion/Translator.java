@@ -57,7 +57,7 @@ public class Translator {
                 && !field.equals("tag")
                 && !field.equals("key")
                 && reference.getField(field) != null
-                && !reference.getField(field).isEmpty(); // hieman ruma kenties
+                && !reference.getField(field).isEmpty();
     }
 
     private void appendField(StringBuilder sb, String fieldName, String field) {
@@ -84,7 +84,6 @@ public class Translator {
     }
 
     private String capsuleUpperCases(String s) {
-        // TODO refactor. tämä on ikävän oloinen ts. haisee
         StringBuilder sb = new StringBuilder();
         if (s.length() > 0) sb.append(s.charAt(0));
         for (int i = 1; i < s.length(); i++) {
@@ -96,6 +95,7 @@ public class Translator {
                 sb.append(s.charAt(i));
             }
         }
+        
         return sb.toString();
     }
 
